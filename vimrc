@@ -104,7 +104,11 @@ Plugin 'tpope/vim-fugitive' " for integrating git
 "Plugin 'klen/python-mode' " for easy python code writing. Allowing the use of pylint, rope, pydoc library in vim to provide features like python code looking for bugs, refactoring and some other usefull things.
 "Plugin 'Valloric/ListToggle' " COMMENTED for conflicting commands (E174)
 "Plugin 'SirVer/ultisnips' " ultimate solution for snippets in Vim. See http://pythonhackers.com/os/SirVer/ultisnips
-"Plugin 'Valloric/YouCompleteMe' " superuseful completion plugin " does not support Windows
+if has("win16") || has("win32")
+	"Plugin 'file://C:/Program Files (x86)/Vim/vimfiles/bundle/YouCompleteMe' "See https://bitbucket.org/Alexander-Shukaev/vim-youcompleteme-for-windows/src/master/
+else
+	Plugin 'Valloric/YouCompleteMe' " superuseful completion plugin
+endif
 "Plugin 'scrooloose/syntastic' " for syntax check. Too expensive
 "Plugin 't9md/vim-quickhl' " for highlighting. See https://github.com/t9md/vim-quickhl
 "Plugin 'scrooloose/nerdcommenter' " for quick commenting
@@ -122,6 +126,7 @@ Plugin 'ShowPairs' " for highlighting the matching pair surrounding the current 
 "Plugin 'VimIM' " An independent IM (Input Method) to support CJK search and CJK input. Chinese input! See http://www.vim.org/scripts/script.php?script_id=2506
 Plugin 'flazz/vim-colorschemes'
 Plugin 'vim-scripts/winmanager' " See https://www.vim.org/scripts/script.php?script_id=95
+Plugin 'vim-scripts/taglist.vim' " See https://www.vim.org/scripts/script.php?script_id=273
 Plugin 'vim-latex/vim-latex' " See http://vim-latex.sourceforge.net/
 " End Added by me
 """""""""""""""""""""""""""""""""""""
