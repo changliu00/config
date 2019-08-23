@@ -54,6 +54,8 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vundle
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Checkout with: 'git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim'.
+" For Windows, checkout to '%PROGRAMFILES%/Vim/vimfiles/bundle/Vundle.vim'.
 " Official settings
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -126,7 +128,7 @@ Plugin 'ShowPairs' " for highlighting the matching pair surrounding the current 
 "Plugin 'VimIM' " An independent IM (Input Method) to support CJK search and CJK input. Chinese input! See http://www.vim.org/scripts/script.php?script_id=2506
 Plugin 'flazz/vim-colorschemes'
 Plugin 'vim-scripts/winmanager' " See https://www.vim.org/scripts/script.php?script_id=95
-Plugin 'vim-scripts/taglist.vim' " See https://www.vim.org/scripts/script.php?script_id=273
+"Plugin 'vim-scripts/taglist.vim' " See https://www.vim.org/scripts/script.php?script_id=273
 Plugin 'vim-latex/vim-latex' " See http://vim-latex.sourceforge.net/
 " End Added by me
 """""""""""""""""""""""""""""""""""""
@@ -725,7 +727,8 @@ if has("win16") || has("win32")
 	endfunction
 
 	" -- My settings --
-	set guifont=Courier\ New:h12
+	"set guifont=Courier\ New:h12
+	set guifont=Consolas:h14
 	"set lines=45 columns=158
 	set gcr=a:block-blinkon0  " To stop the cursor from shining
 	map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
@@ -756,15 +759,23 @@ filetype indent on
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
 
+" My adjustments
+let g:Tex_DefaultTargetFormat = 'pdf' " Default = dvi
+let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode -file-line-error-style -src-specials $*' " Default with '-src-special' option added to enable backsearching
+let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*' " Default
+let g:Tex_MultipleCompileFormats = 'dvi,pdf' " Default = 'dvi'
+"let g:Tex_FormatDependency_pdf = 'dvi,pdf'
+"let g:Tex_ViewRule_pdf = 'acrord32' " Default for Windows
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Ctags
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" man ctags
-" Create or update the tags file and update the taglist
-nnoremap <leader>ct :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
-set tags=tags
-set tags+=./tags " Add current directory's generated tags file
+"" man ctags
+"" Create or update the tags file and update the taglist
+"nnoremap <leader>ct :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
+"set tags=tags
+"set tags+=./tags " Add current directory's generated tags file
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -799,38 +810,38 @@ set tags+=./tags " Add current directory's generated tags file
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Taglist
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" :help taglist.txt
-" -- Options --
-let Tlist_Auto_Highlight_Tag=1  " Automatically highlight the current tag in the taglist.
-"let Tlist_Auto_Open  " Open the taglist window when Vim starts.
-"let Tlist_Auto_Update  " Automatically update the taglist to include newly edited files.
-"let Tlist_Close_On_Select  " Close the taglist window when a file or tag is selected.
-"let Tlist_Compact_Format  " Remove extra information and blank lines from the taglist window.
-let Tlist_Ctags_Cmd='ctags'  " 	Specifies the path to the ctags utility.
-let Tlist_Display_Prototype=1  " Show prototypes and not tags in the taglist window.
-"let Tlist_Display_Tag_Scope  " Show tag scope next to the tag name.
-"let Tlist_Enable_Fold_Column  " Show the fold indicator column in the taglist window.
-let Tlist_Exit_OnlyWindow=1  " Close Vim if the taglist is the only window.
-let Tlist_File_Fold_Auto_Close=0  " Close tag folds for inactive buffers.
-"let Tlist_GainFocus_On_ToggleOpen  " Jump to taglist window on open.
-"let Tlist_Highlight_Tag_On_BufEnter  " On entering a buffer, automatically highlight the current tag.
-"let Tlist_Inc_Winwidth  " Increase the Vim window width to accommodate the taglist window.
-"let Tlist_Max_Submenu_Items  " Maximum number of items in a tags sub-menu.
-"let Tlist_Max_Tag_Length  " Maximum tag length used in a tag menu entry.
-let Tlist_Process_File_Always=1  " Process files even when the taglist window is closed.
-"let Tlist_Show_Menu  " Display the tags menu.
-let Tlist_Show_One_File=0  " Show tags for the current buffer only.
-"let Tlist_Sort_Type  " Sort method used for arranging the tags.
-"let Tlist_Use_Horiz_Window  " Use a horizontally split window for the taglist window.
-"let Tlist_Use_Right_Window  " Place the taglist window on the right side.
-"let Tlist_Use_SingleClick  " Single click on a tag jumps to it.
-"let Tlist_WinHeight  " Horizontally split taglist window height.
-"let Tlist_WinWidth  " Vertically split taglist window width.
-
-" -- Commands --
-nnoremap <leader>tl :TlistToggle<CR>
-nnoremap <leader>ta :TlistAddFiles .
-nnoremap <leader>tr :TlistAddFilesRecursive .
+"" :help taglist.txt
+"" -- Options --
+"let Tlist_Auto_Highlight_Tag=1  " Automatically highlight the current tag in the taglist.
+""let Tlist_Auto_Open  " Open the taglist window when Vim starts.
+""let Tlist_Auto_Update  " Automatically update the taglist to include newly edited files.
+""let Tlist_Close_On_Select  " Close the taglist window when a file or tag is selected.
+""let Tlist_Compact_Format  " Remove extra information and blank lines from the taglist window.
+"let Tlist_Ctags_Cmd='ctags'  " 	Specifies the path to the ctags utility.
+"let Tlist_Display_Prototype=1  " Show prototypes and not tags in the taglist window.
+""let Tlist_Display_Tag_Scope  " Show tag scope next to the tag name.
+""let Tlist_Enable_Fold_Column  " Show the fold indicator column in the taglist window.
+"let Tlist_Exit_OnlyWindow=1  " Close Vim if the taglist is the only window.
+"let Tlist_File_Fold_Auto_Close=0  " Close tag folds for inactive buffers.
+""let Tlist_GainFocus_On_ToggleOpen  " Jump to taglist window on open.
+""let Tlist_Highlight_Tag_On_BufEnter  " On entering a buffer, automatically highlight the current tag.
+""let Tlist_Inc_Winwidth  " Increase the Vim window width to accommodate the taglist window.
+""let Tlist_Max_Submenu_Items  " Maximum number of items in a tags sub-menu.
+""let Tlist_Max_Tag_Length  " Maximum tag length used in a tag menu entry.
+"let Tlist_Process_File_Always=1  " Process files even when the taglist window is closed.
+""let Tlist_Show_Menu  " Display the tags menu.
+"let Tlist_Show_One_File=0  " Show tags for the current buffer only.
+""let Tlist_Sort_Type  " Sort method used for arranging the tags.
+""let Tlist_Use_Horiz_Window  " Use a horizontally split window for the taglist window.
+""let Tlist_Use_Right_Window  " Place the taglist window on the right side.
+""let Tlist_Use_SingleClick  " Single click on a tag jumps to it.
+""let Tlist_WinHeight  " Horizontally split taglist window height.
+""let Tlist_WinWidth  " Vertically split taglist window width.
+"
+"" -- Commands --
+"nnoremap <leader>tl :TlistToggle<CR>
+"nnoremap <leader>ta :TlistAddFiles .
+"nnoremap <leader>tr :TlistAddFilesRecursive .
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -838,7 +849,8 @@ nnoremap <leader>tr :TlistAddFilesRecursive .
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " :help winmanager
 " -- Options --
-let g:winManagerWindowLayout='FileExplorer|TagList' " Set the plugins we want to manage.
+"let g:winManagerWindowLayout='FileExplorer|TagList' " Set the plugins we want to manage.
+let g:winManagerWindowLayout='FileExplorer'
 let g:persistentBehaviour=0 " Exit Vim if winmanager is the last window.
 
 " -- Commands --
