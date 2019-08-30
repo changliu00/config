@@ -55,17 +55,18 @@
 " => Vundle
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Checkout with: 'git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim'.
-" For Windows, checkout to '%PROGRAMFILES%/Vim/vimfiles/bundle/Vundle.vim'.
+" For Windows, checkout to '%USERPROFILE%/vimfiles/bundle/Vundle.vim'.
+" Then, open Vim and run ':PluginInstall'.
 " Official settings
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " Set the runtime path to include Vundle and initialize
 if has("win16") || has("win32")
-	"set rtp+=$HOME/.vim/bundle/Vundle.vim/
-	"call vundle#begin('$HOME/.vim/bundle/')
-	set rtp+=C:/Program\ Files\ (x86)/Vim/vimfiles/bundle/Vundle.vim/
-	call vundle#begin('C:/Program Files (x86)/Vim/vimfiles/bundle/')
+	set rtp+=$USERPROFILE/vimfiles/bundle/Vundle.vim/
+	call vundle#begin('$USERPROFILE/vimfiles/bundle/')
+	"set rtp+=C:/Program\ Files\ (x86)/Vim/vimfiles/bundle/Vundle.vim/
+	"call vundle#begin('C:/Program Files (x86)/Vim/vimfiles/bundle/')
 else
 	set rtp+=~/.vim/bundle/Vundle.vim
 	call vundle#begin()
@@ -196,9 +197,10 @@ nmap <leader>ii :IndentLinesToggle<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Press F9 to show the configuration file
 if has("win16") || has("win32")
-	nnoremap <F9> :vsp C:/Program\ Files\ (x86)/Vim/_vimrc<CR>:set readonly<CR>
+	"nnoremap <F9> :vsp C:/Program\ Files\ (x86)/Vim/_vimrc<CR>:set readonly<CR>
+	nnoremap <F9> :vsp $USERPROFILE/_vimrc<CR>:set readonly<CR>
 else
-	nnoremap <F9> :vsp $HOME/.vimrc<CR>:set readonly<CR>
+	nnoremap <F9> :vsp ~/.vimrc<CR>:set readonly<CR>
 endif
 
 " To stop highlighting the word just searched.
