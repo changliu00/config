@@ -368,15 +368,15 @@ set encoding=utf8
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use spaces instead of tabs
+" Do not use spaces in place of tabs
 set noexpandtab
-autocmd FileType python set expandtab " In python, space is recommended for indent rather than tab
-"set expandtab
-
 " 1 tab == 4 spaces
-set shiftwidth=4
-set softtabstop=4
 set tabstop=4  " default 8
+set softtabstop=4
+set shiftwidth=4
+" Cases to use spaces instead of tabs
+autocmd FileType python set tabstop=4|set expandtab|set shiftwidth=4 " In python, space is recommended for indent rather than tab
+autocmd FileType tex set tabstop=4|set expandtab|set shiftwidth=2 " Indent 2 spaces for tex files
 
 " Be smart when using tabs ;)
 set smarttab
@@ -763,11 +763,17 @@ let g:tex_flavor='latex'
 
 " My adjustments
 let g:Tex_DefaultTargetFormat = 'pdf' " Default = dvi
-let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode -file-line-error-style -src-specials $*' " Default with '-src-special' option added to enable backsearching
-let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*' " Default
+let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode -file-line-error-style -src-specials $*' " Default = 'latex -interaction=nonstopmode -file-line-error-style $*'. '-src-specials' added to enable backsearching
+let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*' " Default = 'pdflatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*'
 let g:Tex_MultipleCompileFormats = 'dvi,pdf' " Default = 'dvi'
-"let g:Tex_FormatDependency_pdf = 'dvi,pdf'
-"let g:Tex_ViewRule_pdf = 'acrord32' " Default for Windows
+"let g:Tex_FormatDependency_pdf = 'dvi,pdf' " Default = 'dvi,pdf'
+"let g:Tex_ViewRule_pdf = 'acrord32' " Default = 'acrord32' for Windows
+let g:tex_indent_brace = 1 " Default = 1
+let g:tex_indent_items = 1 " Default = 1
+let g:tex_items = '\\bibitem\|\\item' " Default = '\\bibitem\|\\item'
+let g:tex_itemize_env = 'itemize\|description\|enumerate\|thebibliography' " Default = 'itemize\|description\|enumerate\|thebibliography'
+let g:tex_noindent_env = 'document\|verbatim\|comment\|lstlisting' " Default = 'document\|verbatim\|comment\|lstlisting'
+let g:tex_indent_ifelsefi = 0 " Default = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
