@@ -730,7 +730,8 @@ if has("win16") || has("win32")
 
 	" -- My settings --
 	"set guifont=Courier\ New:h12
-	set guifont=Consolas:h14
+	set guifont=Consolas:h13
+	set t_Co=256 t_ut="" " To properly display background in Windows PowerShell. `t_ut=""` disables Background Color Erase (BCE)
 	"set lines=45 columns=158
 	set gcr=a:block-blinkon0  " To stop the cursor from shining
 	map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
