@@ -57,6 +57,7 @@
 " Checkout with: 'git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim'.
 " For Windows, checkout to '%USERPROFILE%/vimfiles/bundle/Vundle.vim'.
 " Then, open Vim and run ':PluginInstall'.
+" For proper math highlights in e.g. align envs in LaTeX, download 'http://www.drchip.org/astronaut/vim/vbafiles/amsmath.vba.gz' to '~/.vim/' or '%USERPROFILE%/vimfiles/', open it with Vim, and run `:so %`
 " Official settings
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -149,47 +150,6 @@ filetype plugin indent on    " required
 "
 " See :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-let g:indentLine_char = '|'
-nmap <leader>ii :IndentLinesToggle<CR>
-
-
-"" Another version
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" => Bundle
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"set nocompatible              " be iMproved, required
-"filetype off                  " required
-"
-"" Set the runtime path to include Vundle and initialize
-"set rtp+=~/.vim/bundle/vundle/
-"call vundle#rc()
-""" Alternatively, pass a path where Vundle should install plugins
-""let path = '~/some/path/here'
-""call vundle#rc(path)
-"
-"" Let Vundle manage Vundle, required
-"Plugin 'gmarik/vundle'
-"
-"" The following are examples of different formats supported.
-"" Keep Plugin commands between here and filetype plugin indent on.
-"" -- Scripts on GitHub repos
-"Plugin 'tpope/vim-fugitive'
-"Plugin 'Lokaltog/vim-easymotion' " See https://github.com/Lokaltog/vim-powerline
-"Plugin 'tpope/vim-rails.git'
-"" The sparkup vim script is in a subdirectory of this repo called vim.
-"" Pass the path to set the runtimepath properly.
-"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-"" -- Scripts from http://vim-scripts.org/vim/scripts.html
-"Plugin 'L9'
-"Plugin 'FuzzyFinder'
-"" -- Scripts not on GitHub
-"Plugin 'git://git.wincent.com/command-t.git'
-""" -- Git repos on your local machine (i.e. when working on your own plugin)
-""Plugin 'file:///home/gmarik/path/to/plugin'
-"" ...
-"
-"filetype plugin indent on     " required
-"Bundle 'Valloric/YouCompleteMe'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -204,8 +164,14 @@ else
 endif
 
 " To stop highlighting the word just searched.
-"nmap <leader>q :noh<CR>
 map <silent> <leader>q :noh<CR>
+
+" For indentLine
+let g:indentLine_char = '|'
+nmap <leader>ii :IndentLinesToggle<CR>
+
+" For diff
+set diffopt=vertical " Vertical split is preferred, for e.g., `:diffs`
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -331,7 +297,7 @@ set cursorline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
 " syntax on  " Highlight colors are overruled but links are kept.
-syntax enable  " Only define colors for groups that don't have highlighting yet.  Use \":syntax default\".
+syntax enable  " Only define colors for groups that don't have highlighting yet. Use `:syntax default`
 
 try
     " Recommended: solarized, molokai, phd, desert, wombat
@@ -495,7 +461,7 @@ map Y y$
 "map 0 ^
 
 " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-if has("mac") || has("macunix")
+if has("osx") || has("mac") || has("macunix")
 	nmap <M-j> mz:m+<cr>`z
 	nmap <M-k> mz:m-2<cr>`z
 	vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
@@ -556,7 +522,7 @@ map <leader>ss :setlocal spell!<cr>
 "" Shortcuts using <leader>
 "map <leader>sn ]s
 "map <leader>sp [s
-"map <leader>sa zg
+"map <leader>sa zg " Add word to dictionary
 "map <leader>s? z=
 
 
@@ -660,38 +626,6 @@ endfunction
 
 if has("win16") || has("win32")
 	" -- Default settings from gVim --
-	"" ---- Old version:
-	"set nocompatible
-	"source $VIMRUNTIME/vimrc_example.vim
-	""source $VIMRUNTIME/mswin.vim
-	""behave mswin
-
-	"set diffexpr=MyDiff()
-	"function MyDiff()
-	"  let opt = '-a --binary '
-	"  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-	"  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-	"  let arg1 = v:fname_in
-	"  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-	"  let arg2 = v:fname_new
-	"  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-	"  let arg3 = v:fname_out
-	"  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-	"  let eq = ''
-	"  if $VIMRUNTIME =~ ' '
-	"	if &sh =~ '\<cmd'
-	"	  let cmd = '"' . $VIMRUNTIME . '\diff"'
-	"	  let eq = '""'
-	"	else
-	"	  let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-	"	endif
-	"  else
-	"	let cmd = $VIMRUNTIME . '\diff'
-	"  endif
-	"  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
-	"endfunction
-
-	" ---- New version:
 	source $VIMRUNTIME/vimrc_example.vim
 
 	set diffexpr=MyDiff()
@@ -763,12 +697,17 @@ filetype indent on
 let g:tex_flavor='latex'
 
 " My adjustments
+set noshellslash " For enabling forward search with SumatraPDF in Windows. Alternatively, substitute `target_file` with `'%:r.pdf'` and `sourcefileFull` with `'%:p'` in Line 385 of 'vim-latex/ftplugin/latex-suite/compiler.vim' (The line is originally `let execString .= Tex_Stringformat('start %s %s -forward-search %s %s', viewer, target_file, sourcefileFull, linenr)`.)
 let g:Tex_DefaultTargetFormat = 'pdf' " Default = dvi
-let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode -file-line-error-style -src-specials $*' " Default = 'latex -interaction=nonstopmode -file-line-error-style $*'. '-src-specials' added to enable backsearching
-let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*' " Default = 'pdflatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*'
+let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode -file-line-error-style -src-specials $*' " Default = 'latex -interaction=nonstopmode -file-line-error-style $*'. Add '-src-specials' to enable forward/inverse searching
+let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*' " Default = 'pdflatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*'. The option '-synctex=1' enables forward/inverse searching by providing a synctex(.gz) file to the pdf viewer
 let g:Tex_MultipleCompileFormats = 'dvi,pdf' " Default = 'dvi'
 "let g:Tex_FormatDependency_pdf = 'dvi,pdf' " Default = 'dvi,pdf'
-"let g:Tex_ViewRule_pdf = 'acrord32' " Default = 'acrord32' for Windows
+if has("win16") || has("win32")
+	let g:Tex_ViewRule_pdf = 'SumatraPDF -inverse-search "gvim -c \":RemoteOpen +\%l \%f\""' " Default = 'AcroRd32' for Windows
+elseif has("osx") || has("mac") || has("macunix")
+	let g:Tex_TreatMacViewerAsUNIX = 1 " To enable forward/inverse searching on Macintosh systems
+endif
 let g:tex_indent_brace = 1 " Default = 1
 let g:tex_indent_items = 1 " Default = 1
 let g:tex_items = '\\bibitem\|\\item' " Default = '\\bibitem\|\\item'

@@ -12,10 +12,12 @@
 	"profiles": {
 		"defaults": {
 			// Put settings here that you want to apply to all profiles
+			"background": "#000000",
 			"cursorColor": "#FFFFFF",
 			"cursorShape": "filledBox",
 			"fontFace": "Consolas",
-			"fontSize": 13
+			"fontSize": 13,
+			"padding": "0, 0, 0, 0"
 		},
 		"list": [
 			{
@@ -55,6 +57,14 @@
 	// Add any keybinding overrides to this array.
 	// To unbind a default keybinding, set the command to "unbound"
 	"keybindings": [
+		{
+			"command" : null,
+			"keys" : ["ctrl+shift+6"]
+		},
+		{
+			"command" : null,
+			"keys" : ["ctrl+6"]
+		},
 		{
 			"command": "copy",
 			"keys": [ "ctrl+shift+c" ]
