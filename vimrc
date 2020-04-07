@@ -44,20 +44,20 @@
 "    -> Ctags
 "    -> Omnicppcomplete
 "    -> Taglist
-"    -> Winmanager
-"    -> YouCompleteMe
-"    -> Vim-Powerline
 "    -> Syntastic
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" Important: Basic Instructions.
+" * Checkout with: 'git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim'.
+" - For Windows, checkout to '%USERPROFILE%/vimfiles/bundle/Vundle.vim'.
+" - Then, open Vim and run ':PluginInstall'.
+" * For proper math highlights in e.g. align envs in LaTeX,
+" - Download 'http://www.drchip.org/astronaut/vim/vbafiles/amsmath.vba.gz' to '~/.vim/' or '%USERPROFILE%/vimfiles/'.
+" - Open it with Vim, and run `:so %`.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vundle
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Checkout with: 'git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim'.
-" For Windows, checkout to '%USERPROFILE%/vimfiles/bundle/Vundle.vim'.
-" Then, open Vim and run ':PluginInstall'.
-" For proper math highlights in e.g. align envs in LaTeX, download 'http://www.drchip.org/astronaut/vim/vbafiles/amsmath.vba.gz' to '~/.vim/' or '%USERPROFILE%/vimfiles/', open it with Vim, and run `:so %`
 " Official settings
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -81,7 +81,16 @@ Plugin 'VundleVim/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " -- Plugin on GitHub repo
-Plugin 'tpope/vim-fugitive' " for integrating git
+Plugin 'tpope/vim-fugitive' " for integrating git. 'https://github.com/tpope/vim-fugitive'
+" Examples: " `:G add %` (`:G`=`:Git`) or `:Gwrite`, `Gcommit`,
+" `Gblame`: vert-split window for annotations for each line of the file,
+" `:Gdiffsplit`: diff with the staged,
+" `:Gedit HEAD~3:%`: load the current file as it existed 3 commits ago.
+
+Plugin 'airblade/vim-gitgutter'
+nnoremap <leader>gt :GitGutterToggle<CR>
+set updatetime=1000 " Default = 4000. Also the time delay to write swap files
+
 " -- Plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9' " COMMENTED for conflicting commands (E174)
 " -- Git plugin not hosted on GitHub
@@ -104,34 +113,140 @@ Plugin 'tpope/vim-fugitive' " for integrating git
 "Plugin 'kien/ctrlp.vim' " for finding and opening files with quick search
 "Plugin 'sukima/xmledit' " for conveniently editting XML (and some SGML including HTML)
 "Plugin 'sjl/gundo.vim' " for visualizing the vim undo tree
-"Plugin 'jiangmiao/auto-pairs' " COMMENTED for not desired functionality. For inserting or deleting brackets, parens, quotes in pair. See https://github.com/vim-scripts/Auto-Pairs
 "Plugin 'klen/python-mode' " for easy python code writing. Allowing the use of pylint, rope, pydoc library in vim to provide features like python code looking for bugs, refactoring and some other usefull things.
 "Plugin 'Valloric/ListToggle' " COMMENTED for conflicting commands (E174)
-"Plugin 'SirVer/ultisnips' " ultimate solution for snippets in Vim. See http://pythonhackers.com/os/SirVer/ultisnips
-if has("win16") || has("win32")
-	"Plugin 'file://C:/Program Files (x86)/Vim/vimfiles/bundle/YouCompleteMe' "See https://bitbucket.org/Alexander-Shukaev/vim-youcompleteme-for-windows/src/master/
-else
-	Plugin 'Valloric/YouCompleteMe' " superuseful completion plugin
-endif
+
+" YouCompleteMe
+" For Windows, requires:
+" * (G)Vim is installed/compiled with Python support.
+" - Run `:version` in Vim to see if 'python', 'python3' (or 'python/dyn',
+"   'python3/dyn' for Windows) are included (with the '+' sign).
+" - If NOT (as for the terminal Vim in Windows following official .exe
+"   installation), a pre-compiled binary archive can be downloaded from
+"   'https://tuxproject.de/projects/vim/' (currently Vim-8.2 with python-2.7
+"   and python-3.8 support; also check 'https://github.com/vim/vim-win32-installer/releases'
+"   and the 'more information' link therein). Note to select 32-bit (x86)
+"   or 64-bit (x64) to match that of the installed python dll.
+" * The right Python dynamic link library (for Windows).
+" - Run `:echo has('python')` and `:python import sys; print(sys.version)`
+"   (and for `python3`) to check if this is successful.
+" - If NOT (as the case where the python dll's are not registered in the
+"   path), explicitly set the path to the matching python dll's:
+"     `set pythondll=C:\Program\ Files\Python27\python27.dll`
+"     `set pythonhome=C:\Program\ Files\Python27`
+"     `set pythonthreedll=C:\Program\ Files\Python38\python38.dll`
+"     `set pythonthreehome=C:\Program\ Files\Python38`
+" - If no matching python dll's, install the right python. Check the
+"   compilation info in `vim --version` for the python version
+"   (`-DDYNAMIC_PYTHON_DLL`, `-DDYNAMIC_PYTHON3_DLL`) that was used to compile
+"   the Vim. Also note to match the right bit (x86 or x64) of Vim and Python.
+" * If the YCM is desired to be installed with semantic support for C-family
+"   languages, install CMake 'https://cmake.org/download/' and add to path.
+" * Make sure that 'Visual Studio Build Tools' are installed (may only for
+"   C-family langrage support).
+" * After `:PluginInstall`, `cd` to '~/vimfiles/bundle/YouCompleteMe' and run
+"   `python install.py`. Add option `--clangd-completer` for C-family
+"   languages support, and `--cs-completer` for C# support. `--all` available.
+"Plugin 'Valloric/YouCompleteMe' " Superuseful completion plugin. See 'https://bitbucket.org/Alexander-Shukaev/vim-youcompleteme-for-windows/src/master/' for Windows
+Plugin 'ycm-core/YouCompleteMe'
+"let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py' " Specify the configuration file (This is default)
+let g:ycm_auto_trigger = 1 " When set to 0, use <C-Space> to force semantic completion
+nnoremap <leader>yy :let g:ycm_auto_trigger = !g:ycm_auto_trigger<CR>
+" Do the same as the subcommand 'GoToDefinitionElseDeclaration' (which is only for C#)
+nnoremap <leader>yg :YcmCompleter GoTo<CR>
+" Do not recompile the file with libclang (trades correctness for speed)
+nnoremap <leader>yi :YcmCompleter GoToImprecise<CR>
+nnoremap <leader>yr :YcmRestartServer<CR>
+nnoremap <leader>yu :YcmForceCompileAndDiagnostics<CR>
+" If =99: turn off the identifier completion engine and just leave the semantic engine. If =2: default.
+nnoremap <leader>ys :let g:ycm_min_num_of_chars_for_completion = 101 - g:ycm_min_num_of_chars_for_completion<CR>
+let g:ycm_max_num_candidates = 30 " Default = 50
+let g:ycm_confirm_extra_conf = 0 " Stop confirming loading extra configuration file when entering vim
+"let g:ycm_collect_identifiers_from_tag_files = 1 " Use the tags file produced by ctags
+"let g:ycm_show_diagnostics_ui = 0 " Stops the built-in checker of ycm for c-related syntax
+
+"Plugin 'vimwiki/vimwiki' " Create a number of linked text files that have their own syntax highlighting
 "Plugin 'scrooloose/syntastic' " for syntax check. Too expensive
 "Plugin 't9md/vim-quickhl' " for highlighting. See https://github.com/t9md/vim-quickhl
-"Plugin 'scrooloose/nerdcommenter' " for quick commenting
-"Plugin 'scrooloose/nerdtree'
+
+"Plugin 'vim-scripts/winmanager' " See https://www.vim.org/scripts/script.php?script_id=95
+"let g:winManagerWindowLayout='FileExplorer|TagList' " Set the plugins we want to manage.
+"let g:winManagerWindowLayout='FileExplorer'
+"let g:persistentBehaviour=0 " Exit Vim if winmanager is the last window.
+"nnoremap <leader>wm :WMToggle<CR>
+""nnoremap <C-W><C-M> :WMToggle<CR>
+""nnoremap <C-W><C-B> :BottomExplorerWindow<CR>
+""nnoremap <C-W><C-F> :FirstExplorerWindow<CR>
+
+Plugin 'preservim/nerdtree' " Another file system explorer
+" Open a NERDTree automatically when Vim starts up with no file specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" Close Vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let g:NERDTreeDirArrowExpandable = '>' " 'ÎÎ'
+let g:NERDTreeDirArrowCollapsible = 'v' " 'ÎÎ'
+nnoremap <leader>wm :NERDTreeToggle<CR>
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+"let g:NERDTreeShowIgnoredStatus = 1 " To show ignored status (a heavy feature)
+
+Plugin 'preservim/nerdcommenter' " for quick commenting
+let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
+let g:NERDCompactSexyComs = 1 " Use compact syntax for prettified multi-line comments
+let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
+let g:NERDToggleCheckAllLines = 1 " Enable NERDCommenterToggle to check all selected lines is commented or not 
+" Default Mappings:
+" <leader>cc |NERDCommenterComment|, <leader>cn |NERDCommenterNested|,
+" <leader>c<space> |NERDCommenterToggle|, <leader>cu |NERDCommenterUncomment|
+
+Plugin 'ap/vim-css-color'
+
+"Plugin 'SirVer/ultisnips' " Ultimate solution for snippets in Vim. See 'https://github.com/sirver/ultisnips'
+"" Snippets are separated from the engine. Add this if you want them:
+"Plugin 'honza/vim-snippets'
+"" Trigger configuration. Do not use <tab> if you use 'https://github.com/Valloric/YouCompleteMe'.
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"let g:UltiSnipsEditSplit="vertical" " If you want :UltiSnipsEdit to split your window.
+
+"Plugin 'vifm/vifm.vim' " Curser-based vi[m]-like file manager. Download first from 'https://vifm.info/downloads.shtml'
+"map <leader>vv :Vifm<CR>
+""vp :VsplitVifm<CR> vs :SplitVifm<CR> vd :DiffVifm<CR> vt :TabVifm<CR>
+
+"Plugin 'itchyny/lightline.vim'
 Plugin 'Lokaltog/vim-powerline' " See https://github.com/Lokaltog/vim-powerline
+let g:Powerline_symbols = 'unicode' " 'fancy'
+set laststatus=2
+set t_Co=256
+set encoding=utf8
+
 Plugin 'Yggdroot/indentLine' " See https://github.com/Yggdroot/indentLine
+let g:indentLine_char = '|'
+nmap <leader>ii :IndentLinesToggle<CR>
+
 "..................................
 " -- Vim-scripts repos
 "Plugin 'YankRing.vim' " for maintaining and visualizing the yank register. See https://github.com/vim-scripts/YankRing.vim
 "Plugin 'vcscommand.vim' " for manipulating files controlled by CVS, SVN, SVK, git, bzr, and hg within VIM, including committing changes and performing diffs using the vimdiff system. See http://www.vim.org/scripts/script.php?script_id=90
-Plugin 'ShowPairs' " for highlighting the matching pair surrounding the current cursor location. See http://www.vim.org/scripts/script.php?script_id=626
 "Plugin 'SudoEdit.vim' " for editting Files using sudo or su or any other tool. See http://www.vim.org/scripts/script.php?script_id=2709
 "Plugin 'EasyGrep' " for Fast and Easy Find and Replace Across Multiple Files. See http://www.vim.org/scripts/script.php?script_id=2438  https://github.com/dkprice/vim-easygrep
 "Plugin 'VOoM' " (Vim Outliner of Markups) a plugin for Vim that emulates a two-pane text outliner. See http://www.vim.org/scripts/script.php?script_id=2657
 "Plugin 'VimIM' " An independent IM (Input Method) to support CJK search and CJK input. Chinese input! See http://www.vim.org/scripts/script.php?script_id=2506
-Plugin 'flazz/vim-colorschemes'
-Plugin 'vim-scripts/winmanager' " See https://www.vim.org/scripts/script.php?script_id=95
 "Plugin 'vim-scripts/taglist.vim' " See https://www.vim.org/scripts/script.php?script_id=273
 Plugin 'vim-latex/vim-latex' " See http://vim-latex.sourceforge.net/
+
+Plugin 'flazz/vim-colorschemes'
+Plugin 'sainnhe/sonokai'
+let g:sonokai_style = 'andromeda'
+let g:sonokai_enable_italic = 1
+let g:sonokai_disable_italic_comment = 1
+
+"Plugin 'ShowPairs' " for highlighting the matching pair surrounding the current cursor location. See http://www.vim.org/scripts/script.php?script_id=626
+"Plugin 'jiangmiao/auto-pairs' " COMMENTED for undesired functionality. For inserting or deleting brackets, parens, quotes in pair. See https://github.com/vim-scripts/Auto-Pairs
+Plugin 'luochen1990/rainbow' " for visualizing paired brackets
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 " End Added by me
 """""""""""""""""""""""""""""""""""""
 
@@ -164,14 +279,13 @@ else
 endif
 
 " To stop highlighting the word just searched.
-map <silent> <leader>q :noh<CR>
-
-" For indentLine
-let g:indentLine_char = '|'
-nmap <leader>ii :IndentLinesToggle<CR>
+nnoremap <silent> <leader>q :noh<CR>
 
 " For diff
 set diffopt=vertical " Vertical split is preferred, for e.g., `:diffs`
+
+" Select last paste in visual mode. Use `gv` to select last yanked block.
+nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -298,22 +412,19 @@ set cursorline
 " Enable syntax highlighting
 " syntax on  " Highlight colors are overruled but links are kept.
 syntax enable  " Only define colors for groups that don't have highlighting yet. Use `:syntax default`
+set termguicolors
 
-try
-    " Recommended: solarized, molokai, phd, desert, wombat
-    colorscheme molokai
-catch
-endtry
-
+" Recommended: solarized, molokai, phd, desert, wombat; sonokai
+colorscheme molokai
 set background=dark
 
-" Set extra options when running in GUI mode
-if has("gui_running")
-    set guioptions-=T
-    set guioptions-=e
-    set t_Co=256
-    set guitablabel=%M\ %t
-endif
+"" Set extra options when running in GUI mode
+"if has("gui_running")
+"    set guioptions-=T
+"    set guioptions-=e
+"    set t_Co=256
+"    set guitablabel=%M\ %t
+"endif
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
@@ -374,8 +485,8 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 "map k gk
 
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
-map <c-space> ?
+nnoremap <space> /
+"nnoremap <c-space> ?
 
 "" Disable highlight when <leader><cr> is pressed
 "map <silent> <leader><cr> :noh<cr>
@@ -402,7 +513,7 @@ map <leader>tn :tabnew
 "" Let 'tl' toggle between this and the last accessed tab
 "let g:lasttab = 1
 "nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
-"au TabLeave * let g:lasttab = tabpagenr()
+"autocmd TabLeave * let g:lasttab = tabpagenr()
 
 
 "" Opens a new tab with the current buffer's path
@@ -703,6 +814,7 @@ let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode -file-line-error-sty
 let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*' " Default = 'pdflatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*'. The option '-synctex=1' enables forward/inverse searching by providing a synctex(.gz) file to the pdf viewer
 let g:Tex_MultipleCompileFormats = 'dvi,pdf' " Default = 'dvi'
 "let g:Tex_FormatDependency_pdf = 'dvi,pdf' " Default = 'dvi,pdf'
+let g:Tex_ViewRule_pdf = '' " Default = 'xpdf' for Unix. Consider 'Zathura' for Ubuntu
 if has("win16") || has("win32")
 	let g:Tex_ViewRule_pdf = 'SumatraPDF -inverse-search "gvim -c \":RemoteOpen +\%l \%f\""' " Default = 'AcroRd32' for Windows
 elseif has("osx") || has("mac") || has("macunix")
@@ -793,35 +905,6 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Winmanager
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" :help winmanager
-" -- Options --
-"let g:winManagerWindowLayout='FileExplorer|TagList' " Set the plugins we want to manage.
-let g:winManagerWindowLayout='FileExplorer'
-let g:persistentBehaviour=0 " Exit Vim if winmanager is the last window.
-
-" -- Commands --
-nnoremap <leader>wm :WMToggle<CR>
-"nnoremap <C-W><C-M> :WMToggle<CR>
-"nnoremap <C-W><C-B> :BottomExplorerWindow<CR>
-"nnoremap <C-W><C-F> :FirstExplorerWindow<CR>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => YouCompleteMe
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py' " Specify the configuration file (This is default)
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nnoremap <leader>yy :let g:ycm_auto_trigger=0<CR>
-nnoremap <leader>YY :let g:ycm_auto_trigger=1<CR>
-let g:ycm_confirm_extra_conf=0 " Stop confirming loading extra configuration file when entering vim
-let g:ycm_collect_identifiers_from_tag_files = 1 " Use the tags file produced by ctags
-let g:ycm_show_diagnostics_ui = 0 " Stops the built-in checker of ycm for c-related syntax
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Syntastic
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " :help syntastic
@@ -834,15 +917,5 @@ let g:ycm_show_diagnostics_ui = 0 " Stops the built-in checker of ycm for c-rela
 "let g:syntastic_check_on_open = 1
 "let g:syntastic_check_on_wq = 0
 "let g:syntastic_ignore_files=[".*"] " stop processing files with matching name (exact reg-ex)
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Vim-Powerline
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" :help Powerline
-let g:Powerline_symbols = 'unicode' " 'fancy'
-set laststatus=2
-set t_Co=256
-set encoding=utf8
 
 
