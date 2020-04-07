@@ -412,7 +412,7 @@ set cursorline
 " Enable syntax highlighting
 " syntax on  " Highlight colors are overruled but links are kept.
 syntax enable  " Only define colors for groups that don't have highlighting yet. Use `:syntax default`
-set termguicolors
+"set termguicolors " Required by 'sainnhe/sonokai', but causes faded cursorline in terminal.
 
 " Recommended: solarized, molokai, phd, desert, wombat; sonokai
 colorscheme molokai
@@ -544,9 +544,6 @@ map <leader>tn :tabnew
 """"""""""""""""""""""""""""""
 " Always show the status line
 set laststatus=2
-
-"" Format the status line
-"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
 
 "" Height of the command bar
 "set cmdheight=1  " default 1
@@ -693,15 +690,6 @@ function! VisualSelection(direction, extra_filter) range
     let @/ = l:pattern
     let @" = l:saved_reg
 endfunction
-
-
-"" Returns true if paste mode is enabled
-"function! HasPaste()
-"    if &paste
-"        return 'PASTE MODE  '
-"    endif
-"    return ''
-"endfunction
 
 "" Don't close window, when deleting a buffer
 "command! Bclose call <SID>BufcloseCloseIt()
