@@ -87,8 +87,10 @@ Plugin 'tpope/vim-fugitive' " for integrating git. 'https://github.com/tpope/vim
 " `:Gdiffsplit`: diff with the staged,
 " `:Gedit HEAD~3:%`: load the current file as it existed 3 commits ago.
 
-Plugin 'airblade/vim-gitgutter'
-nnoremap <leader>gt :GitGutterToggle<CR>
+Plugin 'airblade/vim-gitgutter' " 'h' for 'hunk' (block of changed lines)
+nnoremap <leader>hh :GitGutterToggle<CR>
+nnoremap ]h <Plug>(GitGutterNextHunk)
+nnoremap [h <Plug>(GitGutterPrevHunk)
 set updatetime=1000 " Default = 4000. Also the time delay to write swap files
 
 " -- Plugin from http://vim-scripts.org/vim/scripts.html
@@ -191,7 +193,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 "let g:NERDTreeShowIgnoredStatus = 1 " To show ignored status (a heavy feature)
 
 Plugin 'preservim/nerdcommenter' " for quick commenting
-let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 0 " Add spaces after comment delimiters by default
 let g:NERDCompactSexyComs = 1 " Use compact syntax for prettified multi-line comments
 let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
