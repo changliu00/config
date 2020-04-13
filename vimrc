@@ -53,8 +53,11 @@
 " - For Windows, checkout to '%USERPROFILE%/vimfiles/bundle/Vundle.vim'.
 " - Then, open Vim and run ':PluginInstall'.
 " * For proper math highlights in e.g. align envs in LaTeX,
-" - Download 'http://www.drchip.org/astronaut/vim/vbafiles/amsmath.vba.gz' to '~/.vim/' or '%USERPROFILE%/vimfiles/'.
+" - Download <http://www.drchip.org/astronaut/vim/vbafiles/amsmath.vba.gz> to '~/.vim/' or '%USERPROFILE%/vimfiles/'.
 " - Open it with Vim, and run `:so %`.
+" * Download SumatraPDF and add to path for forward/inverse searching
+"   in LaTeX in Windows.
+" * To install YouCompleteMe, read the instructions there.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vundle
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -81,7 +84,7 @@ Plugin 'VundleVim/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " -- Plugin on GitHub repo
-Plugin 'tpope/vim-fugitive' " for integrating git. 'https://github.com/tpope/vim-fugitive'
+Plugin 'tpope/vim-fugitive' " for integrating git. <https://github.com/tpope/vim-fugitive>
 " Examples: " `:G add %` (`:G`=`:Git`) or `:Gwrite`, `Gcommit`,
 " `Gblame`: vert-split window for annotations for each line of the file,
 " `:Gdiffsplit`: diff with the staged,
@@ -93,7 +96,7 @@ nnoremap ]h <Plug>(GitGutterNextHunk)
 nnoremap [h <Plug>(GitGutterPrevHunk)
 set updatetime=1000 " Default = 4000. Also the time delay to write swap files
 
-" -- Plugin from http://vim-scripts.org/vim/scripts.html
+" -- Plugin from <http://vim-scripts.org/vim/scripts.html>
 "Plugin 'L9' " COMMENTED for conflicting commands (E174)
 " -- Git plugin not hosted on GitHub
 "Plugin 'git://git.wincent.com/command-t.git' " COMMENTED for lack of Ruby support of current Vim. For opening files and buffers with convenience. Calls for Ruby support
@@ -118,38 +121,45 @@ set updatetime=1000 " Default = 4000. Also the time delay to write swap files
 "Plugin 'klen/python-mode' " for easy python code writing. Allowing the use of pylint, rope, pydoc library in vim to provide features like python code looking for bugs, refactoring and some other usefull things.
 "Plugin 'Valloric/ListToggle' " COMMENTED for conflicting commands (E174)
 
-" YouCompleteMe
+" YouCompleteMe <https://github.com/ycm-core/YouCompleteMe>
+"Plugin 'Valloric/YouCompleteMe' " Old version. See <https://bitbucket.org/Alexander-Shukaev/vim-youcompleteme-for-windows/src/master/> for Windows
 " For Windows, requires:
-" * (G)Vim is installed/compiled with Python support.
-" - Run `:version` in Vim to see if 'python', 'python3' (or 'python/dyn',
-"   'python3/dyn' for Windows) are included (with the '+' sign).
-" - If NOT (as for the terminal Vim in Windows following official .exe
-"   installation), a pre-compiled binary archive can be downloaded from
-"   'https://tuxproject.de/projects/vim/' (currently Vim-8.2 with python-2.7
-"   and python-3.8 support; also check 'https://github.com/vim/vim-win32-installer/releases'
-"   and the 'more information' link therein). Note to select 32-bit (x86)
-"   or 64-bit (x64) to match that of the installed python dll.
-" * The right Python dynamic link library (for Windows).
-" - Run `:echo has('python')` and `:python import sys; print(sys.version)`
-"   (and for `python3`) to check if this is successful.
-" - If NOT (as the case where the python dll's are not registered in the
-"   path), explicitly set the path to the matching python dll's:
-"     `set pythondll=C:\Program\ Files\Python27\python27.dll`
-"     `set pythonhome=C:\Program\ Files\Python27`
-"     `set pythonthreedll=C:\Program\ Files\Python38\python38.dll`
-"     `set pythonthreehome=C:\Program\ Files\Python38`
-" - If no matching python dll's, install the right python. Check the
-"   compilation info in `vim --version` for the python version
-"   (`-DDYNAMIC_PYTHON_DLL`, `-DDYNAMIC_PYTHON3_DLL`) that was used to compile
-"   the Vim. Also note to match the right bit (x86 or x64) of Vim and Python.
-" * If the YCM is desired to be installed with semantic support for C-family
-"   languages, install CMake 'https://cmake.org/download/' and add to path.
-" * Make sure that 'Visual Studio Build Tools' are installed (may only for
-"   C-family langrage support).
-" * After `:PluginInstall`, `cd` to '~/vimfiles/bundle/YouCompleteMe' and run
-"   `python install.py`. Add option `--clangd-completer` for C-family
-"   languages support, and `--cs-completer` for C# support. `--all` available.
-"Plugin 'Valloric/YouCompleteMe' " Superuseful completion plugin. See 'https://bitbucket.org/Alexander-Shukaev/vim-youcompleteme-for-windows/src/master/' for Windows
+" 1. (G)Vim is installed/compiled with Python support.
+"  - Run `:version` in Vim to see if 'python', 'python3' (or 'python/dyn',
+"    'python3/dyn' for Windows) are included (with the '+' sign).
+"  - If NOT (as for the terminal Vim in Windows following official .exe
+"    installation), a pre-compiled binary archive can be downloaded from
+"    <https://tuxproject.de/projects/vim/> (currently Vim-8.2 with Python-2.7
+"    and Python-3.8 support; also check <https://github.com/vim/vim-win32-installer/releases>
+"    and the 'more information' link therein). Note to select 32-bit (x86)
+"    or 64-bit (x64) to match that of the installed Python dll.
+" 2. The right Python dynamic link library (for Windows).
+"  - Run `:echo has('python')` and `:python import sys; print(sys.version)`
+"    (and for `python3`) to check if this is successful.
+"  - If NOT (as the case where the Python dll's are not registered in the
+"    path), explicitly set the path to the matching Python dll's:
+"      `set pythondll=C:\Program\ Files\Python27\python27.dll`
+"      `set pythonhome=C:\Program\ Files\Python27`
+"      `set pythonthreedll=C:\Program\ Files\Python38\python38.dll`
+"      `set pythonthreehome=C:\Program\ Files\Python38`
+"  - If no matching Python dll's, install the right version of Python. Check
+"    the compilation info in `vim --version` for the Python version
+"    (`-DDYNAMIC_PYTHON_DLL`, `-DDYNAMIC_PYTHON3_DLL`) that was used to compile
+"    the Vim. Also note to match the right bit (x86 or x64) of Vim and Python.
+" 3. If the YCM is desired to be installed with semantic support for C-family
+"    languages, install CMake <https://cmake.org/download/> and add to path.
+" 4. Make sure that 'Visual Studio Build Tools' are installed (may only for
+"    C-family langrage support).
+" 5. After `:PluginInstall`, `cd` to '~/vimfiles/bundle/YouCompleteMe' and run
+"    `python install.py`. Add option `--clangd-completer` for C-family
+"    languages support, and `--cs-completer` for C# support. `--all` available.
+" For Ubuntu 16.04 and later:
+" 1. Install necessary development tools by running
+"    `sudo apt install build-essential cmake python3-dev`.
+" 2. Go to the directory `cd ~/.vim/bundle/YouCompleteMe`
+"    and run `python3 install.py`. Add option `--clangd-completer` for
+"    semantic support for C-family languages. Add option `--all` to compile
+"    with everything enabled.
 Plugin 'ycm-core/YouCompleteMe'
 "let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py' " Specify the configuration file (This is default)
 let g:ycm_auto_trigger = 1 " When set to 0, use <C-Space> to force semantic completion
@@ -169,9 +179,9 @@ let g:ycm_confirm_extra_conf = 0 " Stop confirming loading extra configuration f
 
 "Plugin 'vimwiki/vimwiki' " Create a number of linked text files that have their own syntax highlighting
 "Plugin 'scrooloose/syntastic' " for syntax check. Too expensive
-"Plugin 't9md/vim-quickhl' " for highlighting. See https://github.com/t9md/vim-quickhl
+"Plugin 't9md/vim-quickhl' " for highlighting. See <https://github.com/t9md/vim-quickhl>
 
-"Plugin 'vim-scripts/winmanager' " See https://www.vim.org/scripts/script.php?script_id=95
+"Plugin 'vim-scripts/winmanager' " See <https://www.vim.org/scripts/script.php?script_id=95>
 "let g:winManagerWindowLayout='FileExplorer|TagList' " Set the plugins we want to manage.
 "let g:winManagerWindowLayout='FileExplorer'
 "let g:persistentBehaviour=0 " Exit Vim if winmanager is the last window.
@@ -204,40 +214,40 @@ let g:NERDToggleCheckAllLines = 1 " Enable NERDCommenterToggle to check all sele
 
 Plugin 'ap/vim-css-color'
 
-"Plugin 'SirVer/ultisnips' " Ultimate solution for snippets in Vim. See 'https://github.com/sirver/ultisnips'
+"Plugin 'SirVer/ultisnips' " Ultimate solution for snippets in Vim. See <https://github.com/sirver/ultisnips>
 "" Snippets are separated from the engine. Add this if you want them:
 "Plugin 'honza/vim-snippets'
-"" Trigger configuration. Do not use <tab> if you use 'https://github.com/Valloric/YouCompleteMe'.
+"" Trigger configuration. Do not use <tab> if you use <https://github.com/Valloric/YouCompleteMe>.
 "let g:UltiSnipsExpandTrigger="<tab>"
 "let g:UltiSnipsJumpForwardTrigger="<c-b>"
 "let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 "let g:UltiSnipsEditSplit="vertical" " If you want :UltiSnipsEdit to split your window.
 
-"Plugin 'vifm/vifm.vim' " Curser-based vi[m]-like file manager. Download first from 'https://vifm.info/downloads.shtml'
+"Plugin 'vifm/vifm.vim' " Curser-based vi[m]-like file manager. Download first from <https://vifm.info/downloads.shtml>
 "map <leader>vv :Vifm<CR>
 ""vp :VsplitVifm<CR> vs :SplitVifm<CR> vd :DiffVifm<CR> vt :TabVifm<CR>
 
 "Plugin 'itchyny/lightline.vim'
-Plugin 'Lokaltog/vim-powerline' " See https://github.com/Lokaltog/vim-powerline
+Plugin 'Lokaltog/vim-powerline' " See <https://github.com/Lokaltog/vim-powerline>
 let g:Powerline_symbols = 'unicode' " 'fancy'
 set laststatus=2
 set t_Co=256
 set encoding=utf8
 
-Plugin 'Yggdroot/indentLine' " See https://github.com/Yggdroot/indentLine
+Plugin 'Yggdroot/indentLine' " See <https://github.com/Yggdroot/indentLine>
 let g:indentLine_char = '|'
 nmap <leader>ii :IndentLinesToggle<CR>
 
 "..................................
 " -- Vim-scripts repos
-"Plugin 'YankRing.vim' " for maintaining and visualizing the yank register. See https://github.com/vim-scripts/YankRing.vim
-"Plugin 'vcscommand.vim' " for manipulating files controlled by CVS, SVN, SVK, git, bzr, and hg within VIM, including committing changes and performing diffs using the vimdiff system. See http://www.vim.org/scripts/script.php?script_id=90
-"Plugin 'SudoEdit.vim' " for editting Files using sudo or su or any other tool. See http://www.vim.org/scripts/script.php?script_id=2709
-"Plugin 'EasyGrep' " for Fast and Easy Find and Replace Across Multiple Files. See http://www.vim.org/scripts/script.php?script_id=2438  https://github.com/dkprice/vim-easygrep
-"Plugin 'VOoM' " (Vim Outliner of Markups) a plugin for Vim that emulates a two-pane text outliner. See http://www.vim.org/scripts/script.php?script_id=2657
-"Plugin 'VimIM' " An independent IM (Input Method) to support CJK search and CJK input. Chinese input! See http://www.vim.org/scripts/script.php?script_id=2506
-"Plugin 'vim-scripts/taglist.vim' " See https://www.vim.org/scripts/script.php?script_id=273
-Plugin 'vim-latex/vim-latex' " See http://vim-latex.sourceforge.net/
+"Plugin 'YankRing.vim' " for maintaining and visualizing the yank register. See <https://github.com/vim-scripts/YankRing.vim>
+"Plugin 'vcscommand.vim' " for manipulating files controlled by CVS, SVN, SVK, git, bzr, and hg within VIM, including committing changes and performing diffs using the vimdiff system. See <http://www.vim.org/scripts/script.php?script_id=90>
+"Plugin 'SudoEdit.vim' " for editting Files using sudo or su or any other tool. See <http://www.vim.org/scripts/script.php?script_id=2709>
+"Plugin 'EasyGrep' " for Fast and Easy Find and Replace Across Multiple Files. See <http://www.vim.org/scripts/script.php?script_id=2438> and <https://github.com/dkprice/vim-easygrep>
+"Plugin 'VOoM' " (Vim Outliner of Markups) a plugin for Vim that emulates a two-pane text outliner. See <http://www.vim.org/scripts/script.php?script_id=2657>
+"Plugin 'VimIM' " An independent IM (Input Method) to support CJK search and CJK input. Chinese input! See <http://www.vim.org/scripts/script.php?script_id=2506>
+"Plugin 'vim-scripts/taglist.vim' " See <https://www.vim.org/scripts/script.php?script_id=273>
+Plugin 'vim-latex/vim-latex' " See <http://vim-latex.sourceforge.net/>
 
 Plugin 'flazz/vim-colorschemes'
 Plugin 'sainnhe/sonokai'
@@ -245,8 +255,8 @@ let g:sonokai_style = 'andromeda'
 let g:sonokai_enable_italic = 1
 let g:sonokai_disable_italic_comment = 1
 
-"Plugin 'ShowPairs' " for highlighting the matching pair surrounding the current cursor location. See http://www.vim.org/scripts/script.php?script_id=626
-"Plugin 'jiangmiao/auto-pairs' " COMMENTED for undesired functionality. For inserting or deleting brackets, parens, quotes in pair. See https://github.com/vim-scripts/Auto-Pairs
+"Plugin 'ShowPairs' " for highlighting the matching pair surrounding the current cursor location. See <http://www.vim.org/scripts/script.php?script_id=626>
+"Plugin 'jiangmiao/auto-pairs' " COMMENTED for undesired functionality. For inserting or deleting brackets, parens, quotes in pair. See <https://github.com/vim-scripts/Auto-Pairs>
 Plugin 'luochen1990/rainbow' " for visualizing paired brackets
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 " End Added by me

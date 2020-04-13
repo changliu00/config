@@ -12,7 +12,7 @@ INFOPATH=/usr/local/texlive/2018/texmf-dist/doc/info:$INFOPATH
 PATH=/usr/local/texlive/2018/bin/x86_64-linux:$PATH
 
 # for pdftk
-export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0
+# export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0
 
 # export LC_ALL=C
 # export LC_ALL="en_US.UTF-8"
