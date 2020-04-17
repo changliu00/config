@@ -85,15 +85,16 @@ Plugin 'VundleVim/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
 " -- Plugin on GitHub repo
 Plugin 'tpope/vim-fugitive' " for integrating git. <https://github.com/tpope/vim-fugitive>
-" Examples: " `:G add %` (`:G`=`:Git`) or `:Gwrite`, `Gcommit`,
-" `Gblame`: vert-split window for annotations for each line of the file,
-" `:Gdiffsplit`: diff with the staged,
+" Examples: " `:G add %` (`:G`=`:Git`) or `:Gwrite`; `:Gcommit`; `:Gdiff`;
+" `:Gdiffsplit`: diff with the staged;
+" `:Gblame`: vert-split window for annotations for each line of the file;
 " `:Gedit HEAD~3:%`: load the current file as it existed 3 commits ago.
 
-Plugin 'airblade/vim-gitgutter' " 'h' for 'hunk' (block of changed lines)
+Plugin 'airblade/vim-gitgutter' " <https://github.com/airblade/vim-gitgutter>
+" 'h' for 'hunk' (block of changed lines).
 nnoremap <leader>hh :GitGutterToggle<CR>
-nnoremap ]h <Plug>(GitGutterNextHunk)
-nnoremap [h <Plug>(GitGutterPrevHunk)
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
 set updatetime=1000 " Default = 4000. Also the time delay to write swap files
 
 " -- Plugin from <http://vim-scripts.org/vim/scripts.html>
@@ -478,6 +479,7 @@ set ai "Auto indent
 set si "Smart indent
 set cindent " Works better in most cases but is more strict. Overrides si
 set wrap "Wrap lines. default on.
+nnoremap <leader>ww :set wrap!<CR>
 
 
 """"""""""""""""""""""""""""""
