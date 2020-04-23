@@ -97,6 +97,8 @@ nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
 set updatetime=1000 " Default = 4000. Also the time delay to write swap files
 
+"Plugin 'jreybert/vimagit' " Magit-like plugin for vim
+
 " -- Plugin from <http://vim-scripts.org/vim/scripts.html>
 "Plugin 'L9' " COMMENTED for conflicting commands (E174)
 " -- Git plugin not hosted on GitHub
@@ -202,6 +204,8 @@ let g:NERDTreeDirArrowCollapsible = 'v' " 'ÎÎ'
 nnoremap <leader>wm :NERDTreeToggle<CR>
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 "let g:NERDTreeShowIgnoredStatus = 1 " To show ignored status (a heavy feature)
+Plugin 'tiagofumo/vim-nerdtree-syntax-highlight' " Highlighting Nerdtree
+Plugin 'ryanoasis/vim-devicons' " Icons for Nerdtree
 
 Plugin 'preservim/nerdcommenter' " for quick commenting
 let g:NERDSpaceDelims = 0 " Add spaces after comment delimiters by default
@@ -213,6 +217,8 @@ let g:NERDToggleCheckAllLines = 1 " Enable NERDCommenterToggle to check all sele
 " <leader>cc |NERDCommenterComment|, <leader>cn |NERDCommenterNested|,
 " <leader>c<space> |NERDCommenterToggle|, <leader>cu |NERDCommenterUncomment|
 
+Plugin 'vim-python/python-syntax' " Python highlighting
+let g:python_highlight_all = 1
 Plugin 'ap/vim-css-color'
 
 "Plugin 'SirVer/ultisnips' " Ultimate solution for snippets in Vim. See <https://github.com/sirver/ultisnips>
@@ -258,8 +264,21 @@ let g:sonokai_disable_italic_comment = 1
 
 "Plugin 'ShowPairs' " for highlighting the matching pair surrounding the current cursor location. See <http://www.vim.org/scripts/script.php?script_id=626>
 "Plugin 'jiangmiao/auto-pairs' " COMMENTED for undesired functionality. For inserting or deleting brackets, parens, quotes in pair. See <https://github.com/vim-scripts/Auto-Pairs>
-Plugin 'luochen1990/rainbow' " for visualizing paired brackets
+"Plugin 'luochen1990/rainbow' " for visualizing paired brackets
+Plugin 'frazrepo/vim-rainbow' " for visualizing paired brackets; enhanced version
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+
+Plugin 'suan/vim-instant-markdown', {'rtp': 'after'} " Markdown Preview
+" To install the mini-server, run
+" `[sudo] npm -g install instant-markdown-d` or `pip install --user smdv`.
+" Require: [Linux] xdg-utils, curl, nodejs; [Windows] cURL (and in %PATH%).
+let g:instant_markdown_autostart = 0         " Turns off auto preview
+let g:instant_markdown_browser = "chrome --new-window"    " The browser for preview
+let g:instant_markdown_slow = 1              " Stop updating the display in real-time
+let g:instant_markdown_mathjax = 1
+map <leader>md :InstantMarkdownPreview<CR>
+map <leader>ms :InstantMarkdownStop<CR>
+
 " End Added by me
 """""""""""""""""""""""""""""""""""""
 
@@ -290,9 +309,6 @@ if has("win16") || has("win32")
 else
 	nnoremap <F9> :vsp ~/.vimrc<CR>:set readonly<CR>
 endif
-
-" To stop highlighting the word just searched.
-nnoremap <silent> <leader>q :noh<CR>
 
 " For diff
 set diffopt=vertical " Vertical split is preferred, for e.g., `:diffs`
@@ -502,14 +518,27 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 nnoremap <space> /
 "nnoremap <c-space> ?
 
-"" Disable highlight when <leader><cr> is pressed
-"map <silent> <leader><cr> :noh<cr>
+"" Disable highlighting the last searched item
+nnoremap <silent> <leader>q :noh<CR>
 
 "" Smart way to move between windows
 "map <C-j> <C-W>j
 "map <C-k> <C-W>k
 "map <C-h> <C-W>h
 "map <C-l> <C-W>l
+
+" Make adjusing split sizes a bit more friendly
+noremap <silent> <C-Left> :vertical resize +3<CR>
+noremap <silent> <C-Right> :vertical resize -3<CR>
+noremap <silent> <C-Up> :resize +3<CR>
+noremap <silent> <C-Down> :resize -3<CR>
+
+" Change two split windows from vert to horiz or horiz to vert
+map <Leader>th <C-w>t<C-w>H
+map <Leader>tk <C-w>t<C-w>K
+
+" Open terminal inside Vim
+map <leader>tt :vnew term://bash<CR>
 
 "" Close the current buffer
 "map <leader>bd :Bclose<cr>
