@@ -428,7 +428,12 @@ set tm=500
 "set foldcolumn=1
 
 " Set line number
-set nu  " set number
+set number relativenumber " nu rnu. Set hybrid line number
+augroup numbertoggle
+	autocmd!
+	autocmd BufEnter,FocusGained,InsertLeave * set relativenumber " rnu
+	autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber " nornu
+augroup END
 
 " Highlight current line and column
 set cursorline
