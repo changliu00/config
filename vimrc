@@ -201,7 +201,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDTreeDirArrowExpandable = '>' " 'ÎÎ'
 let g:NERDTreeDirArrowCollapsible = 'v' " 'ÎÎ'
-nnoremap <leader>wm :NERDTreeToggle<CR>
+nnoremap <leader>ff :NERDTreeToggle<CR>
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 "let g:NERDTreeShowIgnoredStatus = 1 " To show ignored status (a heavy feature)
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight' " Highlighting Nerdtree
