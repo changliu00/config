@@ -535,10 +535,10 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 "map <C-l> <C-W>l
 
 " Make adjusing split sizes a bit more friendly
-noremap <silent> <C-W><C-Left> :vertical resize +3<CR>
-noremap <silent> <C-W><C-Right> :vertical resize -3<CR>
-noremap <silent> <C-W><C-Up> :resize +3<CR>
-noremap <silent> <C-W><C-Down> :resize -3<CR>
+noremap <silent> <C-W><Left> :vertical resize +3<CR>
+noremap <silent> <C-W><Right> :vertical resize -3<CR>
+noremap <silent> <C-W><Up> :resize +3<CR>
+noremap <silent> <C-W><Down> :resize -3<CR>
 
 " Change two split windows from vert to horiz or horiz to vert
 nmap <C-w>V <C-w>t<C-w>H
