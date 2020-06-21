@@ -394,9 +394,18 @@ if has("win16") || has("win32")
 	endif
 endif
 
+" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+nnoremap <space> /
+"nnoremap <c-space> ?
+
+"" Disable highlighting the last searched item
+nnoremap <silent> <leader>q :noh<CR>
+
+" Show the number of match under cursor
+nnoremap <leader>* *<C-O>:%s///gn<CR>
+
 "" Ignore case when searching
-"set ignorecase
-set noic
+"set ic
 
 "" When searching try to be smart about cases 
 "set smartcase
@@ -519,31 +528,24 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 "map j gj
 "map k gk
 
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-nnoremap <space> /
-"nnoremap <c-space> ?
-
-"" Disable highlighting the last searched item
-nnoremap <silent> <leader>q :noh<CR>
-
-"" Smart way to move between windows
+"" Smart way to move between windows (<C-w><C-j> etc auto. mapped to <C-w>j)
 "map <C-j> <C-W>j
 "map <C-k> <C-W>k
 "map <C-h> <C-W>h
 "map <C-l> <C-W>l
 
 " Make adjusing split sizes a bit more friendly
-noremap <silent> <C-Left> :vertical resize +3<CR>
-noremap <silent> <C-Right> :vertical resize -3<CR>
-noremap <silent> <C-Up> :resize +3<CR>
-noremap <silent> <C-Down> :resize -3<CR>
+noremap <silent> <C-W><C-Left> :vertical resize +3<CR>
+noremap <silent> <C-W><C-Right> :vertical resize -3<CR>
+noremap <silent> <C-W><C-Up> :resize +3<CR>
+noremap <silent> <C-W><C-Down> :resize -3<CR>
 
 " Change two split windows from vert to horiz or horiz to vert
-map <Leader>th <C-w>t<C-w>H
-map <Leader>tk <C-w>t<C-w>K
+nmap <C-w>V <C-w>t<C-w>H
+nmap <C-w>S <C-w>t<C-w>K
 
 " Open terminal inside Vim
-map <leader>tt :vnew term://bash<CR>
+nmap <C-w>T :vnew term://bash<CR>
 
 "" Close the current buffer
 "map <leader>bd :Bclose<cr>
@@ -552,7 +554,7 @@ map <leader>tt :vnew term://bash<CR>
 "map <leader>ba :bufdo bd<cr>
 
 " Useful mappings for managing tabs
-map <leader>tn :tabnew 
+nmap <leader>tn :tabnew 
 "map <leader>to :tabonly<cr>
 "map <leader>tc :tabclose<cr>
 "map <leader>tm :tabmove 
@@ -955,3 +957,24 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 "let g:syntastic_ignore_files=[".*"] " stop processing files with matching name (exact reg-ex)
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Documents
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 1. Search and replace. <https://vim.fandom.com/wiki/Search_and_replace>
+" * `:%s/p_{\([a-z,,,\,|]*\)}/p(\1)/gc`: replaces anything like `p_{s,\zzt,y|x}` with `p(s,\zzt,y|x)`.
+"   - `{`, `}` are normal characters. `[`, `*`, `.` are not.
+"   - `[a-z,,,\,|]`: matches a character that is either in `[a-z]` or `,` or `\` or `|`.
+"   - `[a-z,,,\,|]*`: matches zero or more such characters.
+"   - The pair `\(`, `\)`: stores the matched string, and the string can be recovered by `\1`, `\2`, etc. according to the order of match.
+" * `:%s/p_{\(.*\)}/p(\1)/gc`:
+"   - `.`: matches any character except newline.
+"   - `{.*}`: matches greedily (from the first `{` in a line to the last `}` in a line): `{aaa} bbb {ccc}`.
+" * `:s/p_{\(.\{-}\)}/p(\1)/gc`:
+"   - `{.\{-}}`: matches minimally: in `{aaa} bbb {ccc}`, `{aaa}` and `{ccc}` are two separate matches.
+" * The `n` flag makes the `:s` (`:substitute`) command print the number of matches instead of performing an actual substitution.
+" * `:global/pattern/print`, or just `:g/pattern`, prints all the lines that match `pattern`.
+" * `&`: everything that was matched in the match-part of the expression.
+"   - `:s/\(pattern\)/a\1b/` = `:s/pattern/a&b/`, but is more than that: `:s/lazy \(dog\|cat\)/& is now stupid \1/`.
+" * `&` in normal mode: repeat the last `:s` command.
+" * `:s/kingma2013auto/kingma2014auto/` = `:s/kingma\zs2013\zeauto/2014/`.
+"
