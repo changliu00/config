@@ -49,15 +49,18 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Important: Basic Instructions.
-" * Checkout with: 'git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim'.
-" - For Windows, checkout to '%USERPROFILE%/vimfiles/bundle/Vundle.vim'.
-" - Then, open Vim and run ':PluginInstall'.
-" * For proper math highlights in e.g. align envs in LaTeX,
-" - Download <http://www.drchip.org/astronaut/vim/vbafiles/amsmath.vba.gz> to '~/.vim/' or '%USERPROFILE%/vimfiles/'.
-" - Open it with Vim, and run `:so %`.
-" * Download SumatraPDF and add to path for forward/inverse searching
-"   in LaTeX in Windows.
+" * Checkout with: 'git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim',
+"   and then open Vim and run ':PluginInstall'.
+"   - For Windows, checkout to '%USERPROFILE%/vimfiles/bundle/Vundle.vim'.
 " * To install YouCompleteMe, read the instructions there.
+" * For vim-latex suite:
+"   - For proper math highlights in e.g. align envs in LaTeX:
+"     Download <http://www.drchip.org/astronaut/vim/vbafiles/amsmath.vba.gz> to '~/.vim/' or '%USERPROFILE%/vimfiles/',
+"     and open it with Vim, and run `:so %`.
+"   - For forward/inverse searching in LaTeX in Windows:
+"     Download SumatraPDF and add it to path.
+"   - To customize shortcuts in insert mode:
+"     Directly edit '$VIMFILES/bundle/vim-latex/ftplugin/latex-suite/main.vim'. E.g., `call IMAP ('==', '={} & ', "tex")`.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vundle
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
