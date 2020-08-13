@@ -976,7 +976,7 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Documents
+" => Notes
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 1. Search and replace. <https://vim.fandom.com/wiki/Search_and_replace>
 " * `:%s/p_{\([a-z,,,\,|]*\)}/p(\1)/gc`:
