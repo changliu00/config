@@ -196,6 +196,7 @@ let g:ycm_confirm_extra_conf = 0 " Stop confirming loading extra configuration f
 ""nnoremap <C-W><C-B> :BottomExplorerWindow<CR>
 ""nnoremap <C-W><C-F> :FirstExplorerWindow<CR>
 
+"nnoremap <leader>ee :Explore<CR>
 Plugin 'preservim/nerdtree' " Another file system explorer
 " Open a NERDTree automatically when Vim starts up with no file specified
 autocmd StdinReadPre * let s:std_in=1
@@ -204,7 +205,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDTreeDirArrowExpandable = '>' " 'ÎÎ'
 let g:NERDTreeDirArrowCollapsible = 'v' " 'ÎÎ'
-nnoremap <leader>ff :NERDTreeToggle<CR>
+nnoremap <leader>ee :NERDTreeToggle<CR>
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 "let g:NERDTreeShowIgnoredStatus = 1 " To show ignored status (a heavy feature)
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight' " Highlighting Nerdtree
@@ -281,6 +282,20 @@ let g:instant_markdown_slow = 1              " Stop updating the display in real
 let g:instant_markdown_mathjax = 1
 map <leader>md :InstantMarkdownPreview<CR>
 map <leader>ms :InstantMarkdownStop<CR>
+
+Plugin 'easymotion/vim-easymotion'
+map <Leader> <Plug>(easymotion-prefix)
+" Jump to anywhere with only `s{char}{target}`. Use `s<CR>` to repeat last find motion.
+nmap s <Plug>(easymotion-s)
+vmap s <Plug>(easymotion-s)
+nmap S <Plug>(easymotion-s2)
+vmap S <Plug>(easymotion-s2)
+" Use uppercase target labels and type as a lower case
+let g:EasyMotion_use_upper = 1
+" Type `l` and match `l` & `L`
+let g:EasyMotion_smartcase = 1
+" Type `3` and match `3` & `#`
+let g:EasyMotion_use_smartsign_us = 1
 
 " End Added by me
 """""""""""""""""""""""""""""""""""""
