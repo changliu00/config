@@ -187,29 +187,30 @@ let g:ycm_confirm_extra_conf = 0 " Stop confirming loading extra configuration f
 "Plugin 'scrooloose/syntastic' " for syntax check. Too expensive
 "Plugin 't9md/vim-quickhl' " for highlighting. See <https://github.com/t9md/vim-quickhl>
 
+"nnoremap <leader>ee :Explore<CR>
+"
 "Plugin 'vim-scripts/winmanager' " See <https://www.vim.org/scripts/script.php?script_id=95>
+"nnoremap <leader>ee :WMToggle<CR>
 "let g:winManagerWindowLayout='FileExplorer|TagList' " Set the plugins we want to manage.
 "let g:winManagerWindowLayout='FileExplorer'
 "let g:persistentBehaviour=0 " Exit Vim if winmanager is the last window.
-"nnoremap <leader>wm :WMToggle<CR>
 ""nnoremap <C-W><C-M> :WMToggle<CR>
 ""nnoremap <C-W><C-B> :BottomExplorerWindow<CR>
 ""nnoremap <C-W><C-F> :FirstExplorerWindow<CR>
-
-"nnoremap <leader>ee :Explore<CR>
+"
 Plugin 'preservim/nerdtree' " Another file system explorer
+nnoremap <leader>ee :NERDTreeToggle<CR>
 " Open a NERDTree automatically when Vim starts up with no file specified
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " Close Vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let g:NERDTreeDirArrowExpandable = '>' " 'ÎÎ'
-let g:NERDTreeDirArrowCollapsible = 'v' " 'ÎÎ'
-nnoremap <leader>ee :NERDTreeToggle<CR>
+"let g:NERDTreeDirArrowExpandable = '>' " 'ÎÎ'
+"let g:NERDTreeDirArrowCollapsible = 'v' " 'ÎÎ'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 "let g:NERDTreeShowIgnoredStatus = 1 " To show ignored status (a heavy feature)
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight' " Highlighting Nerdtree
-Plugin 'ryanoasis/vim-devicons' " Icons for Nerdtree
+"Plugin 'ryanoasis/vim-devicons' " Icons for Nerdtree
 
 Plugin 'preservim/nerdcommenter' " for quick commenting
 let g:NERDSpaceDelims = 0 " Add spaces after comment delimiters by default
