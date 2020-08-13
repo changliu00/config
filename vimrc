@@ -979,20 +979,24 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 " => Documents
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 1. Search and replace. <https://vim.fandom.com/wiki/Search_and_replace>
-" * `:%s/p_{\([a-z,,,\,|]*\)}/p(\1)/gc`: replaces anything like `p_{s,\zzt,y|x}` with `p(s,\zzt,y|x)`.
-"   - `{`, `}` are normal characters. `[`, `*`, `.` are not.
-"   - `[a-z,,,\,|]`: matches a character that is either in `[a-z]` or `,` or `\` or `|`.
+" * `:%s/p_{\([a-z,,,\,|]*\)}/p(\1)/gc`:
+"   Replaces anything like 'p_{s,\zzt,y|x}' with 'p(s,\zzt,y|x)'.
+"   - '{', '}' are normal characters. `[`, `*`, `.` are not.
+"   - `[a-z,,,\,|]`: matches a character that is either in `[a-z]` or is ',' or '\' or '|'.
 "   - `[a-z,,,\,|]*`: matches zero or more such characters.
 "   - The pair `\(`, `\)`: stores the matched string, and the string can be recovered by `\1`, `\2`, etc. according to the order of match.
 " * `:%s/p_{\(.*\)}/p(\1)/gc`:
 "   - `.`: matches any character except newline.
-"   - `{.*}`: matches greedily (from the first `{` in a line to the last `}` in a line): `{aaa} bbb {ccc}`.
+"   - `{.*}`: matches greedily (from the first '{' in a line to the last '}' in a line): '{aaa} bbb {ccc}'.
 " * `:s/p_{\(.\{-}\)}/p(\1)/gc`:
-"   - `{.\{-}}`: matches minimally: in `{aaa} bbb {ccc}`, `{aaa}` and `{ccc}` are two separate matches.
+"   - `{.\{-}}`: matches minimally: in '{aaa} bbb {ccc}', '{aaa}' and '{ccc}' are two separate matches.
 " * The `n` flag makes the `:s` (`:substitute`) command print the number of matches instead of performing an actual substitution.
-" * `:global/pattern/print`, or just `:g/pattern`, prints all the lines that match `pattern`.
+" * `:global/pattern/print`, or just `:g/pattern`, prints all the lines that match 'pattern'.
 " * `&`: everything that was matched in the match-part of the expression.
-"   - `:s/\(pattern\)/a\1b/` = `:s/pattern/a&b/`, but is more than that: `:s/lazy \(dog\|cat\)/& is now stupid \1/`.
+"   - `:s/\(pattern\)/a\1b/` = `:s/pattern/a&b/`, but is more than that: consider `:s/lazy \(dog\|cat\)/& is now stupid \1/`.
 " * `&` in normal mode: repeat the last `:s` command.
 " * `:s/kingma2013auto/kingma2014auto/` = `:s/kingma\zs2013\zeauto/2014/`.
+" * `:g/\\begin{align}/,/\\end{align}/s/x/y/g`:
+"   Look for 'x' between '\begin{align}' and '\end{align}' and substitute all instances of 'x' with 'y'.
+"   For all search instances in one line, use `|` to separate the two search expressions.
 "
