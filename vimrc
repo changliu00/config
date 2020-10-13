@@ -181,7 +181,10 @@ nnoremap <leader>ys :let g:ycm_min_num_of_chars_for_completion = 101 - g:ycm_min
 let g:ycm_max_num_candidates = 30 " Default = 50
 let g:ycm_confirm_extra_conf = 0 " Stop confirming loading extra configuration file when entering vim
 "let g:ycm_collect_identifiers_from_tag_files = 1 " Use the tags file produced by ctags
-"let g:ycm_show_diagnostics_ui = 0 " Stops the built-in checker of ycm for c-related syntax
+"let g:ycm_show_diagnostics_ui = 0 " Stop the built-in checker of ycm for c-related syntax
+" Stop the popup from automatically displaying. Set to 'CursorHold' (default) or 'CursorMoved' (use `<leader>yh` to toggle between the two) to resume.
+let g:ycm_auto_hover = ''
+nmap <leader>yh <Plug>(YCMHover)
 
 "Plugin 'vimwiki/vimwiki' " Create a number of linked text files that have their own syntax highlighting
 "Plugin 'scrooloose/syntastic' " for syntax check. Too expensive
