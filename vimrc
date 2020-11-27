@@ -301,6 +301,9 @@ let g:EasyMotion_smartcase = 1
 " Type `3` and match `3` & `#`
 let g:EasyMotion_use_smartsign_us = 1
 
+Plugin 'statox/vim-compare-lines'
+" Use `:CL` with optional line number(s).
+
 " End Added by me
 """""""""""""""""""""""""""""""""""""
 
