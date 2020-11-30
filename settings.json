@@ -107,6 +107,9 @@
 		{ "command": { "action": "switchToTab", "index": 9 }, "keys": "alt+0" },
 
 		{ "command": { "action": "splitPane", "split": "horizontal"}, "keys": "alt+shift+'" },
-		{ "command": { "action": "splitPane", "split": "vertical"}, "keys": "alt+shift+5" }
+		{ "command": { "action": "splitPane", "split": "vertical"}, "keys": "alt+shift+5" },
+
+		{ "command": "unbound", "keys": "ctrl+6" },
+		{ "command": "unbound", "keys": "ctrl+shift+6" }
     ]
 }
