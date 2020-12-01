@@ -301,8 +301,15 @@ let g:EasyMotion_smartcase = 1
 " Type `3` and match `3` & `#`
 let g:EasyMotion_use_smartsign_us = 1
 
-Plugin 'statox/vim-compare-lines'
-" Use `:CL` with optional line number(s).
+" Compare Two Lines.
+Plugin 'changliu00/vim-compare-lines' " Forked from 'statox/vim-compare-lines'
+" Use `:CL` with optional line number(s). Support relative line numbering.
+
+" Compare Two Blocks. Editing also enabled.
+Plugin 'AndrewRadev/linediff.vim'
+" `ca`: command alias. Visually select one block and `:CB`, and repeat for another block.
+ca CB Linediff
+ca CBreset LinediffReset
 
 " End Added by me
 """""""""""""""""""""""""""""""""""""
