@@ -723,8 +723,8 @@ map <leader>ss :setlocal spell!<cr>
 "set foldmethod=indent
 set foldmethod=syntax
 
-"" Turn off folding when starting Vim
-"set nofoldenable
+" Turn off folding when starting Vim
+set nofoldenable
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
