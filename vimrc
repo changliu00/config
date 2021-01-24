@@ -1013,4 +1013,5 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 " * `:g/\\begin{align}/,/\\end{align}/s/x/y/g`:
 "   Look for 'x' between '\begin{align}' and '\end{align}' and substitute all instances of 'x' with 'y'.
 "   For all search instances in one line, use `|` to separate the two search expressions.
+" * Search in range: v(or V)-select the range, escape, and `/\%Vpattern`.
 "
