@@ -290,10 +290,12 @@ map <leader>ms :InstantMarkdownStop<CR>
 Plugin 'easymotion/vim-easymotion'
 map <Leader> <Plug>(easymotion-prefix)
 " Jump to anywhere with only `s{char}{target}`. Use `s<CR>` to repeat last find motion.
-nmap s <Plug>(easymotion-s)
-vmap s <Plug>(easymotion-s)
-nmap S <Plug>(easymotion-s2)
-vmap S <Plug>(easymotion-s2)
+map s <Plug>(easymotion-s)
+map S <Plug>(easymotion-s2)
+"map <space> <Leader>f
+"map <s-space> <Leader>F
+"map <c-space> <Leader>t
+"map <c-s-space> <Leader>T
 " Use uppercase target labels and type as a lower case
 let g:EasyMotion_use_upper = 1
 " Type `l` and match `l` & `L`
@@ -428,7 +430,7 @@ endif
 
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
 nnoremap <space> /
-"nnoremap <c-space> ?
+nnoremap <c-space> ?
 
 "" Disable highlighting the last searched item
 nnoremap <silent> <leader>q :noh<CR>
@@ -845,7 +847,7 @@ if has("win16") || has("win32")
 
 	" -- My settings --
 	"set guifont=Courier\ New:h12
-	set guifont=Consolas:h13
+	set guifont=Consolas:h14
 	set t_Co=256 t_ut="" " To properly display background in Windows PowerShell. `t_ut=""` disables Background Color Erase (BCE)
 	"set lines=45 columns=158
 	set gcr=a:block-blinkon0  " To stop the cursor from shining
