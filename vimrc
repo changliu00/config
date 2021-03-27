@@ -295,7 +295,7 @@ map <Leader> <Plug>(easymotion-prefix)
 map <space> <Plug>(easymotion-s)
 "map <space> <Leader>f
 "map <s-space> <Leader>F
-"map <c-space> <Leader>t
+map <c-space> <Leader>t
 "map <c-s-space> <Leader>T
 " Use uppercase target labels and type as a lower case
 let g:EasyMotion_use_upper = 1
