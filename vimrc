@@ -1075,6 +1075,17 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 " * Edit registers:
 "   - `:let @w='text'`. Use `:let @w='ctrl-rw...'` to edit the original text.
 "   - `:let @W='dd'` (capital 'W'): append the string 'dd' to register 'w'.
+" 4. Movements.
+" * For C code <https://vim.fandom.com/wiki/Jumping_to_the_start_and_end_of_a_code_block>:
+"   - `[[`: sections backward or to the previous '{' in the first column.
+"   - `[]`: sections backward or to the previous '}' in the first column.
+" * For Python code <https://vi.stackexchange.com/questions/7262/end-of-python-block-motion>:
+"   - `[[`: Jump backwards to begin of current/previous toplevel.
+"   - `[]`: Jump backwards to end of previous toplevel.
+"   - `[m`: Jump backwards to begin of current/previous method/scope.
+"   - `[M`: Jump backwards to end of previous method/scope.
+" * Moving based on folds <https://github.com/lervag/vimtex/issues/1299>:
+"   `[z`, `]z`, `zj`, `zk`.
 " 0. Misc.
 " * `@:`: repeat the last Ex command (colon command). `@w`: play macro 'w'. `@@`: further repeat.
 "   - Use `@:` with `:%s/\<pig\>/cow/gie|:update|:next`.
