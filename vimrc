@@ -1,12 +1,12 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer: 
+" Maintainer:
 "       Amir Salihefendic
 "       http://amix.dk - amix@amix.dk
 "
-" Version: 
+" Version:
 "       5.0 - 29/05/12 15:43:36
 "
-" Blog_post: 
+" Blog_post:
 "       http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
 "
 " Awesome_version:
@@ -19,7 +19,7 @@
 " Syntax_highlighted:
 "       http://amix.dk/vim/vimrc.html
 "
-" Raw_version: 
+" Raw_version:
 "       http://amix.dk/vim/vimrc.txt
 "
 " Sections:
@@ -88,7 +88,7 @@ Plugin 'VundleVim/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
 " -- Plugin on GitHub repo
 Plugin 'tpope/vim-fugitive' " for integrating git. <https://github.com/tpope/vim-fugitive>
-" Examples: " `:G add %` (`:G`=`:Git`) or `:Gwrite`; `:Gcommit`; `:Gdiff`;
+" Examples: " `:G add %` (`:G`=`:Git`) or `:Gw(rite)`; `:Gcommit`; `:Gdiff`;
 " `:Gdiffsplit`: diff with the staged;
 " `:Gblame`: vert-split window for annotations for each line of the file;
 " `:Gedit HEAD~3:%`: load the current file as it existed 3 commits ago.
@@ -220,7 +220,7 @@ let g:NERDSpaceDelims = 0 " Add spaces after comment delimiters by default
 let g:NERDCompactSexyComs = 1 " Use compact syntax for prettified multi-line comments
 let g:NERDCommentEmptyLines = 1 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
-let g:NERDToggleCheckAllLines = 1 " Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1 " Enable NERDCommenterToggle to check all selected lines is commented or not
 " Default Mappings:
 " <leader>cc |NERDCommenterComment|, <leader>cn |NERDCommenterNested|,
 " <leader>c<space> |NERDCommenterToggle|, <leader>cu |NERDCommenterUncomment|
@@ -290,8 +290,9 @@ map <leader>ms :InstantMarkdownStop<CR>
 Plugin 'easymotion/vim-easymotion'
 map <Leader> <Plug>(easymotion-prefix)
 " Jump to anywhere with only `s{char}{target}`. Use `s<CR>` to repeat last find motion.
-map s <Plug>(easymotion-s)
-map S <Plug>(easymotion-s2)
+"map s <Plug>(easymotion-s)
+"map S <Plug>(easymotion-s2)
+map <space> <Plug>(easymotion-s)
 "map <space> <Leader>f
 "map <s-space> <Leader>F
 "map <c-space> <Leader>t
@@ -312,6 +313,19 @@ Plugin 'AndrewRadev/linediff.vim'
 " `ca`: command alias. Visually select one block and `:CB`, and repeat for another block.
 ca CB Linediff
 ca CBreset LinediffReset
+
+" Repeat the last command of a plugin.
+Plugin 'tpope/vim-repeat'
+
+" Add (ys), delete (ds) or change (cs) surroundings in pair.
+Plugin 'tpope/vim-surround' " See also <https://towardsdatascience.com/how-i-learned-to-enjoy-vim-e310e53e8d56>
+" `cs"'`: change surrounding '"' with '''.
+" `ysiw"`: add '"' surrounding the current word (`iw`).
+" `yss)`: add '(',')' pair surrounding the current line (`s`). Use '(' for a space.
+" `ys2aw*`: add '*' pair surrounding two words under cursor. `aw`: around words.
+" `veeeeS"`: visually select and surround with '"'.
+" `dst`, `cst"`: delete/change an html tag.
+nmap S ysiw
 
 " End Added by me
 """""""""""""""""""""""""""""""""""""
@@ -392,7 +406,7 @@ set autoread
 set so=3  " set scrolloff=0. default 0
 
 " Avoid garbled characters in Chinese language Windows OS
-let $LANG='en'    " set message language 
+let $LANG='en'    " set message language
 set langmenu=en   " set menu's language of gvim. no spaces beside '='
 "source $VIMRUNTIME/delmenu.vim
 "source $VIMRUNTIME/menu.vim
@@ -429,8 +443,8 @@ if has("win16") || has("win32")
 endif
 
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-nnoremap <space> /
-nnoremap <c-space> ?
+"nnoremap <space> /
+"nnoremap <c-space> ?
 
 "" Disable highlighting the last searched item
 nnoremap <silent> <leader>q :noh<CR>
@@ -441,23 +455,23 @@ nnoremap <leader>* *<C-O>:%s///gn<CR>
 "" Ignore case when searching
 "set ic
 
-"" When searching try to be smart about cases 
+"" When searching try to be smart about cases
 "set smartcase
 
 " Highlight search results
 set hlsearch
 
 " Makes search act like search in modern browsers
-set incsearch 
+set incsearch
 
 "" Don't redraw while executing macros (good performance config)
-"set lazyredraw 
+"set lazyredraw
 
 " For regular expressions turn magic on
 set magic
 
 " Show matching brackets when text indicator is over them
-set showmatch 
+set showmatch
 " How many tenths of a second to blink when matching brackets
 set mat=2  " set matchtime=2
 
@@ -588,11 +602,11 @@ nmap <C-w>T :vnew term://bash<CR>
 "map <leader>ba :bufdo bd<cr>
 
 " Useful mappings for managing tabs
-nmap <leader>tn :tabnew 
+nmap <leader>tn :tabnew
 "map <leader>to :tabonly<cr>
 "map <leader>tc :tabclose<cr>
-"map <leader>tm :tabmove 
-"map <leader>t<leader> :tabnext 
+"map <leader>tm :tabmove
+"map <leader>t<leader> :tabnext
 
 "" Let 'tl' toggle between this and the last accessed tab
 "let g:lasttab = 1
@@ -607,7 +621,7 @@ nmap <leader>tn :tabnew
 "" Switch CWD to the directory of the open buffer
 "map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
-"" Specify the behavior when switching between buffers 
+"" Specify the behavior when switching between buffers
 "try
 "  set switchbuf=useopen,usetab,newtab
 "  set stal=2
@@ -683,7 +697,7 @@ endif
 "vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
 "
 "" Open Ag and put the cursor in the right position
-"map <leader>g :Ag 
+"map <leader>g :Ag
 "
 "" When you press <leader>r you can search and replace the selected text
 "vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
@@ -752,7 +766,7 @@ function! CmdLine(str)
     exe "menu Foo.Bar :" . a:str
     emenu Foo.Bar
     unmenu Foo
-endfunction 
+endfunction
 
 function! VisualSelection(direction, extra_filter) range
     let l:saved_reg = @"
@@ -995,25 +1009,75 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 " => Notes
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 1. Search and replace. <https://vim.fandom.com/wiki/Search_and_replace>
-" * `:%s/p_{\([a-z,,,\,|]*\)}/p(\1)/gc`:
-"   Replaces anything like 'p_{s,\zzt,y|x}' with 'p(s,\zzt,y|x)'.
-"   - '{', '}' are normal characters. `[`, `*`, `.` are not.
-"   - `[a-z,,,\,|]`: matches a character that is either in `[a-z]` or is ',' or '\' or '|'.
-"   - `[a-z,,,\,|]*`: matches zero or more such characters.
-"   - The pair `\(`, `\)`: stores the matched string, and the string can be recovered by `\1`, `\2`, etc. according to the order of match.
-" * `:%s/p_{\(.*\)}/p(\1)/gc`:
-"   - `.`: matches any character except newline.
-"   - `{.*}`: matches greedily (from the first '{' in a line to the last '}' in a line): '{aaa} bbb {ccc}'.
-" * `:s/p_{\(.\{-}\)}/p(\1)/gc`:
-"   - `{.\{-}}`: matches minimally: in '{aaa} bbb {ccc}', '{aaa}' and '{ccc}' are two separate matches.
-" * The `n` flag makes the `:s` (`:substitute`) command print the number of matches instead of performing an actual substitution.
-" * `:global/pattern/print`, or just `:g/pattern`, prints all the lines that match 'pattern'.
-" * `&`: everything that was matched in the match-part of the expression.
-"   - `:s/\(pattern\)/a\1b/` = `:s/pattern/a&b/`, but is more than that: consider `:s/lazy \(dog\|cat\)/& is now stupid \1/`.
+" * Patterns:
+"   - '(', ')', '{', '}', '?' are normal characters. '[', ']', '*', '.', '^', '$', '&', '\', '/' are not.
+"   - `A.*Z`:
+"     . `.` matches any character except newline.
+"     . `.*` matches zero or more such characters.
+"     . `A.*Z` matches GREEDILY: from the first 'A' in a line to the last 'Z' in that line. Matches the whole 'AaZ bb AZ'.
+"     . `A.\{-}Z` matches MINIMALLY. In 'AaZ bb AZ', 'AaZ' and 'AZ' are two separate matches.
+"       `A.\{5}Z` repeats the match of `.` for 5 times. Same as `A.\{5\}Z`.
+"   - `A[a-z,,,\,|]*Z`: `[a-z,,,\,|]` matches a character either in `[a-z]` or ',' or '\' or '|'.
+"     `[^a-z,,,\,|]` negates all such characters.
+"   - `abc\?d` matches 'abcd' and 'abd'. `a\(bc\)\?d` matches 'abcd' and 'ad'.
+" * Search in range:
+"   - v(or V)-select the range, escape, and `/\%Vpattern`.
+"   - `/\%>11l\%<15lpattern`: within lines (incl.). `.`: current line; `.+2`=`.2` and `.-2` allowed.
+" * Replace flags:
+"   - 'g': do as many times as occurs.
+"   - 'n': makes `:s` (`:substitute`) command print the number of matches instead of performing an actual substitution.
+"   - 'i': ignore case. 'I': case-sensitive.
+"   - 'e': don't break command if no search string found.
+" * The pair `\(`,`\)`:
+"   Stores the matched string, and the string can be recovered by `\1`,`\2`,... according to the order of match.
+"   - `:%s/p_{\([a-z,,,\,|]*\)}/p(\1)/gc`: replaces anything like 'p_{s,\zzt,y|x}' by 'p(s,\zzt,y|x)'.
+"   - `:%s/p_{\(.\{-}\)}/p(\1)/gc`.
+" * `&` in expression: places everything matched in the match-part of the expression.
+"   - `:s/\(pattern\)/a\1b/` = `:s/pattern/a&b/`, but is more than that, e.g., `:s/lazy \(dog\|cat\)/& is now stupid \1/`.
 " * `&` in normal mode: repeat the last `:s` command.
-" * `:s/kingma2013auto/kingma2014auto/` = `:s/kingma\zs2013\zeauto/2014/`.
-" * `:g/\\begin{align}/,/\\end{align}/s/x/y/g`:
-"   Look for 'x' between '\begin{align}' and '\end{align}' and substitute all instances of 'x' with 'y'.
-"   For all search instances in one line, use `|` to separate the two search expressions.
-" * Search in range: v(or V)-select the range, escape, and `/\%Vpattern`.
+" * `:g/pattern`, or `:global/pattern/print`, prints all the lines that have 'pattern'.
+" * Replace in range <https://vim.fandom.com/wiki/Ranges>:
+"   - `:11,15s/old/new/g`: within lines (incl.). `:s/old/new/g`: within current line. `:%s/old/new/g`: all lines.
+"   - `:'a,'bs/old/new/g`: within marks 'a' and 'b'. `:'<,'>s/old/new/g`: within visually selected.
+"   - `:/apples/,/apples/+1s/old/new/g` = `:/apples/;.1s/old/new/g` (';': current line)
+"   - `:g/\\begin{align}/,/\\end{align}/ s/x/y/g`:
+"     Look for 'x' between '\begin{align}' and '\end{align}' and substitute all instances of 'x' with 'y'.
+"     For all search instances in one line, use `|` to separate the two search expressions.
+"     `:g`: global replace in all blocks with the same patterns.
+"   - `:g/\\begin{align}/;/\\end{align}/ s/x/y/g`:
+"     Same, but '\\end{align}' identifies the first occurrence after '\\begin{align}'.
+" * - `:%s/^/# /g`: insert '# ' at the start of each line.
+"   - `:s/kingma\zs2013\zeauto/2014/` = `:s/kingma2013auto/kingma2014auto/`.
+"   - `:%s//bar/g`: replace each match of the last search pattern with 'bar'.
+"   - `:%s/foo/ctrl-rctrl-w/g`: replace each occurrence of 'foo' with the word (`ctrl-a` for WORD) under cursor.
+"   - `:%s/foo/\=@r/g`: same as `:%s/foo/ctrl-rr/g`, except the text in register 'r' is not printed out as you type.
+"   - `:%s/foo/bar/` and `:%s/.*\zsfoo/bar/`: on each line, replace the first and last occurrence of 'foo' with 'bar'.
+"   - `:%s/.*\ze\<foo\>//`: on each line, delete all the text preceding the whole word 'foo' (excl.).
+" 2. Selection.
+" * `vip`: visually select 'inner paragraph'. `viw`: 'inner word'.
+" * `gv`: reselect the last visual selection.
+" 3. Registers <https://www.brianstorti.com/vim-registers/>.
+" * `"ry`, `"rdd`, `"rx`, `"rc`, `"rs`: store in register 'r'. `"rp`: paste from register 'r'.
+" * `ctrl-rr`: insert text from register 'r' under insert/command mode.
+" * `:reg` or `:reg r`: list and view registers.
+" * '"': the default register for `c`,`d`,`s`,`x`,`y` and `p`.
+" * '+': the clipboard register.
+" * '0': always holds the last YANKED text (useful for multiple replace pastes).
+"   '1' to '9': hold the newest to oldest DELETED texts.
+" * Read-only registers.
+"   - '.': last inserted text.
+"   - '%': current file path.
+"   - ':': most recently executed command.
+"   - '#': name of the alternate file. So `ctrl-^` = `:e ctrl-r#` = `:e #`.
+" * '=': the expression register, stores the result of a command/expression. E.g., `ctrl-r=system('ls')<CR>` (insert mode).
+" * '/': the search register, stores the searched text.
+" * `qw...q`: record commands as a macro stored in register 'w'. Use `@w` to play it.
+" * Edit registers:
+"   - `:let @w='text'`. Use `:let @w='ctrl-rw...'` to edit the original text.
+"   - `:let @W='dd'` (capital 'W'): append the string 'dd' to register 'w'.
+" 0. Misc.
+" * `@:`: repeat the last Ex command (colon command). `@w`: play macro 'w'. `@@`: further repeat.
+"   - Use `@:` with `:%s/\<pig\>/cow/gie|:update|:next`.
+" * Different from `:w` (`:write`), `:up` (`:update`) updates the file timestamp only when the file has been changed.
+" * `syntax off`: stop syntax highlight.
 "
