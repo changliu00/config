@@ -292,11 +292,13 @@ map <Leader> <Plug>(easymotion-prefix)
 " Jump to anywhere with only `s{char}{target}`. Use `s<CR>` to repeat last find motion.
 "map s <Plug>(easymotion-s)
 "map S <Plug>(easymotion-s2)
-map <space> <Plug>(easymotion-s)
 "map <space> <Leader>f
 "map <s-space> <Leader>F
-map <c-space> <Leader>t
+"map <c-space> <Leader>t
 "map <c-s-space> <Leader>T
+map <space> <Plug>(easymotion-s)
+map <c-space> <Leader>t
+map <s-space> <Leader>T
 " Use uppercase target labels and type as a lower case
 let g:EasyMotion_use_upper = 1
 " Type `l` and match `l` & `L`
@@ -445,6 +447,7 @@ endif
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
 "nnoremap <space> /
 "nnoremap <c-space> ?
+nnoremap s :%s/
 
 "" Disable highlighting the last searched item
 nnoremap <silent> <leader>q :noh<CR>
@@ -1076,6 +1079,10 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 "   - `:let @w='text'`. Use `:let @w='ctrl-rw...'` to edit the original text.
 "   - `:let @W='dd'` (capital 'W'): append the string 'dd' to register 'w'.
 " 4. Movements.
+" * `c` with movements:
+"   - `ci` inside a pair '', \"\", ``, (), [], {}, <>, <t></t>: change the inner text between.
+"   - `ciw`: change the word under cursor. `c3aw`: change the current and the next 2 words. `cap`: change the current paragraph.
+"   - `C`: change the rest of line. `cc`: change the whole line (= original `S`).
 " * For C code <https://vim.fandom.com/wiki/Jumping_to_the_start_and_end_of_a_code_block>:
 "   - `[[`: sections backward or to the previous '{' in the first column.
 "   - `[]`: sections backward or to the previous '}' in the first column.
