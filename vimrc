@@ -166,6 +166,12 @@ set updatetime=1000 " Default = 4000. Also the time delay to write swap files
 "    and run `python3 install.py`. Add option `--clangd-completer` for
 "    semantic support for C-family languages. Add option `--all` to compile
 "    with everything enabled.
+" 3. In case of the error 'CMake Error at CMakeLists.txt:232 (message):
+"        Your C++ compiler does NOT fully support C++17.',
+"    execute: `
+"      sudo apt-get install g++-8
+"      sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 700 --slave /usr/bin/g++ g++ /usr/bin/g++-7
+"      sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8`
 Plugin 'ycm-core/YouCompleteMe'
 "let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py' " Specify the configuration file (This is default)
 let g:ycm_auto_trigger = 1 " When set to 0, use <C-Space> to force semantic completion
