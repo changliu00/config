@@ -182,8 +182,9 @@ nnoremap <leader>yg :YcmCompleter GoTo<CR>
 nnoremap <leader>yi :YcmCompleter GoToImprecise<CR>
 nnoremap <leader>yr :YcmRestartServer<CR>
 nnoremap <leader>yu :YcmForceCompileAndDiagnostics<CR>
-" If =99: turn off the identifier completion engine and just leave the semantic engine. If =2: default.
-nnoremap <leader>ys :let g:ycm_min_num_of_chars_for_completion = 101 - g:ycm_min_num_of_chars_for_completion<CR>
+let g:ycm_min_num_of_chars_for_completion = 4 " Default = 2
+" If =99: turn off the identifier completion engine and just leave the semantic engine.
+nnoremap <leader>ys :let g:ycm_min_num_of_chars_for_completion = 103 - g:ycm_min_num_of_chars_for_completion<CR>
 let g:ycm_max_num_candidates = 30 " Default = 50
 let g:ycm_confirm_extra_conf = 0 " Stop confirming loading extra configuration file when entering vim
 "let g:ycm_collect_identifiers_from_tag_files = 1 " Use the tags file produced by ctags
@@ -272,7 +273,7 @@ Plugin 'vim-latex/vim-latex' " See <http://vim-latex.sourceforge.net/>
 
 Plugin 'flazz/vim-colorschemes'
 Plugin 'sainnhe/sonokai'
-let g:sonokai_style = 'andromeda'
+let g:sonokai_style = 'andromeda' " 'default', 'atlantis', 'andromeda', 'shusia', 'maia'
 let g:sonokai_enable_italic = 1
 let g:sonokai_disable_italic_comment = 1
 
@@ -512,7 +513,9 @@ set cursorline
 " Enable syntax highlighting
 " syntax on  " Highlight colors are overruled but links are kept.
 syntax enable  " Only define colors for groups that don't have highlighting yet. Use `:syntax default`
-"set termguicolors " Required by 'sainnhe/sonokai', but causes faded cursorline in terminal.
+"if has('termguicolors')
+"	set termguicolors " Required by 'sainnhe/sonokai', but causes faded cursorline in terminal.
+"endif
 
 " Recommended: solarized, molokai, phd, desert, wombat; sonokai
 colorscheme molokai
