@@ -182,9 +182,9 @@ nnoremap <leader>yg :YcmCompleter GoTo<CR>
 nnoremap <leader>yi :YcmCompleter GoToImprecise<CR>
 nnoremap <leader>yr :YcmRestartServer<CR>
 nnoremap <leader>yu :YcmForceCompileAndDiagnostics<CR>
-let g:ycm_min_num_of_chars_for_completion = 4 " Default = 2
+let g:ycm_min_num_of_chars_for_completion = 5 " Default = 2
 " If =99: turn off the identifier completion engine and just leave the semantic engine.
-nnoremap <leader>ys :let g:ycm_min_num_of_chars_for_completion = 103 - g:ycm_min_num_of_chars_for_completion<CR>
+nnoremap <leader>ys :let g:ycm_min_num_of_chars_for_completion = 104 - g:ycm_min_num_of_chars_for_completion<CR>
 let g:ycm_max_num_candidates = 30 " Default = 50
 let g:ycm_confirm_extra_conf = 0 " Stop confirming loading extra configuration file when entering vim
 "let g:ycm_collect_identifiers_from_tag_files = 1 " Use the tags file produced by ctags
@@ -1061,8 +1061,8 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 " * - `:%s/^/# /g`: insert '# ' at the start of each line.
 "   - `:s/kingma\zs2013\zeauto/2014/` = `:s/kingma2013auto/kingma2014auto/`.
 "   - `:%s//bar/g`: replace each match of the last search pattern with 'bar'.
-"   - `:%s/foo/ctrl-rctrl-w/g`: replace each occurrence of 'foo' with the word (`ctrl-a` for WORD) under cursor.
-"   - `:%s/foo/\=@r/g`: same as `:%s/foo/ctrl-rr/g`, except the text in register 'r' is not printed out as you type.
+"   - `:%s/foo/<ctrl-r><ctrl-w>/g`: replace each occurrence of 'foo' with the word (`<ctrl-a>` for WORD) under cursor.
+"   - `:%s/foo/\=@r/g`: same as `:%s/foo/<ctrl-r>r/g`, except the text in register 'r' is not printed out as you type.
 "   - `:%s/foo/bar/` and `:%s/.*\zsfoo/bar/`: on each line, replace the first and last occurrence of 'foo' with 'bar'.
 "   - `:%s/.*\ze\<foo\>//`: on each line, delete all the text preceding the whole word 'foo' (excl.).
 " 2. Selection.
@@ -1070,7 +1070,7 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 " * `gv`: reselect the last visual selection.
 " 3. Registers <https://www.brianstorti.com/vim-registers/>.
 " * `"ry`, `"rdd`, `"rx`, `"rc`, `"rs`: store in register 'r'. `"rp`: paste from register 'r'.
-" * `ctrl-rr`: insert text from register 'r' under insert/command mode.
+" * `<ctrl-r>r`: insert text from register 'r' under insert/command mode.
 " * `:reg` or `:reg r`: list and view registers.
 " * '"': the default register for `c`,`d`,`s`,`x`,`y` and `p`.
 " * '+': the clipboard register.
@@ -1080,12 +1080,12 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 "   - '.': last inserted text.
 "   - '%': current file path.
 "   - ':': most recently executed command.
-"   - '#': name of the alternate file. So `ctrl-^` = `:e ctrl-r#` = `:e #`.
-" * '=': the expression register, stores the result of a command/expression. E.g., `ctrl-r=system('ls')<CR>` (insert mode).
+"   - '#': name of the alternate file. So `<ctrl-^>` = `:e <ctrl-r>#` = `:e #`.
+" * '=': the expression register, stores the result of a command/expression. E.g., `<ctrl-r>=system('ls')<CR>` (insert mode).
 " * '/': the search register, stores the searched text.
 " * `qw...q`: record commands as a macro stored in register 'w'. Use `@w` to play it.
 " * Edit registers:
-"   - `:let @w='text'`. Use `:let @w='ctrl-rw...'` to edit the original text.
+"   - `:let @w='text'`. Use `:let @w='<ctrl-r>w...'` to edit the original text.
 "   - `:let @W='dd'` (capital 'W'): append the string 'dd' to register 'w'.
 " 4. Movements.
 " * `c` with movements:
@@ -1102,6 +1102,11 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 "   - `[M`: Jump backwards to end of previous method/scope.
 " * Moving based on folds <https://github.com/lervag/vimtex/issues/1299>:
 "   `[z`, `]z`, `zj`, `zk`.
+" 5. Command line history.
+" * `:` or `/` then `<Up>` or `<Down>` (support searching with prefix).
+"   `:` or `/` then press the 'cedit' key (default: <ctrl-f>) to open the command-line window.
+"   `q:` or `q/` to open the command-line window. Press <CR> to execute and double-press <ctrl-c> to cancel and close.
+"   `:his` or `:his /` to view command or search history.
 " 0. Misc.
 " * `@:`: repeat the last Ex command (colon command). `@w`: play macro 'w'. `@@`: further repeat.
 "   - Use `@:` with `:%s/\<pig\>/cow/gie|:update|:next`.
