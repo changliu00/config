@@ -371,7 +371,7 @@ endif
 set diffopt=vertical " Vertical split is preferred, for e.g., `:diffs`
 
 " Select last paste in visual mode. Use `gv` to select last yanked block.
-nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
