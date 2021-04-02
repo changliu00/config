@@ -299,13 +299,16 @@ map <Leader> <Plug>(easymotion-prefix)
 " Jump to anywhere with only `s{char}{target}`. Use `s<CR>` to repeat last find motion.
 "map s <Plug>(easymotion-s)
 "map S <Plug>(easymotion-s2)
-"map <space> <Leader>f
-"map <s-space> <Leader>F
-"map <c-space> <Leader>t
-"map <c-s-space> <Leader>T
+"map <space> <Plug>(easymotion-f)
+"map <s-space> <Plug>(easymotion-F)
+"map <c-space> <Plug>(easymotion-t)
+"map <c-s-space> <Plug>(easymotion-T)
 map <space> <Plug>(easymotion-s)
-map <c-space> <Leader>t
-map <s-space> <Leader>T
+map <space><space> <Plug>(easymotion-bd-t)
+map F <Plug>(easymotion-bd-fl)
+map T <Plug>(easymotion-bd-tl)
+"map w <Plug>(easymotion-bd-wl)
+"map e <Plug>(easymotion-bd-el)
 " Use uppercase target labels and type as a lower case
 let g:EasyMotion_use_upper = 1
 " Type `l` and match `l` & `L`
@@ -371,7 +374,7 @@ endif
 set diffopt=vertical " Vertical split is preferred, for e.g., `:diffs`
 
 " Select last paste in visual mode. Use `gv` to select last yanked block.
-nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -614,16 +617,16 @@ nmap <C-w>T :vnew term://bash<CR>
 "map <leader>ba :bufdo bd<cr>
 
 " Useful mappings for managing tabs
-nmap <leader>tn :tabnew
+nmap <leader>tn :tabnew 
 "map <leader>to :tabonly<cr>
 "map <leader>tc :tabclose<cr>
-"map <leader>tm :tabmove
+"map <leader>tm :tabmove 
 "map <leader>t<leader> :tabnext
 
-"" Let 'tl' toggle between this and the last accessed tab
-"let g:lasttab = 1
-"nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
-"autocmd TabLeave * let g:lasttab = tabpagenr()
+" Let `gl` (or, `<leader>tl`) toggle between this and the last accessed tab
+let g:lasttab = 1
+nmap gl :exe "tabn ".g:lasttab<CR>
+autocmd TabLeave * let g:lasttab = tabpagenr()
 
 
 "" Opens a new tab with the current buffer's path
@@ -1102,6 +1105,21 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 "   - `[M`: Jump backwards to end of previous method/scope.
 " * Moving based on folds <https://github.com/lervag/vimtex/issues/1299>:
 "   `[z`, `]z`, `zj`, `zk`.
+" * Marks <https://vim.fandom.com/wiki/Using_marks>:
+"   - `ma`: create mark `a`.
+"   - `'a`, ``a`: the line/exact position (line and column) of mark `a`.
+"   - ````, `''`: jump back.
+"   - ``.`: position where last change occurred in current buffer.
+"   - ``"`: position where last exited current buffer.
+"   - ``0`, ``1`, ...: position in the (second, third) last file edited.
+"   - ``[`, ``]`: beginning/end of the last change or yank or paste.
+"   - ``<`, ``>`: beginning/end of last visual selection.
+"   - `]'`, `]``: the line/exact position of the next lowercase mark.
+" * Tags <https://vim.fandom.com/wiki/Browsing_programs_with_tags>:
+"   - Requires a tag file (Exuberant Ctags, easytags).
+"   - Jump to tag: `tag: tagname` or press `<ctrl-]>` under 'tagname'. `<ctrl-W>]` opens a new window.
+"   - Jump back: `:pop`, or `<ctrl-t>`. The `<ctrl-o>`, `<ctrl-i>` pair also works.
+"   - List tag stack: `:tags`.
 " 5. Command line history.
 " * `:` or `/` then `<Up>` or `<Down>` (support searching with prefix).
 "   `:` or `/` then press the 'cedit' key (default: <ctrl-f>) to open the command-line window.
@@ -1112,4 +1130,5 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 "   - Use `@:` with `:%s/\<pig\>/cow/gie|:update|:next`.
 " * Different from `:w` (`:write`), `:up` (`:update`) updates the file timestamp only when the file has been changed.
 " * `syntax off`: stop syntax highlight.
+" * `:h(elp) something` then press `<ctrl-d>` or `<tab>` (before `<CR>`) to see topics. Use tags to jump.
 "
