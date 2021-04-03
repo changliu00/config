@@ -374,7 +374,7 @@ endif
 set diffopt=vertical " Vertical split is preferred, for e.g., `:diffs`
 
 " Select last paste in visual mode. Use `gv` to select last yanked block.
-nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
+nnoremap <expr> gc '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -415,7 +415,32 @@ set autoread
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Minimal number of screen lines to keep above and below the cursor.
-set so=3  " set scrolloff=0. default 0
+set scrolloff=3 " default 0. `so` for abbr.
+" Toggle the cursor to always stay in the middle of screen when scrolling <https://vim.fandom.com/wiki/Keep_your_cursor_centered_vertically_on_the_screen>.
+if !exists('*VCenterCursor')
+	augroup VCenterCursor
+		au!
+		au OptionSet *,*.*
+					\ if and( expand("<amatch>")=='scrolloff' ,
+					\         exists('#VCenterCursor#WinEnter,WinNew,VimResized') )|
+					\   au! VCenterCursor WinEnter,WinNew,VimResized|
+					\ endif
+	augroup END
+	function VCenterCursor()
+		if !exists('#VCenterCursor#WinEnter,WinNew,VimResized')
+			let s:default_scrolloff=&scrolloff
+			let &scrolloff=winheight(win_getid())/2
+			au VCenterCursor WinEnter,WinNew,VimResized *,*.*
+						\ let &scrolloff=winheight(win_getid())/2
+		else
+			au! VCenterCursor WinEnter,WinNew,VimResized
+			let &scrolloff=s:default_scrolloff
+		endif
+	endfunction
+endif
+
+nnoremap <leader>zz :call VCenterCursor()<CR>
+
 
 " Avoid garbled characters in Chinese language Windows OS
 let $LANG='en'    " set message language
@@ -429,9 +454,9 @@ set wildmenu
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
 if has("win16") || has("win32")
-    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+	set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 else
-    set wildignore+=.git\*,.hg\*,.svn\*
+	set wildignore+=.git\*,.hg\*,.svn\*
 endif
 
 " Always show current position
@@ -450,7 +475,7 @@ set fillchars=vert:\ ,stl:\ ,stlnc:\
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has("win16") || has("win32")
 	if has('mouse')
-	  set mouse=a
+		set mouse=a
 	endif
 endif
 
@@ -458,6 +483,12 @@ endif
 "nnoremap <space> /
 "nnoremap <c-space> ?
 nnoremap s :%s/
+
+" To make `n` always go forward and `N` backward even after `?` and `#` <https://vi.stackexchange.com/questions/2365/how-can-i-get-n-to-go-forward-even-if-i-started-searching-with-or>
+nnoremap <expr> n (v:searchforward ? 'n' : 'N')
+nnoremap <expr> N (v:searchforward ? 'N' : 'n')
+nnoremap <expr> ; (getcharsearch().forward ? ';' : ',')
+nnoremap <expr> , (getcharsearch().forward ? ',' : ';')
 
 "" Disable highlighting the last searched item
 nnoremap <silent> <leader>q :noh<CR>
@@ -778,30 +809,30 @@ map <leader>pp :setlocal paste!<cr>
 " => Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! CmdLine(str)
-    exe "menu Foo.Bar :" . a:str
-    emenu Foo.Bar
-    unmenu Foo
+	exe "menu Foo.Bar :" . a:str
+	emenu Foo.Bar
+	unmenu Foo
 endfunction
 
 function! VisualSelection(direction, extra_filter) range
-    let l:saved_reg = @"
-    execute "normal! vgvy"
+	let l:saved_reg = @"
+	execute "normal! vgvy"
 
-    let l:pattern = escape(@", '\\/.*$^~[]')
-    let l:pattern = substitute(l:pattern, "\n$", "", "")
+	let l:pattern = escape(@", '\\/.*$^~[]')
+	let l:pattern = substitute(l:pattern, "\n$", "", "")
 
-    if a:direction == 'b'
-        execute "normal ?" . l:pattern . "^M"
-    elseif a:direction == 'gv'
-        call CmdLine("Ag \"" . l:pattern . "\" " )
-    elseif a:direction == 'replace'
-        call CmdLine("%s" . '/'. l:pattern . '/')
-    elseif a:direction == 'f'
-        execute "normal /" . l:pattern . "^M"
-    endif
+	if a:direction == 'b'
+		execute "normal ?" . l:pattern . "^M"
+	elseif a:direction == 'gv'
+		call CmdLine("Ag \"" . l:pattern . "\" " )
+	elseif a:direction == 'replace'
+		call CmdLine("%s" . '/'. l:pattern . '/')
+	elseif a:direction == 'f'
+		execute "normal /" . l:pattern . "^M"
+	endif
 
-    let @/ = l:pattern
-    let @" = l:saved_reg
+	let @/ = l:pattern
+	let @" = l:saved_reg
 endfunction
 
 "" Don't close window, when deleting a buffer
@@ -842,36 +873,36 @@ if has("win16") || has("win32")
 
 	set diffexpr=MyDiff()
 	function MyDiff()
-	  let opt = '-a --binary '
-	  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-	  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-	  let arg1 = v:fname_in
-	  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-	  let arg1 = substitute(arg1, '!', '\!', 'g')
-	  let arg2 = v:fname_new
-	  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-	  let arg2 = substitute(arg2, '!', '\!', 'g')
-	  let arg3 = v:fname_out
-	  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-	  let arg3 = substitute(arg3, '!', '\!', 'g')
-	  if $VIMRUNTIME =~ ' '
-		if &sh =~ '\<cmd'
-		  if empty(&shellxquote)
-			let l:shxq_sav = ''
-			set shellxquote&
-		  endif
-		  let cmd = '"' . $VIMRUNTIME . '\diff"'
+		let opt = '-a --binary '
+		if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+		if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+		let arg1 = v:fname_in
+		if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+		let arg1 = substitute(arg1, '!', '\!', 'g')
+		let arg2 = v:fname_new
+		if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+		let arg2 = substitute(arg2, '!', '\!', 'g')
+		let arg3 = v:fname_out
+		if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+		let arg3 = substitute(arg3, '!', '\!', 'g')
+		if $VIMRUNTIME =~ ' '
+			if &sh =~ '\<cmd'
+				if empty(&shellxquote)
+					let l:shxq_sav = ''
+					set shellxquote&
+				endif
+				let cmd = '"' . $VIMRUNTIME . '\diff"'
+			else
+				let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+			endif
 		else
-		  let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+			let cmd = $VIMRUNTIME . '\diff'
 		endif
-	  else
-		let cmd = $VIMRUNTIME . '\diff'
-	  endif
-	  let cmd = substitute(cmd, '!', '\!', 'g')
-	  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
-	  if exists('l:shxq_sav')
-		let &shellxquote=l:shxq_sav
-	  endif
+		let cmd = substitute(cmd, '!', '\!', 'g')
+		silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
+		if exists('l:shxq_sav')
+			let &shellxquote=l:shxq_sav
+		endif
 	endfunction
 
 	" -- My settings --
@@ -1035,6 +1066,10 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 "   - `A[a-z,,,\,|]*Z`: `[a-z,,,\,|]` matches a character either in `[a-z]` or ',' or '\' or '|'.
 "     `[^a-z,,,\,|]` negates all such characters.
 "   - `abc\?d` matches 'abcd' and 'abd'. `a\(bc\)\?d` matches 'abcd' and 'ad'.
+" * Search with easy input <https://vim.fandom.com/wiki/Searching>:
+"   - `/<ctrl-r><ctrl-w or -a>` inputs the <cword> or <cWORD> under cursor.
+"   - `/<CR>` repeats the last search (also works for `?`, `:s`, `:g`). Useful to alter/confirm the search direction of `n`/`N`.
+"   - With `:set incsearch`, when typing the search pattern, press `<ctrl-l>` to insert the next character from the match, or `<ctrl-r><ctrl-w>` to complete the current matching word.
 " * Search in range:
 "   - v(or V)-select the range, escape, and `/\%Vpattern`.
 "   - `/\%>11l\%<15lpattern`: within lines (incl.). `.`: current line; `.+2`=`.2` and `.-2` allowed.
@@ -1091,7 +1126,7 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 "   - `:let @w='text'`. Use `:let @w='<ctrl-r>w...'` to edit the original text.
 "   - `:let @W='dd'` (capital 'W'): append the string 'dd' to register 'w'.
 " 4. Movements.
-" * `c` with movements:
+" * `c`, `y`, `v` with movements:
 "   - `ci` inside a pair '', \"\", ``, (), [], {}, <>, <t></t>: change the inner text between.
 "   - `ciw`: change the word under cursor. `c3aw`: change the current and the next 2 words. `cap`: change the current paragraph.
 "   - `C`: change the rest of line. `cc`: change the whole line (= original `S`).
@@ -1128,7 +1163,8 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 " 0. Misc.
 " * `@:`: repeat the last Ex command (colon command). `@w`: play macro 'w'. `@@`: further repeat.
 "   - Use `@:` with `:%s/\<pig\>/cow/gie|:update|:next`.
-" * Different from `:w` (`:write`), `:up` (`:update`) updates the file timestamp only when the file has been changed.
+" * `:up(date)` updates the file timestamp only when the file has been changed, while `w` always does so.
 " * `syntax off`: stop syntax highlight.
 " * `:h(elp) something` then press `<ctrl-d>` or `<tab>` (before `<CR>`) to see topics. Use tags to jump.
+" * `:set so=999` makes the cursor always in the middle of the screen when scrolling.
 "
