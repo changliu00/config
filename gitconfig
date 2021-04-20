@@ -14,9 +14,11 @@
 	br = branch
 	ci = commit
 	df = diff
+	dfn = diff --name-only
 	dfc = diff --cached
-	dt = difftool
-	dtc = difftool --cached
+	dfcn = diff --cached --name-only
+	dft = difftool
+	dftc = difftool --cached
 	co = checkout
 	st = status
 	#############
