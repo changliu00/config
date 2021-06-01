@@ -174,7 +174,7 @@ set updatetime=1000 " Default = 4000. Also the time delay to write swap files
 "      sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8`
 Plugin 'ycm-core/YouCompleteMe'
 "let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py' " Specify the configuration file (This is default)
-let g:ycm_auto_trigger = 1 " When set to 0, use <C-Space> to force semantic completion
+let g:ycm_auto_trigger = 1 " When set to 0, use <C-space> to force semantic completion
 nnoremap <leader>yy :let g:ycm_auto_trigger = !g:ycm_auto_trigger<CR>
 " Do the same as the subcommand 'GoToDefinitionElseDeclaration' (which is only for C#)
 nnoremap <leader>yg :YcmCompleter GoTo<CR>
@@ -241,8 +241,8 @@ Plugin 'ap/vim-css-color'
 "Plugin 'honza/vim-snippets'
 "" Trigger configuration. Do not use <tab> if you use <https://github.com/Valloric/YouCompleteMe>.
 "let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-b>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"let g:UltiSnipsJumpForwardTrigger="<C-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 "let g:UltiSnipsEditSplit="vertical" " If you want :UltiSnipsEdit to split your window.
 
 "Plugin 'vifm/vifm.vim' " Curser-based vi[m]-like file manager. Download first from <https://vifm.info/downloads.shtml>
@@ -295,14 +295,14 @@ map <leader>md :InstantMarkdownPreview<CR>
 map <leader>ms :InstantMarkdownStop<CR>
 
 Plugin 'easymotion/vim-easymotion'
-map <Leader> <Plug>(easymotion-prefix)
+map <leader> <Plug>(easymotion-prefix)
 " Jump to anywhere with only `s{char}{target}`. Use `s<CR>` to repeat last find motion.
 "map s <Plug>(easymotion-s)
 "map S <Plug>(easymotion-s2)
 "map <space> <Plug>(easymotion-f)
-"map <s-space> <Plug>(easymotion-F)
-"map <c-space> <Plug>(easymotion-t)
-"map <c-s-space> <Plug>(easymotion-T)
+"map <S-space> <Plug>(easymotion-F)
+"map <C-space> <Plug>(easymotion-t)
+"map <C-S-space> <Plug>(easymotion-T)
 map <space> <Plug>(easymotion-s)
 map <space><space> <Plug>(easymotion-bd-t)
 "map F <Plug>(easymotion-bd-fl)
@@ -404,8 +404,8 @@ set autoread
 "let g:mapleader = ','
 
 " Fast saving
-"nmap <leader>w :w!<cr>
-"nmap <leader>w :w<cr>
+"nmap <leader>w :w!<CR>
+"nmap <leader>w :w<CR>
 
 "" :W sudo saves the file (useful for handling the permission-denied error)
 "command W w !sudo tee % > /dev/null
@@ -479,10 +479,12 @@ if has("win16") || has("win32")
 	endif
 endif
 
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+" Map <space> to / (search) and Ctrl-<space> to ? (backwards search)
 "nnoremap <space> /
-"nnoremap <c-space> ?
+"nnoremap <C-space> ?
 nnoremap s :%s/
+"map s :%s///gc<Left><Left><Left>
+"map s :%s/<C-r><C-w>//gc<Left><Left><Left>
 
 " To make `n` always go forward and `N` backward even after `?` and `#` <https://vi.stackexchange.com/questions/2365/how-can-i-get-n-to-go-forward-even-if-i-started-searching-with-or>
 nnoremap <expr> n (v:searchforward ? 'n' : 'N')
@@ -642,15 +644,15 @@ nmap <C-w>S <C-w>t<C-w>K
 nmap <C-w>T :vnew term://bash<CR>
 
 "" Close the current buffer
-"map <leader>bd :Bclose<cr>
+"map <leader>bd :Bclose<CR>
 
 "" Close all the buffers
-"map <leader>ba :bufdo bd<cr>
+"map <leader>ba :bufdo bd<CR>
 
 " Useful mappings for managing tabs
 nmap <leader>tn :tabnew 
-"map <leader>to :tabonly<cr>
-"map <leader>tc :tabclose<cr>
+"map <leader>to :tabonly<CR>
+"map <leader>tc :tabclose<CR>
 "map <leader>tm :tabmove 
 "map <leader>t<leader> :tabnext
 
@@ -662,10 +664,10 @@ autocmd TabLeave * let g:lasttab = tabpagenr()
 
 "" Opens a new tab with the current buffer's path
 "" Super useful when editing files in the same directory
-"map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+"map <leader>te :tabedit <C-r>=expand("%:p:h")<CR>/
 
 "" Switch CWD to the directory of the open buffer
-"map <leader>cd :cd %:p:h<cr>:pwd<cr>
+"map <leader>cd :cd %:p:h<CR>:pwd<CR>
 
 "" Specify the behavior when switching between buffers
 "try
@@ -714,10 +716,10 @@ map Y y$
 
 " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
 if has("osx") || has("mac") || has("macunix")
-	nmap <M-j> mz:m+<cr>`z
-	nmap <M-k> mz:m-2<cr>`z
-	vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-	vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+	nmap <M-j> mz:m+<CR>`z
+	nmap <M-k> mz:m-2<CR>`z
+	vmap <M-j> :m'>+<CR>`<my`>mzgv`yo`z
+	vmap <M-k> :m'<-2<CR>`>my`<mzgv`yo`z
 
 	nmap <D-j> <M-j>
 	nmap <D-k> <M-k>
@@ -759,17 +761,17 @@ endif
 "" To go to the previous search results do:
 ""   <leader>p
 "
-"map <leader>cc :botright cope<cr>
-"map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
-"map <leader>n :cn<cr>
-"map <leader>p :cp<cr>
+"map <leader>cc :botright cope<CR>
+"map <leader>co ggVGy:tabnew<CR>:set syntax=qf<CR>pgg
+"map <leader>n :cn<CR>
+"map <leader>p :cp<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
+map <leader>ss :setlocal spell!<CR>
 
 "" Shortcuts using <leader>
 "map <leader>sn ]s
@@ -793,16 +795,16 @@ set nofoldenable
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Remove the Windows ^M - when the encodings gets messed up
-"noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+"noremap <leader>m mmHmt:%s/<C-V><CR>//ge<CR>'tzt'm
 
 "" Quickly open a buffer for scribble
-"map <leader>q :e ~/buffer<cr>
+"map <leader>q :e ~/buffer<CR>
 
 "" Quickly open a markdown buffer for scribble
-"map <leader>x :e ~/buffer.md<cr>
+"map <leader>x :e ~/buffer.md<CR>
 
 " Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
+map <leader>pp :setlocal paste!<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1054,7 +1056,7 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Notes
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 1. Search and replace. <https://vim.fandom.com/wiki/Search_and_replace>
+" 1. Search and replace. <https://vim.fandom.com/wiki/Search_and_replace> <https://learnbyexample.gitbooks.io/vim-reference/content/Regular_Expressions.html>
 " * Patterns:
 "   - '(', ')', '{', '}', '?' are normal characters. '[', ']', '*', '.', '^', '$', '&', '\', '/' are not.
 "   - `A.*Z`:
@@ -1067,9 +1069,9 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 "     `[^a-z,,,\,|]` negates all such characters.
 "   - `abc\?d` matches 'abcd' and 'abd'. `a\(bc\)\?d` matches 'abcd' and 'ad'.
 " * Search with easy input <https://vim.fandom.com/wiki/Searching>:
-"   - `/<ctrl-r><ctrl-w or -a>` inputs the <cword> or <cWORD> under cursor.
+"   - `/<C-r><C-w or -a>` inputs the <cword> or <cWORD> under cursor.
 "   - `/<CR>` repeats the last search (also works for `?`, `:s`, `:g`). Useful to alter/confirm the search direction of `n`/`N`.
-"   - With `:set incsearch`, when typing the search pattern, press `<ctrl-l>` to insert the next character from the match, or `<ctrl-r><ctrl-w>` to complete the current matching word.
+"   - With `:set incsearch`, when typing the search pattern, press `<C-l>` to insert the next character from the match, or `<C-r><C-w>` to complete the current matching word.
 " * Search in range:
 "   - v(or V)-select the range, escape, and `/\%Vpattern`.
 "   - `/\%>11l\%<15lpattern`: within lines (incl.). `.`: current line; `.+2`=`.2` and `.-2` allowed.
@@ -1099,8 +1101,8 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 " * - `:%s/^/# /g`: insert '# ' at the start of each line.
 "   - `:s/kingma\zs2013\zeauto/2014/` = `:s/kingma2013auto/kingma2014auto/`.
 "   - `:%s//bar/g`: replace each match of the last search pattern with 'bar'.
-"   - `:%s/foo/<ctrl-r><ctrl-w>/g`: replace each occurrence of 'foo' with the word (`<ctrl-a>` for WORD) under cursor.
-"   - `:%s/foo/\=@r/g`: same as `:%s/foo/<ctrl-r>r/g`, except the text in register 'r' is not printed out as you type.
+"   - `:%s/foo/<C-r><C-w>/g`: replace each occurrence of 'foo' with the word (`<C-a>` for WORD) under cursor.
+"   - `:%s/foo/\=@r/g`: same as `:%s/foo/<C-r>r/g`, except the text in register 'r' is not printed out as you type.
 "   - `:%s/foo/bar/` and `:%s/.*\zsfoo/bar/`: on each line, replace the first and last occurrence of 'foo' with 'bar'.
 "   - `:%s/.*\ze\<foo\>//`: on each line, delete all the text preceding the whole word 'foo' (excl.).
 " 2. Selection.
@@ -1108,7 +1110,7 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 " * `gv`: reselect the last visual selection.
 " 3. Registers <https://www.brianstorti.com/vim-registers/>.
 " * `"ry`, `"rdd`, `"rx`, `"rc`, `"rs`: store in register 'r'. `"rp`: paste from register 'r'.
-" * `<ctrl-r>r`: insert text from register 'r' under insert/command mode.
+" * `<C-r>r`: insert text from register 'r' under insert/command mode.
 " * `:reg` or `:reg r`: list and view registers.
 " * '"': the default register for `c`,`d`,`s`,`x`,`y` and `p`.
 " * '+': the clipboard register.
@@ -1118,12 +1120,12 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 "   - '.': last inserted text.
 "   - '%': current file path.
 "   - ':': most recently executed command.
-"   - '#': name of the alternate file. So `<ctrl-^>` = `:e <ctrl-r>#` = `:e #`.
-" * '=': the expression register, stores the result of a command/expression. E.g., `<ctrl-r>=system('ls')<CR>` (insert mode).
+"   - '#': name of the alternate file. So `<C-^>` = `:e <C-r>#` = `:e #`.
+" * '=': the expression register, stores the result of a command/expression. E.g., `<C-r>=system('ls')<CR>` (insert mode).
 " * '/': the search register, stores the searched text.
 " * `qw...q`: record commands as a macro stored in register 'w'. Use `@w` to play it.
 " * Edit registers:
-"   - `:let @w='text'`. Use `:let @w='<ctrl-r>w...'` to edit the original text.
+"   - `:let @w='text'`. Use `:let @w='<C-r>w...'` to edit the original text.
 "   - `:let @W='dd'` (capital 'W'): append the string 'dd' to register 'w'.
 " 4. Movements.
 " * `c`, `y`, `v` with movements:
@@ -1152,19 +1154,19 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 "   - `]'`, `]``: the line/exact position of the next lowercase mark.
 " * Tags <https://vim.fandom.com/wiki/Browsing_programs_with_tags>:
 "   - Requires a tag file (Exuberant Ctags, easytags).
-"   - Jump to tag: `tag: tagname` or press `<ctrl-]>` under 'tagname'. `<ctrl-W>]` opens a new window.
-"   - Jump back: `:pop`, or `<ctrl-t>`. The `<ctrl-o>`, `<ctrl-i>` pair also works.
+"   - Jump to tag: `tag: tagname` or press `<C-]>` under 'tagname'. `<C-W>]` opens a new window.
+"   - Jump back: `:pop`, or `<C-t>`. The `<C-o>`, `<C-i>` pair also works.
 "   - List tag stack: `:tags`.
 " 5. Command line history.
 " * `:` or `/` then `<Up>` or `<Down>` (support searching with prefix).
-"   `:` or `/` then press the 'cedit' key (default: <ctrl-f>) to open the command-line window.
-"   `q:` or `q/` to open the command-line window. Press <CR> to execute and double-press <ctrl-c> to cancel and close.
+"   `:` or `/` then press the 'cedit' key (default: <C-f>) to open the command-line window.
+"   `q:` or `q/` to open the command-line window. Press <CR> to execute and double-press <C-c> to cancel and close.
 "   `:his` or `:his /` to view command or search history.
 " 0. Misc.
 " * `@:`: repeat the last Ex command (colon command). `@w`: play macro 'w'. `@@`: further repeat.
 "   - Use `@:` with `:%s/\<pig\>/cow/gie|:update|:next`.
 " * `:up(date)` updates the file timestamp only when the file has been changed, while `w` always does so.
 " * `syntax off`: stop syntax highlight.
-" * `:h(elp) something` then press `<ctrl-d>` or `<tab>` (before `<CR>`) to see topics. Use tags to jump.
+" * `:h(elp) something` then press `<C-d>` or `<tab>` (before `<CR>`) to see topics. Use tags to jump.
 " * `:set so=999` makes the cursor always in the middle of the screen when scrolling.
 "
