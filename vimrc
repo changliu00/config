@@ -300,9 +300,10 @@ map <leader> <Plug>(easymotion-prefix)
 "map s <Plug>(easymotion-s)
 "map S <Plug>(easymotion-s2)
 map <space> <Plug>(easymotion-f)
-map <S-space> <Plug>(easymotion-F)
-map <space><space> <Plug>(easymotion-t)
-map <S-space><S-space> <Plug>(easymotion-T)
+map <space><space> <Plug>(easymotion-F)
+"map <S-space> <Plug>(easymotion-F)
+"map <space><space> <Plug>(easymotion-t)
+"map <S-space><S-space> <Plug>(easymotion-T)
 "map <C-space> <Plug>(easymotion-t)
 "map <C-S-space> <Plug>(easymotion-T)
 "map <space> <Plug>(easymotion-s)
@@ -314,9 +315,9 @@ map <S-space><S-space> <Plug>(easymotion-T)
 " Use uppercase target labels and type as a lower case
 let g:EasyMotion_use_upper = 1
 " Type `l` and match `l` & `L`
-let g:EasyMotion_smartcase = 1
+"let g:EasyMotion_smartcase = 1
 " Type `3` and match `3` & `#`
-let g:EasyMotion_use_smartsign_us = 1
+"let g:EasyMotion_use_smartsign_us = 1
 
 " Compare Two Lines.
 Plugin 'changliu00/vim-compare-lines' " Forked from 'statox/vim-compare-lines'
