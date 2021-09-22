@@ -310,6 +310,8 @@ map <space> <Plug>(easymotion-s)
 map <space><space> <Plug>(easymotion-bd-t)
 "map F <Plug>(easymotion-bd-fl)
 "map T <Plug>(easymotion-bd-tl)
+map - <Plug>(easymotion-bd-fl)
+map _ <Plug>(easymotion-bd-tl)
 "map w <Plug>(easymotion-bd-wl)
 "map e <Plug>(easymotion-bd-el)
 " Use uppercase target labels and type as a lower case
