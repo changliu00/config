@@ -8,7 +8,7 @@ sudo pip3 install numpy torch torchvision matplotlib jupyter
 mkdir ~/.ssh # run on local: `cat ~/.ssh/id_ed25519.pub | ssh username@hostname 'cat >> .ssh/authorized_keys'`
 
 # git clone https://github.com/changliu00/config.git
-rm -f ~/.bashrc
+rm -f ~/.bashrc ~/.tmux.conf ~/.vimrc ~/.gitconfig
 ln -s ~/config/bashrc ~/.bashrc
 ln -s ~/config/tmux.conf ~/.tmux.conf
 ln -s ~/config/vimrc ~/.vimrc

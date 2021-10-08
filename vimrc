@@ -342,7 +342,7 @@ Plugin 'tpope/vim-surround' " See also <https://towardsdatascience.com/how-i-lea
 " `ys2aw*`: add '*' pair surrounding two words under cursor. `aw`: around words.
 " `veeeeS"`: visually select and surround with '"'.
 " `dst`, `cst"`: delete/change an html tag.
-nmap S ysiw
+nmap S ysaw
 
 " End Added by me
 """""""""""""""""""""""""""""""""""""
