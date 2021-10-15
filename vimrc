@@ -279,8 +279,8 @@ let g:sonokai_disable_italic_comment = 1
 
 "Plugin 'ShowPairs' " for highlighting the matching pair surrounding the current cursor location. See <http://www.vim.org/scripts/script.php?script_id=626>
 "Plugin 'jiangmiao/auto-pairs' " COMMENTED for undesired functionality. For inserting or deleting brackets, parens, quotes in pair. See <https://github.com/vim-scripts/Auto-Pairs>
-"Plugin 'luochen1990/rainbow' " for visualizing paired brackets
-Plugin 'frazrepo/vim-rainbow' " for visualizing paired brackets; enhanced version
+Plugin 'luochen1990/rainbow' " for visualizing paired brackets
+"Plugin 'frazrepo/vim-rainbow' " for visualizing paired brackets; enhanced version but with bug
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
 Plugin 'suan/vim-instant-markdown', {'rtp': 'after'} " Markdown Preview
