@@ -297,7 +297,7 @@ map <leader>ms :InstantMarkdownStop<CR>
 Plugin 'easymotion/vim-easymotion'
 map <leader> <Plug>(easymotion-prefix)
 " Jump to anywhere with only `s{char}{target}`. Use `s<CR>` to repeat last find motion.
-"map s <Plug>(easymotion-s)
+map s <Plug>(easymotion-s)
 "map S <Plug>(easymotion-s2)
 "map <space> <Plug>(easymotion-f)
 "map <space><space> <Plug>(easymotion-F)
@@ -306,12 +306,14 @@ map <leader> <Plug>(easymotion-prefix)
 "map <S-space><S-space> <Plug>(easymotion-T)
 "map <C-space> <Plug>(easymotion-t)
 "map <C-S-space> <Plug>(easymotion-T)
-map <space> <Plug>(easymotion-s)
-map <space><space> <Plug>(easymotion-bd-t)
+"map <space> <Plug>(easymotion-s)
+"map <space><space> <Plug>(easymotion-bd-t)
+map <space> <Plug>(easymotion-bd-fl)
 "map F <Plug>(easymotion-bd-fl)
 "map T <Plug>(easymotion-bd-tl)
-map - <Plug>(easymotion-bd-fl)
-map _ <Plug>(easymotion-bd-tl)
+"map - <Plug>(easymotion-bd-fl)
+map - <Plug>(easymotion-bd-tl)
+"map _ <Plug>(easymotion-bd-tl)
 "map w <Plug>(easymotion-bd-wl)
 "map e <Plug>(easymotion-bd-el)
 " Use uppercase target labels and type as a lower case
@@ -342,7 +344,7 @@ Plugin 'tpope/vim-surround' " See also <https://towardsdatascience.com/how-i-lea
 " `ys2aw*`: add '*' pair surrounding two words under cursor. `aw`: around words.
 " `veeeeS"`: visually select and surround with '"'.
 " `dst`, `cst"`: delete/change an html tag.
-nmap S ysaw
+"nmap S ysaw
 
 " End Added by me
 """""""""""""""""""""""""""""""""""""
@@ -487,7 +489,8 @@ endif
 " Map <space> to / (search) and Ctrl-<space> to ? (backwards search)
 "nnoremap <space> /
 "nnoremap <C-space> ?
-nnoremap s :%s/
+"nnoremap s :%s/
+nnoremap S :%s/
 "map s :%s///gc<Left><Left><Left>
 "map s :%s/<C-r><C-w>//gc<Left><Left><Left>
 
