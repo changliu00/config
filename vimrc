@@ -1177,4 +1177,5 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 " * `syntax off`: stop syntax highlight.
 " * `:h(elp) something` then press `<C-d>` or `<tab>` (before `<CR>`) to see topics. Use tags to jump.
 " * `:set so=999` makes the cursor always in the middle of the screen when scrolling.
+" * `vim -q <(grep -nr pattern *.py */*.py)` opens grepped files at the lines in error mode.
 "
