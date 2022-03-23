@@ -664,9 +664,12 @@ nmap <leader>tn :tabnew
 "map <leader>tm :tabmove 
 "map <leader>t<leader> :tabnext
 
-" Let `gl` (or, `<leader>tl`) toggle between this and the last accessed tab
+" Easier finger move
+nmap gl gt
+nmap gh gT
+" Let `go` toggle between this and the last accessed tab
 let g:lasttab = 1
-nmap gl :exe "tabn ".g:lasttab<CR>
+nmap go :exe "tabn ".g:lasttab<CR>
 autocmd TabLeave * let g:lasttab = tabpagenr()
 
 
