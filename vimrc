@@ -1068,7 +1068,7 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 " => Notes
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 1. Search and replace. <https://vim.fandom.com/wiki/Search_and_replace> <https://learnbyexample.gitbooks.io/vim-reference/content/Regular_Expressions.html>
-" * Patterns:
+" * Patterns (`h pattern`):
 "   - '(', ')', '{', '}', '?' are normal characters. '[', ']', '*', '.', '^', '$', '&', '\', '/' are not.
 "   - `A.*Z`:
 "     . `.` matches any character except newline.
@@ -1079,6 +1079,13 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 "   - `A[a-z,,,\,|]*Z`: `[a-z,,,\,|]` matches a character either in `[a-z]` or ',' or '\' or '|'.
 "     `[^a-z,,,\,|]` negates all such characters.
 "   - `abc\?d` matches 'abcd' and 'abd'. `a\(bc\)\?d` matches 'abcd' and 'ad'.
+"   - For matching a paired bracket with possibly nested brackets inside:
+"     - Cannot use regex to match infinitely nested patterns in Vim
+"       <https://vi.stackexchange.com/questions/16323/replace-matching-parentheses/16324#16324?newreg=e8f58c1ed9d9452b99d510ce78b8aae9>.
+"     - For 'monotone/one-peak' nested patterns like '{a{b{c}d}e}', use `{[^}]*[^{]*}`.
+"       But it fails for '{a{b}c{d}}'. For this 'two-peak' pattern, use `{[^}]*[^{]*\({[^}]*[^{]*}\)*}`,
+"       which is a recursion of the 'one-peak' pattern. But it fails for the 'one-peak' pattern if followed by further brackets.
+"       <https://stackoverflow.com/questions/15301708/perl-regular-expression-match-nested-brackets>
 " * Search with easy input <https://vim.fandom.com/wiki/Searching>:
 "   - `/<C-r><C-w or -a>` inputs the <cword> or <cWORD> under cursor.
 "   - `/<CR>` repeats the last search (also works for `?`, `:s`, `:g`). Useful to alter/confirm the search direction of `n`/`N`.
@@ -1092,12 +1099,12 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 "   - 'i': ignore case. 'I': case-sensitive.
 "   - 'e': don't break command if no search string found.
 " * The pair `\(`,`\)`:
-"   Stores the matched string, and the string can be recovered by `\1`,`\2`,... according to the order of match.
+"   Groups patterns and stores the matched string, and the string can be recovered by `\1`,`\2`,... according to the order of match.
 "   - `:%s/p_{\([a-z,,,\,|]*\)}/p(\1)/gc`: replaces anything like 'p_{s,\zzt,y|x}' by 'p(s,\zzt,y|x)'.
 "   - `:%s/p_{\(.\{-}\)}/p(\1)/gc`.
 " * `&` in expression: places everything matched in the match-part of the expression.
 "   - `:s/\(pattern\)/a\1b/` = `:s/pattern/a&b/`, but is more than that, e.g., `:s/lazy \(dog\|cat\)/& is now stupid \1/`.
-" * `&` in normal mode: repeat the last `:s` command.
+"   `&` in normal mode: repeat the last `:s` command.
 " * `:g/pattern`, or `:global/pattern/print`, prints all the lines that have 'pattern'.
 " * Replace in range <https://vim.fandom.com/wiki/Ranges>:
 "   - `:11,15s/old/new/g`: within lines (incl.). `:s/old/new/g`: within current line. `:%s/old/new/g`: all lines.
