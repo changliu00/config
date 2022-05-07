@@ -507,7 +507,7 @@ nnoremap <silent> <leader>q :noh<CR>
 nnoremap <leader>* *<C-O>:%s///gn<CR>
 
 " Input Greek letters using digraph
-imap <expr> <C-L> '<C-K>'.getcharstr().'*'
+imap <expr> <C-L> '<C-K>'.nr2char(getchar()).'*'
 
 "" Ignore case when searching
 "set ic
