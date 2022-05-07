@@ -506,6 +506,9 @@ nnoremap <silent> <leader>q :noh<CR>
 " Show the number of match under cursor
 nnoremap <leader>* *<C-O>:%s///gn<CR>
 
+" Input Greek letters using digraph
+imap <expr> <C-L> '<C-K>'.getcharstr().'*'
+
 "" Ignore case when searching
 "set ic
 
