@@ -2,8 +2,11 @@ sudo add-apt-repository ppa:jonathonf/vim # latest but unofficial package for Vi
 sudo apt update
 sudo apt install --upgrade python3 python3-pip git tmux vim
 
-sudo pip3 install numpy torch torchvision matplotlib jupyter
+sudo python3 -m pip install --upgrade pip numpy torch torchvision matplotlib jupyter
 # sudo pip3 install sklearn scipy tqdm tabulate dalib
+sudo python3 -m pip install --upgrade "jax[cuda]" -f https://storage.googleapis.com/jax-releases/jax_releases.html
+# sudo python3 -m pip install "jax[cuda10_cudnn83]" -f https://storage.googleapis.com/jax-releases/jax_releases.html # Check CUDA version: `nvcc --version`, check CuDNN version: `cat /usr/include/x86_64-linux-gnu/cudnn_v*.h | grep CUDNN_MAJOR -A 2`
+sudo python3 -m pip install --upgrade jaxlib flax
 
 mkdir ~/.ssh # run on local: `cat ~/.ssh/id_ed25519.pub | ssh username@hostname 'cat >> .ssh/authorized_keys'`
 
