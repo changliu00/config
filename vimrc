@@ -801,8 +801,8 @@ map <leader>ss :setlocal spell!<CR>
 "set foldmethod=indent
 set foldmethod=syntax
 
-" Turn off folding when starting Vim
-set nofoldenable
+"" Turn off folding when starting Vim
+"set nofoldenable
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -974,6 +974,14 @@ let g:tex_items = '\\bibitem\|\\item' " Default = '\\bibitem\|\\item'
 let g:tex_itemize_env = 'itemize\|description\|enumerate\|thebibliography' " Default = 'itemize\|description\|enumerate\|thebibliography'
 let g:tex_noindent_env = 'document\|verbatim\|comment\|lstlisting' " Default = 'document\|verbatim\|comment\|lstlisting'
 let g:tex_indent_ifelsefi = 0 " Default = 1
+
+" Other options
+if (&filetype != 'tex') && (&filetype != 'bib')
+	let g:indentLine_enabled=0 " Disable 'indentline'
+	let g:loaded_youcompleteme=1 " Do not load 'youcompleteme'
+	set spell
+	" set nofoldenable " Does not work for now
+endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
