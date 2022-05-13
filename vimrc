@@ -257,8 +257,17 @@ set t_Co=256
 set encoding=utf8
 
 Plugin 'Yggdroot/indentLine' " See <https://github.com/Yggdroot/indentLine>
+"It sets `conceallevel = 2` and `concealcursor = 'inc'`.
 let g:indentLine_char = '|'
+autocmd FileType tex,latex,bib,bibtex let g:indentLine_setColors = 0 " Do not overwrite 'conceal' color for tex files
+"let g:indentLine_defaultGroup = 'SpecialKey' " Use the same colors as the 'SpecialKey' highlight group
+"let g:indentLine_color_term = 239 | let g:indentLine_bgcolor_term = 202 " Customize conceal color
 nmap <leader>ii :IndentLinesToggle<CR>
+
+Plugin 'KeitaNakamura/tex-conceal.vim'
+
+" Toggle conceal
+nnoremap coc :set <C-R>=(&cole>1) ? 'cole=0' : 'cole=2'<CR><CR>
 
 "..................................
 " -- Vim-scripts repos
@@ -507,7 +516,17 @@ nnoremap <silent> <leader>q :noh<CR>
 nnoremap <leader>* *<C-O>:%s///gn<CR>
 
 " Input Greek letters using digraph
-imap <expr> <C-L> '<C-K>'.nr2char(getchar()).'*'
+imap <expr> <C-G> '<C-K>'.nr2char(getchar()).'*'
+"inoremap <silent> <C-G>s <C-K>s* " To resolve conflict with 'vim-surround'. This does not work here, nor does 'iunmap'. Put it in `~/.vim/after/plugin/somename.vim`
+imap <C-G>< <C-K>=<
+imap <C-G>> <C-K>>=
+imap <C-G>~ <C-K>?2
+imap <C-G>! <C-K>!=
+imap <C-G>+ <C-K>+-
+imap <C-G>- <C-K>-+
+imap <expr> <C-H> '<C-K>'.nr2char(getchar()).'S'
+imap <expr> <C-L> '<C-K>'.nr2char(getchar()).'s'
+
 
 "" Ignore case when searching
 "set ic
@@ -567,6 +586,9 @@ syntax enable  " Only define colors for groups that don't have highlighting yet.
 " Recommended: solarized, molokai, phd, desert, wombat; sonokai
 colorscheme molokai
 set background=dark
+"highlight Conceal ctermfg=109 ctermbg=NONE guifg=#ff0000 guibg=#00ff00
+"highlight Conceal ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE
+autocmd Colorscheme * highlight! link Conceal Special
 
 "" Set extra options when running in GUI mode
 "if has("gui_running")
@@ -976,12 +998,10 @@ let g:tex_noindent_env = 'document\|verbatim\|comment\|lstlisting' " Default = '
 let g:tex_indent_ifelsefi = 0 " Default = 1
 
 " Other options
-if (&filetype != 'tex') && (&filetype != 'bib')
-	let g:indentLine_enabled=0 " Disable 'indentline'
-	let g:loaded_youcompleteme=1 " Do not load 'youcompleteme'
-	set spell
-	" set nofoldenable " Does not work for now
-endif
+"if &filetype ==? 'tex' || &filetype ==? 'bib' | [commands] | endif " This does not work! When `.vimrc` is loaded, file type is unknown! Try `echom 'a'.&filetype.'b'`, which gives 'ab'.
+autocmd FileType tex,latex,bib,bibtex let g:indentLine_enabled=0 " Disable 'indentline' to avoid conceal conflict
+autocmd FileType tex,latex,bib,bibtex let g:loaded_youcompleteme=1 " Do not load 'youcompleteme'
+autocmd FileType tex,latex,bib,bibtex set spell | set nofoldenable | set cole=2
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
