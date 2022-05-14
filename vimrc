@@ -174,7 +174,7 @@ set updatetime=1000 " Default = 4000. Also the time delay to write swap files
 "      sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8`
 Plugin 'ycm-core/YouCompleteMe'
 "let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py' " Specify the configuration file (This is default)
-let g:ycm_auto_trigger = 1 " When set to 0, use <C-space> to force semantic completion
+autocmd FileType * if index(['tex','latex','bib','bibtex'], &filetype) >= 0 | let g:ycm_auto_trigger = 0 | endif " When set to 0, use <C-space> to force semantic completion. Default = 1
 nnoremap <leader>yy :let g:ycm_auto_trigger = !g:ycm_auto_trigger<CR>
 " Do the same as the subcommand 'GoToDefinitionElseDeclaration' (which is only for C#)
 nnoremap <leader>yg :YcmCompleter GoTo<CR>
@@ -264,7 +264,7 @@ autocmd FileType tex,latex,bib,bibtex let g:indentLine_setColors = 0 " Do not ov
 "let g:indentLine_color_term = 239 | let g:indentLine_bgcolor_term = 202 " Customize conceal color
 nmap <leader>ii :IndentLinesToggle<CR>
 
-Plugin 'KeitaNakamura/tex-conceal.vim'
+Plugin 'changliu00/tex-conceal.vim' " 'KeitaNakamura/tex-conceal.vim'
 
 " Toggle conceal
 nnoremap coc :set <C-R>=(&cole>1) ? 'cole=0' : 'cole=2'<CR><CR>
@@ -588,7 +588,7 @@ colorscheme molokai
 set background=dark
 "highlight Conceal ctermfg=109 ctermbg=NONE guifg=#ff0000 guibg=#00ff00
 "highlight Conceal ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE
-autocmd Colorscheme * highlight! link Conceal Special
+autocmd Colorscheme * highlight! link Conceal Macro " Operator Special SpecialKey
 
 "" Set extra options when running in GUI mode
 "if has("gui_running")
@@ -1000,8 +1000,7 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 " Other options
 "if &filetype ==? 'tex' || &filetype ==? 'bib' | [commands] | endif " This does not work! When `.vimrc` is loaded, file type is unknown! Try `echom 'a'.&filetype.'b'`, which gives 'ab'.
 autocmd FileType tex,latex,bib,bibtex let g:indentLine_enabled=0 " Disable 'indentline' to avoid conceal conflict
-autocmd FileType tex,latex,bib,bibtex let g:loaded_youcompleteme=1 " Do not load 'youcompleteme'
-autocmd FileType tex,latex,bib,bibtex set spell | set nofoldenable | set cole=2
+autocmd FileType tex,latex,bib,bibtex set spell | set nofoldenable | set cole=2 | set cocu=inc
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
