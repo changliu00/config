@@ -588,7 +588,7 @@ colorscheme molokai
 set background=dark
 "highlight Conceal ctermfg=109 ctermbg=NONE guifg=#ff0000 guibg=#00ff00
 "highlight Conceal ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE
-autocmd Colorscheme * highlight! link Conceal Macro " Operator Special SpecialKey
+autocmd Colorscheme * highlight! link Conceal Macro " Identifier Operator Special SpecialKey
 
 "" Set extra options when running in GUI mode
 "if has("gui_running")
