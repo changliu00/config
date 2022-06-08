@@ -134,3 +134,8 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+## For enabling the jax package working, which requires CUDA-11
+#export PATH=/usr/local/cuda-11/bin:${PATH:+:${PATH}}
+#export LD_LIBRARY_PATH=/usr/local/cuda-11/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
