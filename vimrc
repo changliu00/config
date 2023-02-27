@@ -131,7 +131,7 @@ set updatetime=1000 " Default = 4000. Also the time delay to write swap files
 "Plugin 'Valloric/YouCompleteMe' " Old version. See <https://bitbucket.org/Alexander-Shukaev/vim-youcompleteme-for-windows/src/master/> for Windows
 " For Windows, requires:
 " 1. (G)Vim is installed/compiled with Python support.
-"  - Run `:version` in Vim to see if 'python', 'python3' (or 'python/dyn',
+"  - Run `:ver(sion)` in Vim to see if 'python', 'python3' (or 'python/dyn',
 "    'python3/dyn' for Windows) are included (with the '+' sign).
 "  - If NOT (as for the terminal Vim in Windows following official .exe
 "    installation), a pre-compiled binary archive can be downloaded from
@@ -139,11 +139,23 @@ set updatetime=1000 " Default = 4000. Also the time delay to write swap files
 "    and Python-3.8 support; also check <https://github.com/vim/vim-win32-installer/releases>
 "    and the 'more information' link therein). Note to select 32-bit (x86)
 "    or 64-bit (x64) to match that of the installed Python dll.
+"  - Vim 9.0 currently has problem in rendering concealed characters. Recommend Vim 8.2.
+"  - If no auto-install exe file for the desired (python-compiled, 64-bit,
+"    etc.) version (only an archive of program files available), then first
+"    install using the standard auto-install exe file for the standard version
+"    (probably not python-compiled and 32-bit) for system awareness (e.g., you
+"    can uninstall Vim through 'Settings', and there is an auto-generated
+"    `vim.bat` file in `C:\Windows\` so that you can use Vim from command line
+"    (e.g., in PowerShell)), then replace the program files in
+"    `C:\Program\ Files\ (x86)\Vim\vim82\` with those of the desired version.
 " 2. The right Python dynamic link library (for Windows).
 "  - Run `:echo has('python')` and `:python import sys; print(sys.version)`
 "    (and for `python3`) to check if this is successful.
-"  - If NOT (as the case where the Python dll's are not registered in the
-"    path), explicitly set the path to the matching Python dll's:
+"  - If NOT (as is the case where the Python dll's are not registered in the
+"    path; so to avoild this, check 'Add python.exe to PATH' when installing it;
+"    no need to install for all users (though recommended), nor a path directly
+"    to the dll file (auto-added path to e.g. '...\Python38\' suffices)),
+"    explicitly set the path to the matching Python dll's:
 "      `set pythondll=C:\Program\ Files\Python27\python27.dll`
 "      `set pythonhome=C:\Program\ Files\Python27`
 "      `set pythonthreedll=C:\Program\ Files\Python38\python38.dll`
