@@ -184,6 +184,11 @@ set updatetime=1000 " Default = 4000. Also the time delay to write swap files
 "      sudo apt-get install g++-8
 "      sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 700 --slave /usr/bin/g++ g++ /usr/bin/g++-7
 "      sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8`
+" 4. In case of the error 'CMake Error at /usr/share/cmake-3.22/Modules/FindPackageHandleStandardArgs.cmake:230 (message):
+"        Could NOT find Python3: Found unsuitable version "3.10.12", required range
+"        is "3.6...3.10" (found /usr/bin/python3, found components: Interpreter [...]',
+"    edit file './third_party/ycmd/cpp/CMakeLists.txt' Line 235: `find_package( Python3 3.6...3.10: [...]`:
+"                                                      change to `find_package( Python3 3.6...3.10.12: [...]`.
 Plugin 'ycm-core/YouCompleteMe'
 "let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py' " Specify the configuration file (This is default)
 autocmd FileType * if index(['tex','latex','bib','bibtex'], &filetype) >= 0 | let g:ycm_auto_trigger = 0 | endif " When set to 0, use <C-space> to force semantic completion. Default = 1
@@ -542,6 +547,10 @@ imap <expr> <C-L> '<C-K>'.nr2char(getchar()).'s'
 
 "" Ignore case when searching
 "set ic
+
+"" Swap * and g*
+"nnoremap * g*
+"nnoremap g* *
 
 "" When searching try to be smart about cases
 "set smartcase
