@@ -266,12 +266,53 @@ Plugin 'ap/vim-css-color'
 "map <leader>vv :Vifm<CR>
 ""vp :VsplitVifm<CR> vs :SplitVifm<CR> vd :DiffVifm<CR> vt :TabVifm<CR>
 
-"Plugin 'itchyny/lightline.vim'
-Plugin 'Lokaltog/vim-powerline' " See <https://github.com/Lokaltog/vim-powerline>
-let g:Powerline_symbols = 'unicode' " 'fancy'
 set laststatus=2
 set t_Co=256
 set encoding=utf8
+"Plugin 'Lokaltog/vim-powerline' " 'powerline/powerline' " See <https://github.com/Lokaltog/vim-powerline>
+"let g:Powerline_symbols = 'unicode' " 'fancy'
+Plugin 'itchyny/lightline.vim'
+let g:lightline = {
+      \ 'colorscheme': 'powerline',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified', 'method' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead',
+      \   'method': 'NearestMethodOrFunction'
+      \ },
+      \ }
+
+Plugin 'liuchengxu/vista.vim'
+" This requires installing ctags:
+" # install libjansson first to support json formats
+" sudo apt-get install libjansson-dev
+" # then compile and install universal-ctags.
+" # NOTE: Don't use `sudo apt install ctags`, which will install exuberant-ctags and it's not guaranteed to work with vista.vim.
+" git clone https://github.com/universal-ctags/ctags.git --depth=1
+" cd ctags
+" ./autogen.sh
+" ./configure
+" make
+" sudo make install
+nnoremap <leader>vv :Vista!!<CR>
+let g:vista_icon_indent = ["▸ ", ""] " ["╰─▸ ", "├─▸ "]
+let g:vista_fzf_preview = ['right:50%']
+let g:vista#renderer#enable_icon = 1
+let g:vista#renderer#icons = {
+\   "function": "\uf794",
+\   "variable": "\uf71b",
+\  }
+" Display function name in status line:
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+set statusline+=%{NearestMethodOrFunction()}
+" By default vista.vim never run if you don't call it explicitly.
+" If you want to show the nearest function in your statusline automatically,
+" you can add the following line to your vimrc
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 Plugin 'Yggdroot/indentLine' " See <https://github.com/Yggdroot/indentLine>
 "It sets `conceallevel = 2` and `concealcursor = 'inc'`.
@@ -545,12 +586,12 @@ imap <expr> <C-H> '<C-K>'.nr2char(getchar()).'S'
 imap <expr> <C-L> '<C-K>'.nr2char(getchar()).'s'
 
 
-"" Ignore case when searching
-"set ic
+" Ignore case when searching
+set ic
 
-"" Swap * and g*
-"nnoremap * g*
-"nnoremap g* *
+" Swap * and g*
+nnoremap * g*
+nnoremap g* *
 
 "" When searching try to be smart about cases
 "set smartcase
