@@ -199,9 +199,9 @@ nnoremap <leader>g :YcmCompleter GoTo<CR>
 nnoremap <leader>yi :YcmCompleter GoToImprecise<CR>
 nnoremap <leader>yr :YcmRestartServer<CR>
 nnoremap <leader>yu :YcmForceCompileAndDiagnostics<CR>
-let g:ycm_min_num_of_chars_for_completion = 5 " Default = 2
+let g:ycm_min_num_of_chars_for_completion = 4 " Default = 2
 " If =99: turn off the identifier completion engine and just leave the semantic engine.
-nnoremap <leader>ys :let g:ycm_min_num_of_chars_for_completion = 104 - g:ycm_min_num_of_chars_for_completion<CR>
+nnoremap <leader>ys :let g:ycm_min_num_of_chars_for_completion = 103 - g:ycm_min_num_of_chars_for_completion<CR>
 let g:ycm_max_num_candidates = 30 " Default = 50
 let g:ycm_confirm_extra_conf = 0 " Stop confirming loading extra configuration file when entering vim
 "let g:ycm_collect_identifiers_from_tag_files = 1 " Use the tags file produced by ctags
@@ -726,15 +726,24 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 " Smart way to move between windows (<C-w><C-j> etc auto. mapped to <C-w>j)
 let g:BASH_Ctrl_j = 'off'
 nnoremap <C-j> <C-w>j
+nnoremap <C-m> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
+nnoremap <C-t> <C-w><C-w>
+inoremap <C-j> <Esc><C-w>j
+inoremap <C-m> <Esc><C-w>j
+inoremap <C-k> <Esc><C-w>k
+inoremap <C-h> <Esc><C-w>h
+inoremap <C-l> <Esc><C-w>l
+inoremap <C-t> <Esc><C-w><C-w>
 
 " Make adjusing split sizes a bit more friendly
+nnoremap <silent> <C-w>j :resize -3<CR>
+nnoremap <silent> <C-w>m :resize -3<CR>
+nnoremap <silent> <C-w>k :resize +3<CR>
 nnoremap <silent> <C-w>h :vertical resize +3<CR>
 nnoremap <silent> <C-w>l :vertical resize -3<CR>
-nnoremap <silent> <C-w>k :resize +3<CR>
-nnoremap <silent> <C-w>j :resize -3<CR>
 
 " Change two split windows from vert to horiz or horiz to vert
 nnoremap <C-w>v <C-w>t<C-w>H
