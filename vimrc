@@ -393,6 +393,7 @@ let g:EasyMotion_use_upper = 1
 "let g:EasyMotion_smartcase = 1
 " Type `3` and match `3` & `#`
 "let g:EasyMotion_use_smartsign_us = 1
+inoremap <C-s> <Esc><Plug>(easymotion-s)
 
 " Compare Two Lines.
 Plugin 'changliu00/vim-compare-lines' " Forked from 'statox/vim-compare-lines'
@@ -578,16 +579,15 @@ nnoremap <silent> <leader>q :noh<CR>
 nnoremap <leader>* *<C-o>:%s///gn<CR>
 
 " Input Greek letters using digraph
-imap <expr> <C-g> '<C-k>'.nr2char(getchar()).'*'
-"inoremap <silent> <C-g>s <C-k>s* " To resolve conflict with 'vim-surround'. This does not work here, nor does 'iunmap'. Put it in `~/.vim/after/plugin/somename.vim`
-imap <C-g>< <C-k>=<
-imap <C-g>> <C-k>>=
-imap <C-g>~ <C-k>?2
-imap <C-g>! <C-k>!=
-imap <C-g>+ <C-k>+-
-imap <C-g>- <C-k>-+
-imap <expr> <C-h> '<C-k>'.nr2char(getchar()).'S'
-imap <expr> <C-l> '<C-k>'.nr2char(getchar()).'s'
+inoremap <expr> <C-q> '<C-k>'.nr2char(getchar()).'*' " Greek letter
+inoremap <C-q>< <C-k>=<
+inoremap <C-q>> <C-k>>=
+inoremap <C-q>~ <C-k>?2
+inoremap <C-q>! <C-k>!=
+inoremap <C-q>+ <C-k>+-
+inoremap <C-q>- <C-k>-+
+inoremap <expr> <C-u> '<C-k>'.nr2char(getchar()).'S' " superscript numbers
+inoremap <expr> <C-d> '<C-k>'.nr2char(getchar()).'s' " subscript numbers
 
 
 " Ignore case when searching
@@ -732,7 +732,7 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 nnoremap <C-t> <C-w><C-w>
 inoremap <C-j> <Esc><C-w>j
-inoremap <C-m> <Esc><C-w>j
+"inoremap <C-m> <Esc><C-w>j " same code as <CR>, i.e. <Enter>, in insert mode
 inoremap <C-k> <Esc><C-w>k
 inoremap <C-h> <Esc><C-w>h
 inoremap <C-l> <Esc><C-w>l
@@ -774,6 +774,9 @@ let g:lasttab = 1
 nmap go :exe "tabn ".g:lasttab<CR>
 autocmd TabLeave * let g:lasttab = tabpagenr()
 
+inoremap <C-g>l <Esc>gt
+inoremap <C-g>h <Esc>gT
+inoremap <C-g>o '<Esc>:exe "tabn ".g:lasttab<CR>'
 
 "" Opens a new tab with the current buffer's path
 "" Super useful when editing files in the same directory
