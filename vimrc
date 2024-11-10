@@ -194,7 +194,7 @@ Plugin 'ycm-core/YouCompleteMe'
 autocmd FileType * if index(['tex','latex','bib','bibtex'], &filetype) >= 0 | let g:ycm_auto_trigger = 0 | endif " When set to 0, use <C-space> to force semantic completion. Default = 1
 nnoremap <leader>yy :let g:ycm_auto_trigger = !g:ycm_auto_trigger<CR>
 " Do the same as the subcommand 'GoToDefinitionElseDeclaration' (which is only for C#)
-nnoremap <leader>yg :YcmCompleter GoTo<CR>
+nnoremap <leader>g :YcmCompleter GoTo<CR>
 " Do not recompile the file with libclang (trades correctness for speed)
 nnoremap <leader>yi :YcmCompleter GoToImprecise<CR>
 nnoremap <leader>yr :YcmRestartServer<CR>
@@ -214,19 +214,19 @@ nmap <leader>yh <Plug>(YCMHover)
 "Plugin 'scrooloose/syntastic' " for syntax check. Too expensive
 "Plugin 't9md/vim-quickhl' " for highlighting. See <https://github.com/t9md/vim-quickhl>
 
-"nnoremap <leader>ee :Explore<CR>
+"nnoremap <leader>e :Explore<CR>
 "
 "Plugin 'vim-scripts/winmanager' " See <https://www.vim.org/scripts/script.php?script_id=95>
-"nnoremap <leader>ee :WMToggle<CR>
+"nnoremap <leader>e :WMToggle<CR>
 "let g:winManagerWindowLayout='FileExplorer|TagList' " Set the plugins we want to manage.
 "let g:winManagerWindowLayout='FileExplorer'
 "let g:persistentBehaviour=0 " Exit Vim if winmanager is the last window.
-""nnoremap <C-W><C-M> :WMToggle<CR>
-""nnoremap <C-W><C-B> :BottomExplorerWindow<CR>
-""nnoremap <C-W><C-F> :FirstExplorerWindow<CR>
+""nnoremap <C-w><C-m> :WMToggle<CR>
+""nnoremap <C-w><C-b> :BottomExplorerWindow<CR>
+""nnoremap <C-w><C-f> :FirstExplorerWindow<CR>
 "
 Plugin 'preservim/nerdtree' " Another file system explorer
-nnoremap <leader>ee :NERDTreeToggle<CR>
+nnoremap <leader>e :NERDTreeToggle<CR>
 " Open a NERDTree automatically when Vim starts up with no file specified
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
@@ -284,6 +284,8 @@ let g:lightline = {
       \ },
       \ }
 
+"Plugin 'tyru/current-func-info.vim' " A light-weighted plugin for displaying function name in status line
+"let &statusline .= ' [%{cfi#format("%s", "")}]'
 Plugin 'liuchengxu/vista.vim'
 " This requires installing ctags:
 " # install libjansson first to support json formats
@@ -297,13 +299,13 @@ Plugin 'liuchengxu/vista.vim'
 " make
 " sudo make install
 nnoremap <leader>vv :Vista!!<CR>
-let g:vista_icon_indent = ["▸ ", ""] " ["╰─▸ ", "├─▸ "]
-let g:vista_fzf_preview = ['right:50%']
-let g:vista#renderer#enable_icon = 1
-let g:vista#renderer#icons = {
-\   "function": "\uf794",
-\   "variable": "\uf71b",
-\  }
+"let g:vista_icon_indent = ["▸ ", ""] " ["╰─▸ ", "├─▸ "]
+"let g:vista_fzf_preview = ['right:50%']
+"let g:vista#renderer#enable_icon = 1
+"let g:vista#renderer#icons = {
+"\   "function": "\uf794",
+"\   "variable": "\uf71b",
+"\  }
 " Display function name in status line:
 function! NearestMethodOrFunction() abort
   return get(b:, 'vista_nearest_method_or_function', '')
@@ -325,7 +327,9 @@ nmap <leader>ii :IndentLinesToggle<CR>
 Plugin 'changliu00/tex-conceal.vim' " 'KeitaNakamura/tex-conceal.vim'
 
 " Toggle conceal
-nnoremap coc :set <C-R>=(&cole>1) ? 'cole=0' : 'cole=2'<CR><CR>
+nnoremap coc :set <C-r>=(&cole>1) ? 'cole=0' : 'cole=2'<CR><CR>
+
+"Plugin 'maxbrunsfeld/vim-yankstack' " A simpler alternative to 'yankring'
 
 "..................................
 " -- Vim-scripts repos
@@ -470,7 +474,7 @@ set history=500
 " Set to auto read when a file is changed from the outside
 set autoread
 
-" Automatically write before moving to another file using tags, make, or <C-O> <C-I>, etc.
+" Automatically write before moving to another file using tags, make, or <C-o> <C-i>, etc.
 "set autowrite
 
 "" With a map leader it's possible to do extra key combinations like <leader>w saves the current file
@@ -571,19 +575,19 @@ nnoremap <expr> , (getcharsearch().forward ? ',' : ';')
 nnoremap <silent> <leader>q :noh<CR>
 
 " Show the number of match under cursor
-nnoremap <leader>* *<C-O>:%s///gn<CR>
+nnoremap <leader>* *<C-o>:%s///gn<CR>
 
 " Input Greek letters using digraph
-imap <expr> <C-G> '<C-K>'.nr2char(getchar()).'*'
-"inoremap <silent> <C-G>s <C-K>s* " To resolve conflict with 'vim-surround'. This does not work here, nor does 'iunmap'. Put it in `~/.vim/after/plugin/somename.vim`
-imap <C-G>< <C-K>=<
-imap <C-G>> <C-K>>=
-imap <C-G>~ <C-K>?2
-imap <C-G>! <C-K>!=
-imap <C-G>+ <C-K>+-
-imap <C-G>- <C-K>-+
-imap <expr> <C-H> '<C-K>'.nr2char(getchar()).'S'
-imap <expr> <C-L> '<C-K>'.nr2char(getchar()).'s'
+imap <expr> <C-g> '<C-k>'.nr2char(getchar()).'*'
+"inoremap <silent> <C-g>s <C-k>s* " To resolve conflict with 'vim-surround'. This does not work here, nor does 'iunmap'. Put it in `~/.vim/after/plugin/somename.vim`
+imap <C-g>< <C-k>=<
+imap <C-g>> <C-k>>=
+imap <C-g>~ <C-k>?2
+imap <C-g>! <C-k>!=
+imap <C-g>+ <C-k>+-
+imap <C-g>- <C-k>-+
+imap <expr> <C-h> '<C-k>'.nr2char(getchar()).'S'
+imap <expr> <C-l> '<C-k>'.nr2char(getchar()).'s'
 
 
 " Ignore case when searching
@@ -700,7 +704,7 @@ set ai "Auto indent
 set si "Smart indent
 set cindent " Works better in most cases but is more strict. Overrides si
 set wrap "Wrap lines. default on.
-nnoremap <leader>ww :set wrap!<CR>
+nnoremap <leader>w :set wrap!<CR>
 
 
 """"""""""""""""""""""""""""""
@@ -719,24 +723,24 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 "map j gj
 "map k gk
 
-"" Smart way to move between windows (<C-w><C-j> etc auto. mapped to <C-w>j)
-"map <C-j> <C-W>j
-"map <C-k> <C-W>k
-"map <C-h> <C-W>h
-"map <C-l> <C-W>l
+" Smart way to move between windows (<C-w><C-j> etc auto. mapped to <C-w>j)
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
 
 " Make adjusing split sizes a bit more friendly
-noremap <silent> <C-W><Left> :vertical resize +3<CR>
-noremap <silent> <C-W><Right> :vertical resize -3<CR>
-noremap <silent> <C-W><Up> :resize +3<CR>
-noremap <silent> <C-W><Down> :resize -3<CR>
+noremap <silent> <C-w><Left> :vertical resize +3<CR>
+noremap <silent> <C-w><Right> :vertical resize -3<CR>
+noremap <silent> <C-w><Up> :resize +3<CR>
+noremap <silent> <C-w><Down> :resize -3<CR>
 
 " Change two split windows from vert to horiz or horiz to vert
-nmap <C-w>V <C-w>t<C-w>H
-nmap <C-w>S <C-w>t<C-w>K
+nnoremap <C-w>v <C-w>t<C-w>H
+nnoremap <C-w>h <C-w>t<C-w>K
 
-" Open terminal inside Vim
-nmap <C-w>T :vnew term://bash<CR>
+"" Open terminal inside Vim
+"nmap <C-w>T :vnew term://bash<CR>
 
 "" Close the current buffer
 "map <leader>bd :Bclose<CR>
@@ -745,15 +749,16 @@ nmap <C-w>T :vnew term://bash<CR>
 "map <leader>ba :bufdo bd<CR>
 
 " Useful mappings for managing tabs
-nmap <leader>tn :tabnew 
+nnoremap gt :tabnew 
+"nmap <leader>tn :tabnew 
 "map <leader>to :tabonly<CR>
 "map <leader>tc :tabclose<CR>
 "map <leader>tm :tabmove 
 "map <leader>t<leader> :tabnext
 
 " Easier finger move
-nmap gl gt
-nmap gh gT
+nnoremap gl gt
+nnoremap gh gT
 " Let `go` toggle between this and the last accessed tab
 let g:lasttab = 1
 nmap go :exe "tabn ".g:lasttab<CR>
@@ -893,7 +898,7 @@ set foldmethod=syntax
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Remove the Windows ^M - when the encodings gets messed up
-"noremap <leader>m mmHmt:%s/<C-V><CR>//ge<CR>'tzt'm
+"noremap <leader>m mmHmt:%s/<C-v><CR>//ge<CR>'tzt'm
 
 "" Quickly open a buffer for scribble
 "map <leader>q :e ~/buffer<CR>
@@ -1095,9 +1100,9 @@ autocmd FileType tex,latex,bib,bibtex set spell | set nofoldenable | set cole=2 
 "
 "" -- Commands --
 "" Automatically complete the code using F3. Note that there should be no character following this mapping command, including <tab>.
-"imap <F3> <C-X><C-O>
+"imap <F3> <C-x><C-o>
 "" " Completion according to the included files.
-""imap <F2> <C-X><C-I>
+""imap <F2> <C-x><C-i>
 "
 "" To disable and enable the automatic OmniComplete actions
 "cmap dsom :let OmniCpp_MayCompleteDot=0<CR>:let OmniCpp_MayCompleteArrow=0<CR>:let OmniCpp_MayCompleteScope=0<CR>
@@ -1225,11 +1230,11 @@ autocmd FileType tex,latex,bib,bibtex set spell | set nofoldenable | set cole=2 
 " * '"': the default register for `c`,`d`,`s`,`x`,`y` and `p`.
 " * '+': the clipboard register.
 " * '0': always holds the last YANKED text (useful for multiple replace pastes).
-"   '1' to '9': hold the newest to oldest DELETED texts.
+"   '1' to '9': hold the newest to oldest DELETED texts as a queue.
 " * Read-only registers.
 "   - '.': last inserted text.
-"   - '%': current file path.
 "   - ':': most recently executed command.
+"   - '%': current file path.
 "   - '#': name of the alternate file. So `<C-^>` = `:e <C-r>#` = `:e #`.
 " * '=': the expression register, stores the result of a command/expression. E.g., `<C-r>=system('ls')<CR>` (insert mode).
 " * '/': the search register, stores the searched text.
@@ -1264,7 +1269,7 @@ autocmd FileType tex,latex,bib,bibtex set spell | set nofoldenable | set cole=2 
 "   - `]'`, `]``: the line/exact position of the next lowercase mark.
 " * Tags <https://vim.fandom.com/wiki/Browsing_programs_with_tags>:
 "   - Requires a tag file (Exuberant Ctags, easytags).
-"   - Jump to tag: `tag: tagname` or press `<C-]>` under 'tagname'. `<C-W>]` opens a new window.
+"   - Jump to tag: `tag: tagname` or press `<C-]>` under 'tagname'. `<C-w>]` opens a new window.
 "   - Jump back: `:pop`, or `<C-t>`. The `<C-o>`, `<C-i>` pair also works.
 "   - List tag stack: `:tags`.
 " 5. Command line history.
