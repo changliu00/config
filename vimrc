@@ -724,20 +724,21 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 "map k gk
 
 " Smart way to move between windows (<C-w><C-j> etc auto. mapped to <C-w>j)
+let g:BASH_Ctrl_j = 'off'
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
 " Make adjusing split sizes a bit more friendly
-noremap <silent> <C-w><Left> :vertical resize +3<CR>
-noremap <silent> <C-w><Right> :vertical resize -3<CR>
-noremap <silent> <C-w><Up> :resize +3<CR>
-noremap <silent> <C-w><Down> :resize -3<CR>
+nnoremap <silent> <C-w>h :vertical resize +3<CR>
+nnoremap <silent> <C-w>l :vertical resize -3<CR>
+nnoremap <silent> <C-w>k :resize +3<CR>
+nnoremap <silent> <C-w>j :resize -3<CR>
 
 " Change two split windows from vert to horiz or horiz to vert
 nnoremap <C-w>v <C-w>t<C-w>H
-nnoremap <C-w>h <C-w>t<C-w>K
+nnoremap <C-w>s <C-w>t<C-w>K
 
 "" Open terminal inside Vim
 "nmap <C-w>T :vnew term://bash<CR>
