@@ -776,7 +776,10 @@ autocmd TabLeave * let g:lasttab = tabpagenr()
 
 inoremap <C-g>l <Esc>gt
 inoremap <C-g>h <Esc>gT
-inoremap <C-g>o '<Esc>:exe "tabn ".g:lasttab<CR>'
+inoremap <C-g>o <Esc>:exe "tabn ".g:lasttab<CR>
+
+inoremap <C-f> <Esc><C-f>
+inoremap <C-b> <Esc><C-b>
 
 "" Opens a new tab with the current buffer's path
 "" Super useful when editing files in the same directory
