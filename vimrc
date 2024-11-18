@@ -194,7 +194,7 @@ Plugin 'ycm-core/YouCompleteMe'
 autocmd FileType * if index(['tex','latex','bib','bibtex'], &filetype) >= 0 | let g:ycm_auto_trigger = 0 | endif " When set to 0, use <C-space> to force semantic completion. Default = 1
 nnoremap <leader>yy :let g:ycm_auto_trigger = !g:ycm_auto_trigger<CR>
 " Do the same as the subcommand 'GoToDefinitionElseDeclaration' (which is only for C#)
-nnoremap <leader>g :YcmCompleter GoTo<CR>
+nnoremap <leader>f :YcmCompleter GoTo<CR>
 " Do not recompile the file with libclang (trades correctness for speed)
 nnoremap <leader>yi :YcmCompleter GoToImprecise<CR>
 nnoremap <leader>yr :YcmRestartServer<CR>
@@ -298,7 +298,7 @@ Plugin 'liuchengxu/vista.vim'
 " ./configure
 " make
 " sudo make install
-nnoremap <leader>vv :Vista!!<CR>
+nnoremap <leader>v :Vista!!<CR>
 "let g:vista_icon_indent = ["▸ ", ""] " ["╰─▸ ", "├─▸ "]
 "let g:vista_fzf_preview = ['right:50%']
 "let g:vista#renderer#enable_icon = 1
@@ -572,23 +572,8 @@ nnoremap <expr> N (v:searchforward ? 'N' : 'n')
 nnoremap <expr> ; (getcharsearch().forward ? ';' : ',')
 nnoremap <expr> , (getcharsearch().forward ? ',' : ';')
 
-"" Disable highlighting the last searched item
-nnoremap <silent> <leader>q :noh<CR>
-
 " Show the number of match under cursor
 nnoremap <leader>* *<C-o>:%s///gn<CR>
-
-" Input Greek letters using digraph
-inoremap <expr> <C-q> '<C-k>'.nr2char(getchar()).'*' " Greek letter
-inoremap <C-q>< <C-k>=<
-inoremap <C-q>> <C-k>>=
-inoremap <C-q>~ <C-k>?2
-inoremap <C-q>! <C-k>!=
-inoremap <C-q>+ <C-k>+-
-inoremap <C-q>- <C-k>-+
-inoremap <expr> <C-u> '<C-k>'.nr2char(getchar()).'S' " superscript numbers
-inoremap <expr> <C-d> '<C-k>'.nr2char(getchar()).'s' " subscript numbers
-
 
 " Ignore case when searching
 set ic
@@ -597,11 +582,17 @@ set ic
 nnoremap * g*
 nnoremap g* *
 
+nnoremap gs :let @/ = expand('<cword>')<CR>:set hlsearch<CR>
+nnoremap gS :let @/ = '\<'.expand('<cword>').'\>'<CR>:set hlsearch<CR>
+
 "" When searching try to be smart about cases
 "set smartcase
 
 " Highlight search results
 set hlsearch
+
+"" Disable highlighting the last searched item
+nnoremap <silent> <leader>q :noh<CR>
 
 " Makes search act like search in modern browsers
 set incsearch
@@ -670,6 +661,16 @@ set encoding=utf8
 "" Use Unix as the standard file type
 "set ffs=unix,dos,mac
 
+" Input Greek letters using digraph
+inoremap <expr> <C-q> '<C-k>'.nr2char(getchar()).'*' " Greek letter
+inoremap <C-q>< <C-k>=<
+inoremap <C-q>> <C-k>>=
+inoremap <C-q>~ <C-k>?2
+inoremap <C-q>! <C-k>!=
+inoremap <C-q>+ <C-k>+-
+inoremap <C-q>- <C-k>-+
+inoremap <expr> <C-u> '<C-k>'.nr2char(getchar()).'S' " superscript numbers
+inoremap <expr> <C-d> '<C-k>'.nr2char(getchar()).'s' " subscript numbers
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -726,13 +727,12 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 " Smart way to move between windows (<C-w><C-j> etc auto. mapped to <C-w>j)
 let g:BASH_Ctrl_j = 'off'
 nnoremap <C-j> <C-w>j
-nnoremap <C-m> <C-w>j
+nnoremap <C-n> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 nnoremap <C-t> <C-w><C-w>
 inoremap <C-j> <Esc><C-w>j
-"inoremap <C-m> <Esc><C-w>j " same code as <CR>, i.e. <Enter>, in insert mode
 inoremap <C-k> <Esc><C-w>k
 inoremap <C-h> <Esc><C-w>h
 inoremap <C-l> <Esc><C-w>l
@@ -740,7 +740,6 @@ inoremap <C-t> <Esc><C-w><C-w>
 
 " Make adjusing split sizes a bit more friendly
 nnoremap <silent> <C-w>j :resize -3<CR>
-nnoremap <silent> <C-w>m :resize -3<CR>
 nnoremap <silent> <C-w>k :resize +3<CR>
 nnoremap <silent> <C-w>h :vertical resize +3<CR>
 nnoremap <silent> <C-w>l :vertical resize -3<CR>
