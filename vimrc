@@ -194,7 +194,7 @@ Plugin 'ycm-core/YouCompleteMe'
 autocmd FileType * if index(['tex','latex','bib','bibtex'], &filetype) >= 0 | let g:ycm_auto_trigger = 0 | endif " When set to 0, use <C-space> to force semantic completion. Default = 1
 nnoremap <leader>yy :let g:ycm_auto_trigger = !g:ycm_auto_trigger<CR>
 " Do the same as the subcommand 'GoToDefinitionElseDeclaration' (which is only for C#)
-nnoremap <leader>f :YcmCompleter GoTo<CR>
+nnoremap gd :YcmCompleter GoTo<CR>
 " Do not recompile the file with libclang (trades correctness for speed)
 nnoremap <leader>yi :YcmCompleter GoToImprecise<CR>
 nnoremap <leader>yr :YcmRestartServer<CR>
@@ -758,7 +758,7 @@ nnoremap <C-w>s <C-w>t<C-w>K
 "map <leader>ba :bufdo bd<CR>
 
 " Useful mappings for managing tabs
-nnoremap gt :tabnew 
+nnoremap gb :tabnew
 "nmap <leader>tn :tabnew 
 "map <leader>to :tabonly<CR>
 "map <leader>tc :tabclose<CR>
