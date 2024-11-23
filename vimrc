@@ -581,6 +581,8 @@ set ic
 " Swap * and g*
 nnoremap * g*
 nnoremap g* *
+nnoremap # g#
+nnoremap g# #
 
 nnoremap gs :let @/ = expand('<cword>')<CR>:set hlsearch<CR>
 nnoremap gS :let @/ = '\<'.expand('<cword>').'\>'<CR>:set hlsearch<CR>
@@ -758,7 +760,7 @@ nnoremap <C-w>s <C-w>t<C-w>K
 "map <leader>ba :bufdo bd<CR>
 
 " Useful mappings for managing tabs
-nnoremap gb :tabnew
+nnoremap gb :tabnew 
 "nmap <leader>tn :tabnew 
 "map <leader>to :tabonly<CR>
 "map <leader>tc :tabclose<CR>
