@@ -760,7 +760,23 @@ nnoremap <C-w>s <C-w>t<C-w>K
 "map <leader>ba :bufdo bd<CR>
 
 " Useful mappings for managing tabs
-nnoremap gb :tabnew 
+nnoremap gt :tabnew 
+nnoremap 1gt 1gt
+nnoremap 2gt 2gt
+nnoremap 3gt 3gt
+nnoremap 4gt 4gt
+nnoremap 5gt 5gt
+nnoremap 6gt 6gt
+nnoremap 7gt 7gt
+nnoremap 8gt 8gt
+nnoremap 9gt 9gt
+nnoremap 10gt 10gt
+nnoremap 11gt 11gt
+nnoremap 12gt 12gt
+nnoremap 13gt 13gt
+nnoremap 14gt 14gt
+nnoremap 15gt 15gt
+nnoremap 16gt 16gt
 "nmap <leader>tn :tabnew 
 "map <leader>to :tabonly<CR>
 "map <leader>tc :tabclose<CR>
