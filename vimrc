@@ -195,6 +195,7 @@ autocmd FileType * if index(['tex','latex','bib','bibtex'], &filetype) >= 0 | le
 nnoremap <leader>yy :let g:ycm_auto_trigger = !g:ycm_auto_trigger<CR>
 " Do the same as the subcommand 'GoToDefinitionElseDeclaration' (which is only for C#)
 nnoremap gd :YcmCompleter GoTo<CR>
+nmap gD gTgd
 " Do not recompile the file with libclang (trades correctness for speed)
 nnoremap <leader>yi :YcmCompleter GoToImprecise<CR>
 nnoremap <leader>yr :YcmRestartServer<CR>
@@ -790,6 +791,25 @@ nnoremap gh gT
 let g:lasttab = 1
 nmap go :exe "tabn ".g:lasttab<CR>
 autocmd TabLeave * let g:lasttab = tabpagenr()
+
+" Duplicate the current file in a new tab with the same cursor location
+nnoremap gT :let lnum=line('.') \| let colnum=col('.') \| tabnew \| e # \| call cursor(lnum, colnum)<CR>
+nnoremap 1gT 1gT
+nnoremap 2gT 2gT
+nnoremap 3gT 3gT
+nnoremap 4gT 4gT
+nnoremap 5gT 5gT
+nnoremap 6gT 6gT
+nnoremap 7gT 7gT
+nnoremap 8gT 8gT
+nnoremap 9gT 9gT
+nnoremap 10gT 10gT
+nnoremap 11gT 11gT
+nnoremap 12gT 12gT
+nnoremap 13gT 13gT
+nnoremap 14gT 14gT
+nnoremap 15gT 15gT
+nnoremap 16gT 16gT
 
 inoremap <C-g>l <Esc>gt
 inoremap <C-g>h <Esc>gT
