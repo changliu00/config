@@ -403,8 +403,8 @@ Plugin 'changliu00/vim-compare-lines' " Forked from 'statox/vim-compare-lines'
 " Compare Two Blocks. Editing also enabled.
 Plugin 'AndrewRadev/linediff.vim'
 " `ca`: command alias. Visually select one block and `:CB`, and repeat for another block.
-ca CB Linediff
-ca CBreset LinediffReset
+command! CB Linediff
+command! CBreset LinediffReset
 
 " Repeat the last command of a plugin.
 Plugin 'tpope/vim-repeat'
@@ -810,6 +810,39 @@ nnoremap 13gT 13gT
 nnoremap 14gT 14gT
 nnoremap 15gT 15gT
 nnoremap 16gT 16gT
+
+" Open the file with name under the cursor in a new tab
+nnoremap gF :exe "tabnew ".expand('<cfile>')<CR>
+
+" Open the file in an existing tab in a split window of the current tab
+function! OpenFileFromTabN(cmd, n, close_tab)
+  if a:n < 1 || a:n > tabpagenr('$')
+    echoerr "Invalid tab number"
+    return
+  endif
+  let bufnr = tabpagebuflist(a:n)[tabpagewinnr(a:n) - 1]
+  execute a:cmd . ' #' . bufnr
+  if a:cmd != "diffs"
+    let winid = win_getid(tabpagewinnr(a:n), a:n)
+    let pos = split(win_execute(winid, 'echo getpos(".")')) " The direct output of `win_e...` is a string
+    call cursor(pos[1], pos[2])
+  endif
+  if a:close_tab
+    execute "tabclose " . a:n
+  endif
+endfunction
+command! -nargs=1 Vsplit call OpenFileFromTabN("vsplit", <args>, v:false)
+command! -nargs=1 VSPLIT call OpenFileFromTabN("vsplit", <args>, v:true)
+command! -nargs=1 Split call OpenFileFromTabN("split", <args>, v:false)
+command! -nargs=1 SPLIT call OpenFileFromTabN("split", <args>, v:true)
+command! -nargs=1 Diffsplit call OpenFileFromTabN("diffs", <args>, v:false)
+command! -nargs=1 DIFFSPLIT call OpenFileFromTabN("diffs", <args>, v:true)
+command! -nargs=1 Vsp Vsplit <args>
+command! -nargs=1 VSP VSPLIT <args>
+command! -nargs=1 Sp Split <args>
+command! -nargs=1 SP SPLIT <args>
+command! -nargs=1 Diffs Diffsplit <args>
+command! -nargs=1 DIFFS DIFFSPLIT <args>
 
 inoremap <C-g>l <Esc>gt
 inoremap <C-g>h <Esc>gT
