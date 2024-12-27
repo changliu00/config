@@ -328,7 +328,8 @@ nmap <leader>ii :IndentLinesToggle<CR>
 Plugin 'changliu00/tex-conceal.vim' " 'KeitaNakamura/tex-conceal.vim'
 
 " Toggle conceal
-nnoremap coc :set <C-r>=(&cole>1) ? 'cole=0' : 'cole=2'<CR><CR>
+nnoremap <C-q> :set <C-r>=(&cole>1) ? 'cole=0' : 'cole=2'<CR><CR>
+inoremap <C-q> <Esc>:set <C-r>=(&cole>1) ? 'cole=0' : 'cole=2'<CR><CR>a
 
 "Plugin 'maxbrunsfeld/vim-yankstack' " A simpler alternative to 'yankring'
 
@@ -665,13 +666,13 @@ set encoding=utf8
 "set ffs=unix,dos,mac
 
 " Input Greek letters using digraph
-inoremap <expr> <C-q> '<C-k>'.nr2char(getchar()).'*' " Greek letter
-inoremap <C-q>< <C-k>=<
-inoremap <C-q>> <C-k>>=
-inoremap <C-q>~ <C-k>?2
-inoremap <C-q>! <C-k>!=
-inoremap <C-q>+ <C-k>+-
-inoremap <C-q>- <C-k>-+
+inoremap <expr> <C-g> '<C-k>'.nr2char(getchar()).'*' " Greek letter
+inoremap <C-g>< <C-k>=<
+inoremap <C-g>> <C-k>>=
+inoremap <C-g>~ <C-k>?2
+inoremap <C-g>! <C-k>!=
+inoremap <C-g>+ <C-k>+-
+inoremap <C-g>- <C-k>-+
 inoremap <expr> <C-u> '<C-k>'.nr2char(getchar()).'S' " superscript numbers
 inoremap <expr> <C-d> '<C-k>'.nr2char(getchar()).'s' " subscript numbers
 
@@ -844,9 +845,9 @@ command! -nargs=1 SP SPLIT <args>
 command! -nargs=1 Diffs Diffsplit <args>
 command! -nargs=1 DIFFS DIFFSPLIT <args>
 
-inoremap <C-g>l <Esc>gt
-inoremap <C-g>h <Esc>gT
-inoremap <C-g>o <Esc>:exe "tabn ".g:lasttab<CR>
+"inoremap <C-g>l <Esc>gt
+"inoremap <C-g>h <Esc>gT
+"inoremap <C-g>o <Esc>:exe "tabn ".g:lasttab<CR>
 
 inoremap <C-f> <Esc><C-f>
 inoremap <C-b> <Esc><C-b>
