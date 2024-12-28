@@ -127,89 +127,91 @@ set updatetime=1000 " Default = 4000. Also the time delay to write swap files
 "Plugin 'klen/python-mode' " for easy python code writing. Allowing the use of pylint, rope, pydoc library in vim to provide features like python code looking for bugs, refactoring and some other usefull things.
 "Plugin 'Valloric/ListToggle' " COMMENTED for conflicting commands (E174)
 
-" YouCompleteMe <https://github.com/ycm-core/YouCompleteMe>
-"Plugin 'Valloric/YouCompleteMe' " Old version. See <https://bitbucket.org/Alexander-Shukaev/vim-youcompleteme-for-windows/src/master/> for Windows
-" For Windows, requires:
-" 1. (G)Vim is installed/compiled with Python support.
-"  - Run `:ver(sion)` in Vim to see if 'python', 'python3' (or 'python/dyn',
-"    'python3/dyn' for Windows) are included (with the '+' sign).
-"  - If NOT (as for the terminal Vim in Windows following official .exe
-"    installation), a pre-compiled binary archive can be downloaded from
-"    <https://tuxproject.de/projects/vim/> (currently Vim-8.2 with Python-2.7
-"    and Python-3.8 support; also check <https://github.com/vim/vim-win32-installer/releases>
-"    and the 'more information' link therein). Note to select 32-bit (x86)
-"    or 64-bit (x64) to match that of the installed Python dll.
-"  - Vim 9.0 currently has problem in rendering concealed characters. Recommend Vim 8.2.
-"  - If no auto-install exe file for the desired (python-compiled, 64-bit,
-"    etc.) version (only an archive of program files available), then first
-"    install using the standard auto-install exe file for the standard version
-"    (probably not python-compiled and 32-bit) for system awareness (e.g., you
-"    can uninstall Vim through 'Settings', and there is an auto-generated
-"    `vim.bat` file in `C:\Windows\` so that you can use Vim from command line
-"    (e.g., in PowerShell)), then replace the program files in
-"    `C:\Program\ Files\ (x86)\Vim\vim82\` with those of the desired version.
-" 2. The right Python dynamic link library (for Windows).
-"  - Run `:echo has('python')` and `:python import sys; print(sys.version)`
-"    (and for `python3`) to check if this is successful.
-"  - If NOT (as is the case where the Python dll's are not registered in the
-"    path; so to avoild this, check 'Add python.exe to PATH' when installing it;
-"    no need to install for all users (though recommended), nor a path directly
-"    to the dll file (auto-added path to e.g. '...\Python38\' suffices)),
-"    explicitly set the path to the matching Python dll's:
-"      `set pythondll=C:\Program\ Files\Python27\python27.dll`
-"      `set pythonhome=C:\Program\ Files\Python27`
-"      `set pythonthreedll=C:\Program\ Files\Python38\python38.dll`
-"      `set pythonthreehome=C:\Program\ Files\Python38`
-"  - If no matching Python dll's, install the right version of Python. Check
-"    the compilation info in `vim --version` for the Python version
-"    (`-DDYNAMIC_PYTHON_DLL`, `-DDYNAMIC_PYTHON3_DLL`) that was used to compile
-"    the Vim. Also note to match the right bit (x86 or x64) of Vim and Python.
-" 3. If the YCM is desired to be installed with semantic support for C-family
-"    languages, install CMake <https://cmake.org/download/> and add to path.
-" 4. Make sure that 'Visual Studio Build Tools' are installed (may only for
-"    C-family langrage support).
-" 5. After `:PluginInstall`, `cd` to '~/vimfiles/bundle/YouCompleteMe' and run
-"    `python install.py`. Add option `--clangd-completer` for C-family
-"    languages support, and `--cs-completer` for C# support. `--all` available.
-" For Ubuntu 16.04 and later:
-" 1. Install necessary development tools by running
-"    `sudo apt install build-essential cmake python3-dev`.
-" 2. Go to the directory `cd ~/.vim/bundle/YouCompleteMe`
-"    and run `python3 install.py`. Add option `--clangd-completer` for
-"    semantic support for C-family languages. Add option `--all` to compile
-"    with everything enabled.
-" 3. In case of the error 'CMake Error at CMakeLists.txt:232 (message):
-"        Your C++ compiler does NOT fully support C++17.',
-"    execute: `
-"      sudo apt-get install g++-8
-"      sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 700 --slave /usr/bin/g++ g++ /usr/bin/g++-7
-"      sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8`
-" 4. In case of the error 'CMake Error at /usr/share/cmake-3.22/Modules/FindPackageHandleStandardArgs.cmake:230 (message):
-"        Could NOT find Python3: Found unsuitable version "3.10.12", required range
-"        is "3.6...3.10" (found /usr/bin/python3, found components: Interpreter [...]',
-"    edit file './third_party/ycmd/cpp/CMakeLists.txt' Line 235: `find_package( Python3 3.6...3.10: [...]`:
-"                                                      change to `find_package( Python3 3.6...3.10.12: [...]`.
-Plugin 'ycm-core/YouCompleteMe'
-"let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py' " Specify the configuration file (This is default)
-autocmd FileType * if index(['tex','latex','bib','bibtex'], &filetype) >= 0 | let g:ycm_auto_trigger = 0 | endif " When set to 0, use <C-space> to force semantic completion. Default = 1
-nnoremap <leader>yy :let g:ycm_auto_trigger = !g:ycm_auto_trigger<CR>
-" Do the same as the subcommand 'GoToDefinitionElseDeclaration' (which is only for C#)
-nnoremap gd :YcmCompleter GoTo<CR>
+if !has("win16") && !has("win32")
+  " YouCompleteMe <https://github.com/ycm-core/YouCompleteMe>
+  "Plugin 'Valloric/YouCompleteMe' " Old version. See <https://bitbucket.org/Alexander-Shukaev/vim-youcompleteme-for-windows/src/master/> for Windows
+  " For Windows, requires:
+  " 1. (G)Vim is installed/compiled with Python support.
+  "  - Run `:ver(sion)` in Vim to see if 'python', 'python3' (or 'python/dyn',
+  "    'python3/dyn' for Windows) are included (with the '+' sign).
+  "  - If NOT (as for the terminal Vim in Windows following official .exe
+  "    installation), a pre-compiled binary archive can be downloaded from
+  "    <https://tuxproject.de/projects/vim/> (currently Vim-8.2 with Python-2.7
+  "    and Python-3.8 support; also check <https://github.com/vim/vim-win32-installer/releases>
+  "    and the 'more information' link therein). Note to select 32-bit (x86)
+  "    or 64-bit (x64) to match that of the installed Python dll.
+  "  - Vim 9.0 currently has problem in rendering concealed characters. Recommend Vim 8.2.
+  "  - If no auto-install exe file for the desired (python-compiled, 64-bit,
+  "    etc.) version (only an archive of program files available), then first
+  "    install using the standard auto-install exe file for the standard version
+  "    (probably not python-compiled and 32-bit) for system awareness (e.g., you
+  "    can uninstall Vim through 'Settings', and there is an auto-generated
+  "    `vim.bat` file in `C:\Windows\` so that you can use Vim from command line
+  "    (e.g., in PowerShell)), then replace the program files in
+  "    `C:\Program\ Files\ (x86)\Vim\vim82\` with those of the desired version.
+  " 2. The right Python dynamic link library (for Windows).
+  "  - Run `:echo has('python')` and `:python import sys; print(sys.version)`
+  "    (and for `python3`) to check if this is successful.
+  "  - If NOT (as is the case where the Python dll's are not registered in the
+  "    path; so to avoild this, check 'Add python.exe to PATH' when installing it;
+  "    no need to install for all users (though recommended), nor a path directly
+  "    to the dll file (auto-added path to e.g. '...\Python38\' suffices)),
+  "    explicitly set the path to the matching Python dll's:
+  "      `set pythondll=C:\Program\ Files\Python27\python27.dll`
+  "      `set pythonhome=C:\Program\ Files\Python27`
+  "      `set pythonthreedll=C:\Program\ Files\Python38\python38.dll`
+  "      `set pythonthreehome=C:\Program\ Files\Python38`
+  "  - If no matching Python dll's, install the right version of Python. Check
+  "    the compilation info in `vim --version` for the Python version
+  "    (`-DDYNAMIC_PYTHON_DLL`, `-DDYNAMIC_PYTHON3_DLL`) that was used to compile
+  "    the Vim. Also note to match the right bit (x86 or x64) of Vim and Python.
+  " 3. If the YCM is desired to be installed with semantic support for C-family
+  "    languages, install CMake <https://cmake.org/download/> and add to path.
+  " 4. Make sure that 'Visual Studio Build Tools' are installed (may only for
+  "    C-family langrage support).
+  " 5. After `:PluginInstall`, `cd` to '~/vimfiles/bundle/YouCompleteMe' and run
+  "    `python install.py`. Add option `--clangd-completer` for C-family
+  "    languages support, and `--cs-completer` for C# support. `--all` available.
+  " For Ubuntu 16.04 and later:
+  " 1. Install necessary development tools by running
+  "    `sudo apt install build-essential cmake python3-dev`.
+  " 2. Go to the directory `cd ~/.vim/bundle/YouCompleteMe`
+  "    and run `python3 install.py`. Add option `--clangd-completer` for
+  "    semantic support for C-family languages. Add option `--all` to compile
+  "    with everything enabled.
+  " 3. In case of the error 'CMake Error at CMakeLists.txt:232 (message):
+  "        Your C++ compiler does NOT fully support C++17.',
+  "    execute: `
+  "      sudo apt-get install g++-8
+  "      sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 700 --slave /usr/bin/g++ g++ /usr/bin/g++-7
+  "      sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8`
+  " 4. In case of the error 'CMake Error at /usr/share/cmake-3.22/Modules/FindPackageHandleStandardArgs.cmake:230 (message):
+  "        Could NOT find Python3: Found unsuitable version "3.10.12", required range
+  "        is "3.6...3.10" (found /usr/bin/python3, found components: Interpreter [...]',
+  "    edit file './third_party/ycmd/cpp/CMakeLists.txt' Line 235: `find_package( Python3 3.6...3.10: [...]`:
+  "                                                      change to `find_package( Python3 3.6...3.10.12: [...]`.
+  Plugin 'ycm-core/YouCompleteMe'
+  "let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py' " Specify the configuration file (This is default)
+  autocmd FileType * if index(['tex','latex','bib','bibtex'], &filetype) >= 0 | let g:ycm_auto_trigger = 0 | endif " When set to 0, use <C-space> to force semantic completion. Default = 1
+  nnoremap <leader>yy :let g:ycm_auto_trigger = !g:ycm_auto_trigger<CR>
+  " Do the same as the subcommand 'GoToDefinitionElseDeclaration' (which is only for C#)
+  nnoremap gd :YcmCompleter GoTo<CR>
+  " Do not recompile the file with libclang (trades correctness for speed)
+  nnoremap <leader>yi :YcmCompleter GoToImprecise<CR>
+  nnoremap <leader>yr :YcmRestartServer<CR>
+  nnoremap <leader>yu :YcmForceCompileAndDiagnostics<CR>
+  let g:ycm_min_num_of_chars_for_completion = 4 " Default = 2
+  " If =99: turn off the identifier completion engine and just leave the semantic engine.
+  nnoremap <leader>ys :let g:ycm_min_num_of_chars_for_completion = 103 - g:ycm_min_num_of_chars_for_completion<CR>
+  let g:ycm_max_num_candidates = 30 " Default = 50
+  let g:ycm_confirm_extra_conf = 0 " Stop confirming loading extra configuration file when entering vim
+  "let g:ycm_collect_identifiers_from_tag_files = 1 " Use the tags file produced by ctags
+  "let g:ycm_show_diagnostics_ui = 0 " Stop the built-in checker of ycm for c-related syntax
+  " Stop the popup from automatically displaying. Set to 'CursorHold' (default) or 'CursorMoved' (use `<leader>yh` to toggle between the two) to resume.
+  let g:ycm_auto_hover = ''
+  nmap <leader>yh <Plug>(YCMHover)
+endif
 nmap gD gTgd
-" Do not recompile the file with libclang (trades correctness for speed)
-nnoremap <leader>yi :YcmCompleter GoToImprecise<CR>
-nnoremap <leader>yr :YcmRestartServer<CR>
-nnoremap <leader>yu :YcmForceCompileAndDiagnostics<CR>
-let g:ycm_min_num_of_chars_for_completion = 4 " Default = 2
-" If =99: turn off the identifier completion engine and just leave the semantic engine.
-nnoremap <leader>ys :let g:ycm_min_num_of_chars_for_completion = 103 - g:ycm_min_num_of_chars_for_completion<CR>
-let g:ycm_max_num_candidates = 30 " Default = 50
-let g:ycm_confirm_extra_conf = 0 " Stop confirming loading extra configuration file when entering vim
-"let g:ycm_collect_identifiers_from_tag_files = 1 " Use the tags file produced by ctags
-"let g:ycm_show_diagnostics_ui = 0 " Stop the built-in checker of ycm for c-related syntax
-" Stop the popup from automatically displaying. Set to 'CursorHold' (default) or 'CursorMoved' (use `<leader>yh` to toggle between the two) to resume.
-let g:ycm_auto_hover = ''
-nmap <leader>yh <Plug>(YCMHover)
 
 "Plugin 'vimwiki/vimwiki' " Create a number of linked text files that have their own syntax highlighting
 "Plugin 'scrooloose/syntastic' " for syntax check. Too expensive
@@ -285,37 +287,39 @@ let g:lightline = {
       \ },
       \ }
 
-"Plugin 'tyru/current-func-info.vim' " A light-weighted plugin for displaying function name in status line
-"let &statusline .= ' [%{cfi#format("%s", "")}]'
-Plugin 'liuchengxu/vista.vim'
-" This requires installing ctags:
-" # install libjansson first to support json formats
-" sudo apt-get install libjansson-dev
-" # then compile and install universal-ctags.
-" # NOTE: Don't use `sudo apt install ctags`, which will install exuberant-ctags and it's not guaranteed to work with vista.vim.
-" git clone https://github.com/universal-ctags/ctags.git --depth=1
-" cd ctags
-" ./autogen.sh
-" ./configure
-" make
-" sudo make install
-nnoremap <leader>v :Vista!!<CR>
-"let g:vista_icon_indent = ["▸ ", ""] " ["╰─▸ ", "├─▸ "]
-"let g:vista_fzf_preview = ['right:50%']
-"let g:vista#renderer#enable_icon = 1
-"let g:vista#renderer#icons = {
-"\   "function": "\uf794",
-"\   "variable": "\uf71b",
-"\  }
-" Display function name in status line:
-function! NearestMethodOrFunction() abort
-  return get(b:, 'vista_nearest_method_or_function', '')
-endfunction
-set statusline+=%{NearestMethodOrFunction()}
-" By default vista.vim never run if you don't call it explicitly.
-" If you want to show the nearest function in your statusline automatically,
-" you can add the following line to your vimrc
-autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+if !has("win16") && !has("win32")
+  "Plugin 'tyru/current-func-info.vim' " A light-weighted plugin for displaying function name in status line
+  "let &statusline .= ' [%{cfi#format("%s", "")}]'
+  Plugin 'liuchengxu/vista.vim'
+  " This requires installing ctags:
+  " # install libjansson first to support json formats
+  " sudo apt-get install libjansson-dev
+  " # then compile and install universal-ctags.
+  " # NOTE: Don't use `sudo apt install ctags`, which will install exuberant-ctags and it's not guaranteed to work with vista.vim.
+  " git clone https://github.com/universal-ctags/ctags.git --depth=1
+  " cd ctags
+  " ./autogen.sh
+  " ./configure
+  " make
+  " sudo make install
+  nnoremap <leader>v :Vista!!<CR>
+  "let g:vista_icon_indent = ["▸ ", ""] " ["╰─▸ ", "├─▸ "]
+  "let g:vista_fzf_preview = ['right:50%']
+  "let g:vista#renderer#enable_icon = 1
+  "let g:vista#renderer#icons = {
+  "\   "function": "\uf794",
+  "\   "variable": "\uf71b",
+  "\  }
+  " Display function name in status line:
+  function! NearestMethodOrFunction() abort
+    return get(b:, 'vista_nearest_method_or_function', '')
+  endfunction
+  set statusline+=%{NearestMethodOrFunction()}
+  " By default vista.vim never run if you don't call it explicitly.
+  " If you want to show the nearest function in your statusline automatically,
+  " you can add the following line to your vimrc
+  autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+endif
 
 Plugin 'Yggdroot/indentLine' " See <https://github.com/Yggdroot/indentLine>
 "It sets `conceallevel = 2` and `concealcursor = 'inc'`.
@@ -696,7 +700,7 @@ set softtabstop=4
 set shiftwidth=4
 " Cases to use spaces instead of tabs
 autocmd FileType python set tabstop=4|set expandtab|set shiftwidth=4 " In python, space is recommended for indent rather than tab
-autocmd FileType tex set tabstop=4|set expandtab|set shiftwidth=2 " Indent 2 spaces for tex files
+autocmd FileType tex,latex,bib,bibtex set tabstop=4|set expandtab|set shiftwidth=2 " Indent 2 spaces for tex files
 
 " Be smart when using tabs ;)
 set smarttab
