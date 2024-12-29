@@ -677,8 +677,8 @@ inoremap <C-g>~ <C-k>?2
 inoremap <C-g>! <C-k>!=
 inoremap <C-g>+ <C-k>+-
 inoremap <C-g>- <C-k>-+
-inoremap <expr> <C-u> '<C-k>'.nr2char(getchar()).'S' " superscript numbers
-inoremap <expr> <C-d> '<C-k>'.nr2char(getchar()).'s' " subscript numbers
+"inoremap <expr> <C-u> '<C-k>'.nr2char(getchar()).'S' " superscript numbers
+"inoremap <expr> <C-d> '<C-k>'.nr2char(getchar()).'s' " subscript numbers
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -734,17 +734,17 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 
 " Smart way to move between windows (<C-w><C-j> etc auto. mapped to <C-w>j)
 let g:BASH_Ctrl_j = 'off'
-nnoremap <C-j> <C-w>j
+nnoremap <C-j> <C-w>j " may not be working even with the above option
 nnoremap <C-n> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 nnoremap <C-t> <C-w><C-w>
-inoremap <C-j> <Esc><C-w>j
+"inoremap <C-j> <Esc><C-w>j " saved for shortcut jump-out in vim-latex
 inoremap <C-k> <Esc><C-w>k
 inoremap <C-h> <Esc><C-w>h
 inoremap <C-l> <Esc><C-w>l
-inoremap <C-t> <Esc><C-w><C-w>
+"inoremap <C-t> <Esc><C-w><C-w>
 
 " Make adjusing split sizes a bit more friendly
 nnoremap <silent> <C-w>j :resize -3<CR>
