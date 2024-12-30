@@ -287,39 +287,43 @@ let g:lightline = {
       \ },
       \ }
 
-if !has("win16") && !has("win32")
-  "Plugin 'tyru/current-func-info.vim' " A light-weighted plugin for displaying function name in status line
-  "let &statusline .= ' [%{cfi#format("%s", "")}]'
-  Plugin 'liuchengxu/vista.vim'
-  " This requires installing ctags:
-  " # install libjansson first to support json formats
-  " sudo apt-get install libjansson-dev
-  " # then compile and install universal-ctags.
-  " # NOTE: Don't use `sudo apt install ctags`, which will install exuberant-ctags and it's not guaranteed to work with vista.vim.
-  " git clone https://github.com/universal-ctags/ctags.git --depth=1
-  " cd ctags
-  " ./autogen.sh
-  " ./configure
-  " make
-  " sudo make install
-  nnoremap <leader>v :Vista!!<CR>
-  "let g:vista_icon_indent = ["▸ ", ""] " ["╰─▸ ", "├─▸ "]
-  "let g:vista_fzf_preview = ['right:50%']
-  "let g:vista#renderer#enable_icon = 1
-  "let g:vista#renderer#icons = {
-  "\   "function": "\uf794",
-  "\   "variable": "\uf71b",
-  "\  }
-  " Display function name in status line:
-  function! NearestMethodOrFunction() abort
-    return get(b:, 'vista_nearest_method_or_function', '')
-  endfunction
-  set statusline+=%{NearestMethodOrFunction()}
-  " By default vista.vim never run if you don't call it explicitly.
-  " If you want to show the nearest function in your statusline automatically,
-  " you can add the following line to your vimrc
-  autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-endif
+"if !has("win16") && !has("win32")
+"  "Plugin 'tyru/current-func-info.vim' " A light-weighted plugin for displaying function name in status line
+"  "let &statusline .= ' [%{cfi#format("%s", "")}]'
+"  Plugin 'liuchengxu/vista.vim'
+"  " This requires installing ctags:
+"  " # install libjansson first to support json formats
+"  " sudo apt-get install libjansson-dev
+"  " # then compile and install universal-ctags.
+"  " # NOTE: Don't use `sudo apt install ctags`, which will install exuberant-ctags and it's not guaranteed to work with vista.vim.
+"  " git clone https://github.com/universal-ctags/ctags.git --depth=1
+"  " cd ctags
+"  " ./autogen.sh
+"  " ./configure
+"  " make
+"  " sudo make install
+"  nnoremap <leader>v :Vista!!<CR>
+"  "let g:vista_icon_indent = ["▸ ", ""] " ["╰─▸ ", "├─▸ "]
+"  "let g:vista_fzf_preview = ['right:50%']
+"  "let g:vista#renderer#enable_icon = 1
+"  "let g:vista#renderer#icons = {
+"  "\   "function": "\uf794",
+"  "\   "variable": "\uf71b",
+"  "\  }
+"  " Display function name in status line:
+"  function! NearestMethodOrFunction() abort
+"    return get(b:, 'vista_nearest_method_or_function', '')
+"  endfunction
+"  set statusline+=%{NearestMethodOrFunction()}
+"  " By default vista.vim never run if you don't call it explicitly.
+"  " If you want to show the nearest function in your statusline automatically,
+"  " you can add the following line to your vimrc
+"  autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+"endif
+Plugin 'wellle/context.vim'
+nnoremap <leader>v :ContextToggleWindow<CR>
+" let g:context_filetype_blacklist = []
+let g:context_max_height = 11 " 21
 
 Plugin 'Yggdroot/indentLine' " See <https://github.com/Yggdroot/indentLine>
 "It sets `conceallevel = 2` and `concealcursor = 'inc'`.
@@ -408,8 +412,8 @@ Plugin 'changliu00/vim-compare-lines' " Forked from 'statox/vim-compare-lines'
 " Compare Two Blocks. Editing also enabled.
 Plugin 'AndrewRadev/linediff.vim'
 " `ca`: command alias. Visually select one block and `:CB`, and repeat for another block.
-command! CB Linediff
-command! CBreset LinediffReset
+ca CB Linediff
+ca CBreset LinediffReset
 
 " Repeat the last command of a plugin.
 Plugin 'tpope/vim-repeat'
