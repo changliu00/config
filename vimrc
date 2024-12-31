@@ -530,6 +530,8 @@ endif
 
 nnoremap <leader>zz :call VCenterCursor()<CR>
 
+nnoremap <C-e> <C-e>j
+nnoremap <C-y> <C-y>k
 
 " Avoid garbled characters in Chinese language Windows OS
 let $LANG='en'    " set message language
