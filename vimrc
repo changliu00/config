@@ -412,8 +412,8 @@ Plugin 'changliu00/vim-compare-lines' " Forked from 'statox/vim-compare-lines'
 " Compare Two Blocks. Editing also enabled.
 Plugin 'AndrewRadev/linediff.vim'
 " `ca`: command alias. Visually select one block and `:CB`, and repeat for another block.
-ca CB Linediff
-ca CBreset LinediffReset
+command -range CB <line1>,<line2>Linediff
+command CBreset LinediffReset
 
 " Repeat the last command of a plugin.
 Plugin 'tpope/vim-repeat'
@@ -530,8 +530,9 @@ endif
 
 nnoremap <leader>zz :call VCenterCursor()<CR>
 
-nnoremap <C-e> <C-e>j
-nnoremap <C-y> <C-y>k
+" Use `autocmd VimEnter *` to conduct the mapping after loading the 'context.vim' plugin
+autocmd VimEnter * nnoremap <C-e> <C-e>j
+autocmd VimEnter * nnoremap <C-y> <C-y>k
 
 " Avoid garbled characters in Chinese language Windows OS
 let $LANG='en'    " set message language
@@ -1382,4 +1383,7 @@ autocmd FileType tex,latex,bib,bibtex set spell | set nofoldenable | set cole=2 
 " * `:h(elp) something` then press `<C-d>` or `<tab>` (before `<CR>`) to see topics. Use tags to jump.
 " * `:set so=999` makes the cursor always in the middle of the screen when scrolling.
 " * `vim -q <(grep -nr pattern *.py */*.py)` opens grepped files at the lines in error mode.
+" * Use `:command` to list the definition of Ex commands.
+"   Use `:verbose command CB` or `:verbose map <C-e>` to check the last user-definition of the command or map.
+"   Use `:verbose set number` to check the status of a setting.
 "
