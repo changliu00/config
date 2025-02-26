@@ -376,10 +376,18 @@ map <leader>md :InstantMarkdownPreview<CR>
 map <leader>ms :InstantMarkdownStop<CR>
 
 Plugin 'easymotion/vim-easymotion'
-map <leader> <Plug>(easymotion-prefix)
+"map <leader> <Plug>(easymotion-prefix)
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+" Use uppercase target labels and type as a lower case
+"let g:EasyMotion_use_upper = 1
+" Type `l` and match `l` & `L`
+let g:EasyMotion_smartcase = 1
+" Type `3` and match `3` & `#`
+"let g:EasyMotion_use_smartsign_us = 1
 " Jump to anywhere with only `s{char}{target}`. Use `s<CR>` to repeat last find motion.
-map s <Plug>(easymotion-s)
-"map S <Plug>(easymotion-s2)
+"map s <Plug>(easymotion-s)
+" Jump to anywhere with `s{char}{char}{label}`
+nmap s <Plug>(easymotion-s2)
 "map <space> <Plug>(easymotion-f)
 "map <space><space> <Plug>(easymotion-F)
 "map <S-space> <Plug>(easymotion-F)
@@ -389,21 +397,14 @@ map s <Plug>(easymotion-s)
 "map <C-S-space> <Plug>(easymotion-T)
 "map <space> <Plug>(easymotion-s)
 "map <space><space> <Plug>(easymotion-bd-t)
-map <space> <Plug>(easymotion-bd-fl)
-"map F <Plug>(easymotion-bd-fl)
-"map T <Plug>(easymotion-bd-tl)
-"map - <Plug>(easymotion-bd-fl)
-map - <Plug>(easymotion-bd-tl)
+nmap <space> <Plug>(easymotion-bd-fl)
+nmap - <Plug>(easymotion-bd-tl)
+"nmap F <Plug>(easymotion-bd-fl)
+"nmap T <Plug>(easymotion-bd-tl)
 "map _ <Plug>(easymotion-bd-tl)
 "map w <Plug>(easymotion-bd-wl)
 "map e <Plug>(easymotion-bd-el)
-" Use uppercase target labels and type as a lower case
-let g:EasyMotion_use_upper = 1
-" Type `l` and match `l` & `L`
-"let g:EasyMotion_smartcase = 1
-" Type `3` and match `3` & `#`
-"let g:EasyMotion_use_smartsign_us = 1
-inoremap <C-s> <Esc><Plug>(easymotion-s)
+imap <C-s> <Esc>s
 
 " Compare Two Lines.
 Plugin 'changliu00/vim-compare-lines' " Forked from 'statox/vim-compare-lines'
