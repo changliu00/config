@@ -95,7 +95,7 @@ Plugin 'tpope/vim-fugitive' " for integrating git. <https://github.com/tpope/vim
 
 Plugin 'airblade/vim-gitgutter' " <https://github.com/airblade/vim-gitgutter>
 " 'h' for 'hunk' (block of changed lines).
-nnoremap <leader>hh :GitGutterToggle<CR>
+nnoremap <leader>h :GitGutterToggle<CR>
 nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
 set updatetime=1000 " Default = 4000. Also the time delay to write swap files
@@ -251,6 +251,14 @@ let g:NERDToggleCheckAllLines = 1 " Enable NERDCommenterToggle to check all sele
 " Default Mappings:
 " <leader>cc |NERDCommenterComment|, <leader>cn |NERDCommenterNested|,
 " <leader>c<space> |NERDCommenterToggle|, <leader>cu |NERDCommenterUncomment|
+nmap ca :call nerdcommenter#Comment("n", "Comment")<CR>
+xmap ca :call nerdcommenter#Comment("x", "Comment")<CR>
+nmap cc :call nerdcommenter#Comment("n", "Toggle")<CR>
+xmap cc :call nerdcommenter#Comment("x", "Toggle")<CR>
+nmap cn :call nerdcommenter#Comment("n", "Nested")<CR>
+xmap cn :call nerdcommenter#Comment("x", "Nested")<CR>
+nmap cu :call nerdcommenter#Comment("n", "Uncomment")<CR>
+xmap cu :call nerdcommenter#Comment("x", "Uncomment")<CR>
 
 Plugin 'vim-python/python-syntax' " Python highlighting
 let g:python_highlight_all = 1
@@ -331,7 +339,7 @@ let g:indentLine_char = '|'
 autocmd FileType tex,latex,bib,bibtex let g:indentLine_setColors = 0 " Do not overwrite 'conceal' color for tex files
 "let g:indentLine_defaultGroup = 'SpecialKey' " Use the same colors as the 'SpecialKey' highlight group
 "let g:indentLine_color_term = 239 | let g:indentLine_bgcolor_term = 202 " Customize conceal color
-nmap <leader>ii :IndentLinesToggle<CR>
+nmap <leader>i :IndentLinesToggle<CR>
 
 Plugin 'changliu00/tex-conceal.vim' " 'KeitaNakamura/tex-conceal.vim'
 
@@ -387,7 +395,7 @@ let g:EasyMotion_smartcase = 1
 " Jump to anywhere with only `s{char}{target}`. Use `s<CR>` to repeat last find motion.
 "map s <Plug>(easymotion-s)
 " Jump to anywhere with `s{char}{char}{label}`
-nmap s <Plug>(easymotion-s2)
+map s <Plug>(easymotion-s2)
 "map <space> <Plug>(easymotion-f)
 "map <space><space> <Plug>(easymotion-F)
 "map <S-space> <Plug>(easymotion-F)
@@ -397,14 +405,18 @@ nmap s <Plug>(easymotion-s2)
 "map <C-S-space> <Plug>(easymotion-T)
 "map <space> <Plug>(easymotion-s)
 "map <space><space> <Plug>(easymotion-bd-t)
-nmap <space> <Plug>(easymotion-bd-fl)
-nmap - <Plug>(easymotion-bd-tl)
-"nmap F <Plug>(easymotion-bd-fl)
-"nmap T <Plug>(easymotion-bd-tl)
+map <space> <Plug>(easymotion-bd-fl)
+map - <Plug>(easymotion-bd-tl)
+"map F <Plug>(easymotion-bd-fl)
+"map T <Plug>(easymotion-bd-tl)
 "map _ <Plug>(easymotion-bd-tl)
 "map w <Plug>(easymotion-bd-wl)
 "map e <Plug>(easymotion-bd-el)
+"map - <Plug>(easymotion-bd-jk)
+map + <Plug>(easymotion-f)
+map <S-k> <Plug>(easymotion-F)
 imap <C-s> <Esc>s
+"imap <C-space> <Esc><space>
 
 " Compare Two Lines.
 Plugin 'changliu00/vim-compare-lines' " Forked from 'statox/vim-compare-lines'
@@ -500,6 +512,7 @@ set autoread
 "" :W sudo saves the file (useful for handling the permission-denied error)
 "command W w !sudo tee % > /dev/null
 
+nmap <C-s> :up<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -529,7 +542,7 @@ if !exists('*VCenterCursor')
 	endfunction
 endif
 
-nnoremap <leader>zz :call VCenterCursor()<CR>
+nnoremap <leader>z :call VCenterCursor()<CR>
 
 " Use `autocmd VimEnter *` to conduct the mapping after loading the 'context.vim' plugin
 autocmd VimEnter * nnoremap <C-e> <C-e>j
@@ -589,29 +602,27 @@ nnoremap <expr> , (getcharsearch().forward ? ',' : ';')
 " Show the number of match under cursor
 nnoremap <leader>* *<C-o>:%s///gn<CR>
 
-" Ignore case when searching
-set ic
-
 " Swap * and g*
 nnoremap * g*
 nnoremap g* *
 nnoremap # g#
 nnoremap g# #
 
-nnoremap gs :let @/ = expand('<cword>')<CR>:set hlsearch<CR>
-nnoremap gS :let @/ = '\<'.expand('<cword>').'\>'<CR>:set hlsearch<CR>
+map gs :let @/ = expand('<cword>')<CR>:set hlsearch<CR>
+map gS :let @/ = '\<'.expand('<cword>').'\>'<CR>:set hlsearch<CR>
 
-"" When searching try to be smart about cases
-"set smartcase
+" Ignore case when searching
+set ignorecase
+set smartcase
+
+" Makes search act like search in modern browsers
+set incsearch
 
 " Highlight search results
 set hlsearch
 
 "" Disable highlighting the last searched item
 nnoremap <silent> <leader>q :noh<CR>
-
-" Makes search act like search in modern browsers
-set incsearch
 
 "" Don't redraw while executing macros (good performance config)
 "set lazyredraw
@@ -973,7 +984,7 @@ endif
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<CR>
+map <leader>s :setlocal spell!<CR>
 
 "" Shortcuts using <leader>
 "map <leader>sn ]s
@@ -1006,7 +1017,9 @@ set foldmethod=syntax
 "map <leader>x :e ~/buffer.md<CR>
 
 " Toggle paste mode on and off
-map <leader>pp :setlocal paste!<CR>
+map <leader>p :setlocal paste!<CR>
+map gp "0p
+map gP "0P
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
