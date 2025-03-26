@@ -93,6 +93,20 @@ Plugin 'tpope/vim-fugitive' " for integrating git. <https://github.com/tpope/vim
 " `:Gblame`: vert-split window for annotations for each line of the file;
 " `:Gedit HEAD~3:%`: load the current file as it existed 3 commits ago.
 
+command! ToggleDiffMode call ToggleDiff()
+
+function! ToggleDiff()
+	if &diff
+		diffoff!
+	else
+		windo diffthis
+	endif
+endfunction
+
+nnoremap <leader>d :ToggleDiffMode<CR>
+
+nmap <C-p> :echo expand('%:p')<CR>
+
 Plugin 'airblade/vim-gitgutter' " <https://github.com/airblade/vim-gitgutter>
 " 'h' for 'hunk' (block of changed lines).
 nnoremap <leader>h :GitGutterToggle<CR>
@@ -395,7 +409,7 @@ let g:EasyMotion_smartcase = 1
 " Jump to anywhere with only `s{char}{target}`. Use `s<CR>` to repeat last find motion.
 "map s <Plug>(easymotion-s)
 " Jump to anywhere with `s{char}{char}{label}`
-map s <Plug>(easymotion-s2)
+nmap s <Plug>(easymotion-s2)
 "map <space> <Plug>(easymotion-f)
 "map <space><space> <Plug>(easymotion-F)
 "map <S-space> <Plug>(easymotion-F)
