@@ -428,6 +428,7 @@ map - <Plug>(easymotion-bd-tl)
 "map e <Plug>(easymotion-bd-el)
 "map - <Plug>(easymotion-bd-jk)
 map + <Plug>(easymotion-f)
+map _ <Plug>(easymotion-b)
 map <S-k> <Plug>(easymotion-F)
 "imap <C-s> <Esc>s
 "imap <C-space> <Esc><space>
@@ -824,8 +825,12 @@ nnoremap 16gt 16gt
 "map <leader>t<leader> :tabnext
 
 " Easier finger move
-nnoremap gl gt
-nnoremap gh gT
+nnoremap ]b :bnext<CR>
+nnoremap [b :bprev<CR>
+"nnoremap ]t :tabn<CR>
+"nnoremap [t :tabp<CR>
+nnoremap gl :tabn<CR>
+nnoremap gh :tabp<CR>
 " Let `go` toggle between this and the last accessed tab
 let g:lasttab = 1
 nmap go :exe "tabn ".g:lasttab<CR>
