@@ -429,7 +429,7 @@ map - <Plug>(easymotion-bd-tl)
 "map - <Plug>(easymotion-bd-jk)
 map + <Plug>(easymotion-f)
 map <S-k> <Plug>(easymotion-F)
-imap <C-s> <Esc>s
+"imap <C-s> <Esc>s
 "imap <C-space> <Esc><space>
 
 " Compare Two Lines.
@@ -527,6 +527,7 @@ set autoread
 "command W w !sudo tee % > /dev/null
 
 nmap <C-s> :up<CR>
+imap <C-s> <Esc>:up<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
