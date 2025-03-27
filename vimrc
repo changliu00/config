@@ -428,8 +428,8 @@ map - <Plug>(easymotion-bd-tl)
 "map e <Plug>(easymotion-bd-el)
 "map - <Plug>(easymotion-bd-jk)
 map + <Plug>(easymotion-f)
-map _ <Plug>(easymotion-b)
-map <S-k> <Plug>(easymotion-F)
+map _ <Plug>(easymotion-F)
+"map K <Plug>(easymotion-F)
 "imap <C-s> <Esc>s
 "imap <C-space> <Esc><space>
 
