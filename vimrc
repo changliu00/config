@@ -92,9 +92,10 @@ Plugin 'tpope/vim-fugitive' " for integrating git. <https://github.com/tpope/vim
 " `:Gdiffsplit`: diff with the staged;
 " `:G blame`: vert-split window for annotations for each line of the file;
 " `:Gedit HEAD~3:%`: load the current file as it existed 3 commits ago.
-command! Gdf Gdiff
+command! -nargs=* Gdf Gdiff <args>
 command! Gdfc execute 'Gdiff HEAD'
-command! Gbl execute 'G blame'
+command! -nargs=* Gbl execute 'G blame' <args>
+command! -nargs=* Gci execute 'G commit ' . <q-args>
 
 command! ToggleDiffMode call ToggleDiff()
 
