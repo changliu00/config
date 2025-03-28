@@ -92,9 +92,10 @@ Plugin 'tpope/vim-fugitive' " for integrating git. <https://github.com/tpope/vim
 " `:Gdiffsplit`: diff with the staged;
 " `:G blame`: vert-split window for annotations for each line of the file;
 " `:Gedit HEAD~3:%`: load the current file as it existed 3 commits ago.
-command! -nargs=* Gdf Gdiff <args>
-command! Gdfc execute 'Gdiff HEAD'
-command! -nargs=* Gbl execute 'G blame' <args>
+command! -nargs=* Gdf execute 'Gdiff ' . <q-args>
+command! -nargs=* Gdfc execute 'Gdiff HEAD ' . <q-args>
+command! -nargs=* Gst execute 'G status ' . <q-args>
+command! -nargs=* Gbl execute 'G blame ' . <q-args>
 command! -nargs=* Gci execute 'G commit ' . <q-args>
 
 command! ToggleDiffMode call ToggleDiff()
@@ -829,8 +830,6 @@ nnoremap 16gt 16gt
 "map <leader>t<leader> :tabnext
 
 " Easier finger move
-nnoremap ]b :bnext<CR>
-nnoremap [b :bprev<CR>
 "nnoremap ]t :tabn<CR>
 "nnoremap [t :tabp<CR>
 nnoremap gl :tabn<CR>
@@ -899,12 +898,12 @@ command! -nargs=1 DIFFS DIFFSPLIT <args>
 inoremap <C-f> <Esc><C-f>
 inoremap <C-b> <Esc><C-b>
 
-"" Opens a new tab with the current buffer's path
-"" Super useful when editing files in the same directory
-"map <leader>te :tabedit <C-r>=expand("%:p:h")<CR>/
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+nmap gr :tabnew <C-r>=expand("%:p:h")<CR>/
 
-"" Switch CWD to the directory of the open buffer
-"map <leader>cd :cd %:p:h<CR>:pwd<CR>
+" Switch CWD to the directory of the open buffer
+nmap <leader>cd :cd %:p:h<CR>:pwd<CR>
 
 "" Specify the behavior when switching between buffers
 "try
@@ -913,14 +912,28 @@ inoremap <C-b> <Esc><C-b>
 "catch
 "endtry
 
-"" Return to last edit position when opening files (You want this!)
-"autocmd BufReadPost *
-"     \ if line("'\"") > 0 && line("'\"") <= line("$") |
-"     \   exe "normal! g`\"" |
-"     \ endif
-"" Remember info about open buffers on close
-"set viminfo^=%
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+	\ if line("'\"") > 0 && line("'\"") <= line("$") |
+	\   exe "normal! g`\"" |
+	\ endif
+" Remember info about open buffers on close
+set viminfo^=%
 
+" buffer list
+nnoremap ]b :bnext<CR>
+nnoremap [b :bprev<CR>
+
+" error/quickfix list
+nnoremap ge :copen<CR>
+" Use `:cc[number]` to jump to the location of [number]-th spot in the error/quickfix list
+nnoremap ]e :cnext<CR>
+nnoremap [e :cprev<CR>
+
+" grep
+"autocmd QuickFixCmdPost [^l]* nested copen
+"command! -nargs=* greph execute 'grep -n ' . <q-args> . './*' " need to filter out directories
+"command! -nargs=* grepr execute 'grep -n ' . <q-args> . '-r .'
 
 """"""""""""""""""""""""""""""
 " => Status line and command line
