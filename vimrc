@@ -90,8 +90,11 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive' " for integrating git. <https://github.com/tpope/vim-fugitive>
 " Examples: " `:G add %` (`:G`=`:Git`) or `:Gw(rite)`; `:Gcommit`; `:Gdiff`;
 " `:Gdiffsplit`: diff with the staged;
-" `:Gblame`: vert-split window for annotations for each line of the file;
+" `:G blame`: vert-split window for annotations for each line of the file;
 " `:Gedit HEAD~3:%`: load the current file as it existed 3 commits ago.
+command! Gdf Gdiff
+command! Gdfc execute 'Gdiff HEAD'
+command! Gbl execute 'G blame'
 
 command! ToggleDiffMode call ToggleDiff()
 
@@ -221,9 +224,9 @@ if !has("win16") && !has("win32")
   let g:ycm_confirm_extra_conf = 0 " Stop confirming loading extra configuration file when entering vim
   "let g:ycm_collect_identifiers_from_tag_files = 1 " Use the tags file produced by ctags
   "let g:ycm_show_diagnostics_ui = 0 " Stop the built-in checker of ycm for c-related syntax
-  " Stop the popup from automatically displaying. Set to 'CursorHold' (default) or 'CursorMoved' (use `<leader>yh` to toggle between the two) to resume.
+  " Stop the popup from automatically displaying. Set to 'CursorHold' (default) or 'CursorMoved' (use `K` to toggle between the two) to resume.
   let g:ycm_auto_hover = ''
-  nmap <leader>yh <Plug>(YCMHover)
+  nmap K <Plug>(YCMHover)
 endif
 nmap gD gTgd
 
