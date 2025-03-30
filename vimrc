@@ -1,3 +1,6 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" => PLUGIN REGISTRATION IN VUNDLE
+"""""""""""""""""""""""""""""""""""""""""""""""""
 " Checkout with: 'git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim',
 " or to '%USERPROFILE%/vimfiles/bundle/Vundle.vim' on Windows,
 " then open Vim and run ':PluginInstall'.
@@ -21,6 +24,7 @@ endif
 " Let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+" ==> SPECIAL INSTALLATION / FILETYPE SPECIFIC
 if !has("win16") && !has("win32")
   Plugin 'ycm-core/YouCompleteMe'
 endif
@@ -96,6 +100,7 @@ Plugin 'vim-latex/vim-latex' " See <http://vim-latex.sourceforge.net/>
 "   Directly edit '$VIMFILES/bundle/vim-latex/ftplugin/latex-suite/main.vim'. E.g., `call IMAP ('==', '={} & ', "tex")`.
 Plugin 'changliu00/tex-conceal.vim' " 'KeitaNakamura/tex-conceal.vim'
 
+" ==> APPEARANCES
 " Plugin 'flazz/vim-colorschemes'
 Plugin 'sainnhe/sonokai'
 
@@ -111,12 +116,28 @@ Plugin 'ap/vim-css-color'
 Plugin 'Yggdroot/indentLine' " See <https://github.com/Yggdroot/indentLine>
 Plugin 'vim-python/python-syntax'
 
+" ==> VIEWS AND BEHAVIORS
 Plugin 'easymotion/vim-easymotion'
 
 Plugin 'preservim/nerdtree' " Another file system explorer
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight' " Highlighting Nerdtree
 "Plugin 'ryanoasis/vim-devicons' " Icons for Nerdtree
+
+" ==> EDIT ENHANCEMENTS
+Plugin 'changliu00/vim-compare-lines' " Forked from 'statox/vim-compare-lines' Compare Two Lines.
+Plugin 'AndrewRadev/linediff.vim' " Compare Two Blocks. Editing also enabled.
+
+"Plugin 'maxbrunsfeld/vim-yankstack' " A simpler alternative to 'yankring'
+"Plugin 'YankRing.vim' " for maintaining and visualizing the yank register. See <https://github.com/vim-scripts/YankRing.vim>
+
+Plugin 'tpope/vim-repeat' " Repeat the last command of a plugin.
+
+Plugin 'tpope/vim-surround' " Add (ys), delete (ds) or change (cs) surroundings in pair. See also <https://towardsdatascience.com/how-i-learned-to-enjoy-vim-e310e53e8d56>
+
+" ==> PROGRAMMING
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
 
 Plugin 'wellle/context.vim'
 "if !has("win16") && !has("win32")
@@ -134,22 +155,9 @@ Plugin 'wellle/context.vim'
 "  " sudo make install
 "endif
 
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-
-Plugin 'changliu00/vim-compare-lines' " Forked from 'statox/vim-compare-lines' Compare Two Lines.
-" Use `:CL` with optional line number(s). Support relative line numbering.
-Plugin 'AndrewRadev/linediff.vim' " Compare Two Blocks. Editing also enabled.
-
-"Plugin 'maxbrunsfeld/vim-yankstack' " A simpler alternative to 'yankring'
-"Plugin 'YankRing.vim' " for maintaining and visualizing the yank register. See <https://github.com/vim-scripts/YankRing.vim>
-
-Plugin 'tpope/vim-repeat' " Repeat the last command of a plugin.
-
-Plugin 'tpope/vim-surround' " Add (ys), delete (ds) or change (cs) surroundings in pair. See also <https://towardsdatascience.com/how-i-learned-to-enjoy-vim-e310e53e8d56>
-
 Plugin 'preservim/nerdcommenter'
 
+" ==> RESERVED
 "Plugin 'jreybert/vimagit' " Magit-like plugin for vim
 " -- Plugin from <http://vim-scripts.org/vim/scripts.html>
 "Plugin 'L9' " COMMENTED for conflicting commands (E174)
@@ -195,7 +203,10 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 """""""""""""""""""""""""""""""""""""""""""""""""
+" => PLUGIN CONFIGURATIONS
+"""""""""""""""""""""""""""""""""""""""""""""""""
 
+" ==> SPECIAL INSTALLATION / FILETYPE SPECIFIC
 if !has("win16") && !has("win32")
   " Plugin 'ycm-core/YouCompleteMe'
   "let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py' " Specify the configuration file (This is default)
@@ -240,8 +251,10 @@ filetype indent on
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
 
+" ==> APPEARANCES
 " Plugin 'flazz/vim-colorschemes'
 " colorscheme molokai
+
 " Plugin 'sainnhe/sonokai'
 let g:sonokai_style = 'andromeda' " 'default', 'atlantis', 'andromeda', 'shusia', 'maia'
 let g:sonokai_enable_italic = 1
@@ -262,7 +275,7 @@ let g:lightline = {
       \ },
       \ }
 
-" 'luochen1990/rainbow'
+" Plugin 'luochen1990/rainbow' " for visualizing paired brackets
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
 " Plugin 'Yggdroot/indentLine' " See <https://github.com/Yggdroot/indentLine>
@@ -276,8 +289,9 @@ nnoremap <leader>i :IndentLinesToggle<CR>
 " Plugin 'vim-python/python-syntax'
 let g:python_highlight_all = 1
 
+" ==> VIEWS AND BEHAVIORS
 " Plugin 'easymotion/vim-easymotion'
-"map <leader> <Plug>(easymotion-prefix)
+"noremap <leader> <Plug>(easymotion-prefix)
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " Use uppercase target labels and type as a lower case
 "let g:EasyMotion_use_upper = 1
@@ -286,25 +300,25 @@ let g:EasyMotion_smartcase = 1
 " Type `3` and match `3` & `#`
 "let g:EasyMotion_use_smartsign_us = 1
 " Jump to anywhere with only `s{char}{target}`. Use `s<CR>` to repeat last find motion.
-"map s <Plug>(easymotion-s)
+"noremap s <Plug>(easymotion-s)
 " Jump to anywhere with `s{char}{char}{label}`
-nmap s <Plug>(easymotion-s2)
-"map <space> <Plug>(easymotion-f)
-"map <space><space> <Plug>(easymotion-F)
-"map <C-space> <Plug>(easymotion-t)
-"map <space> <Plug>(easymotion-s)
-"map <space><space> <Plug>(easymotion-bd-t)
-map <space> <Plug>(easymotion-bd-fl)
-map - <Plug>(easymotion-bd-tl)
-"map F <Plug>(easymotion-bd-fl)
-"map T <Plug>(easymotion-bd-tl)
-"map - <Plug>(easymotion-bd-jk)
-map + <Plug>(easymotion-f)
-map _ <Plug>(easymotion-F)
+nnoremap s <Plug>(easymotion-s2)
+"noremap <space> <Plug>(easymotion-f)
+"noremap <space><space> <Plug>(easymotion-F)
+"noremap <C-space> <Plug>(easymotion-t)
+"noremap <space> <Plug>(easymotion-s)
+"noremap <space><space> <Plug>(easymotion-bd-t)
+noremap <space> <Plug>(easymotion-bd-fl)
+noremap - <Plug>(easymotion-bd-tl)
+"noremap F <Plug>(easymotion-bd-fl)
+"noremap T <Plug>(easymotion-bd-tl)
+"noremap - <Plug>(easymotion-bd-jk)
+noremap + <Plug>(easymotion-f)
+noremap _ <Plug>(easymotion-F)
 "imap <C-s> <Esc>s
 
 " Plugin 'preservim/nerdtree' " Another file system explorer
-nnoremap <leader>e :NERDTreeToggle<CR>
+nnoremap <leader>f :NERDTreeToggle<CR>
 " Open a NERDTree automatically when Vim starts up with no file specified
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
@@ -315,10 +329,49 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " Plugin 'Xuyuanp/nerdtree-git-plugin'
 "let g:NERDTreeShowIgnoredStatus = 1 " To show ignored status (a heavy feature)
 
+" ==> EDIT ENHANCEMENTS
+" Plugin 'changliu00/vim-compare-lines' " Forked from 'statox/vim-compare-lines' Compare Two Lines.
+" Use `:CL` with optional line number(s). Support relative line numbering.
+
+" Plugin 'AndrewRadev/linediff.vim' " Compare Two Blocks. Editing also enabled.
+" `ca`: command alias. Visually select one block and `:CB`, and repeat for another block.
+command -range CB <line1>,<line2>Linediff
+command CBreset LinediffReset
+
+" Plugin 'tpope/vim-surround' " Add (ys), delete (ds) or change (cs) surroundings in pair. See also <https://towardsdatascience.com/how-i-learned-to-enjoy-vim-e310e53e8d56>
+" `cs"'`: change surrounding '"' with '''.
+" `ysiw"`: add '"' surrounding the current word (`iw`).
+" `yss)`: add '(',')' pair surrounding the current line (`s`). Use '(' for a space.
+" `ys2aw*`: add '*' pair surrounding two words under cursor. `aw`: around words.
+" `veeeeS"`: visually select and surround with '"'.
+" `dst`, `cst"`: delete/change an html tag.
+" nnoremap S ysaw
+
+" ==> PROGRAMMING
+" Plugin 'tpope/vim-fugitive'
+" Examples: " `:G add %` (`:G`=`:Git`) or `:Gw(rite)`; `:Gcommit`; `:Gdiff`;
+" `:Gdiffsplit`: diff with the staged;
+" `:G blame`: vert-split window for annotations for each line of the file;
+" `:Gedit HEAD~3:%`: load the current file as it existed 3 commits ago.
+command! -nargs=* Gdf execute 'Gdiff ' . <q-args>
+command! -nargs=* Gdfc execute 'Gdiff HEAD ' . <q-args>
+command! -nargs=* Gst execute 'G status ' . <q-args>
+command! -nargs=* Gbl execute 'G blame ' . <q-args>
+command! -nargs=* Gci execute 'G commit ' . <q-args>
+command! -nargs=* Gpush execute 'G push ' . <q-args>
+command! -nargs=* Gbr execute 'G branch ' . <q-args>
+
+" Plugin 'airblade/vim-gitgutter'
+nnoremap <leader>g :GitGutterToggle<CR>
+nnoremap ]g <Plug>(GitGutterNextHunk)
+nnoremap [g <Plug>(GitGutterPrevHunk)
+set updatetime=1000 " Default = 4000. Also the time delay to write swap files
+
 " Plugin 'wellle/context.vim'
 nnoremap <leader>h :ContextToggleWindow<CR>
 " let g:context_filetype_blacklist = []
 let g:context_max_height = 11 " 21
+
 "if !has("win16") && !has("win32")
 "  Plugin 'liuchengxu/vista.vim'
 "  nnoremap <leader>v :Vista!!<CR>
@@ -340,38 +393,6 @@ let g:context_max_height = 11 " 21
 "  autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 "endif
 
-" Plugin 'tpope/vim-fugitive'
-" Examples: " `:G add %` (`:G`=`:Git`) or `:Gw(rite)`; `:Gcommit`; `:Gdiff`;
-" `:Gdiffsplit`: diff with the staged;
-" `:G blame`: vert-split window for annotations for each line of the file;
-" `:Gedit HEAD~3:%`: load the current file as it existed 3 commits ago.
-command! -nargs=* Gdf execute 'Gdiff ' . <q-args>
-command! -nargs=* Gdfc execute 'Gdiff HEAD ' . <q-args>
-command! -nargs=* Gst execute 'G status ' . <q-args>
-command! -nargs=* Gbl execute 'G blame ' . <q-args>
-command! -nargs=* Gci execute 'G commit ' . <q-args>
-command! -nargs=* Gpush execute 'G push ' . <q-args>
-command! -nargs=* Gbr execute 'G branch ' . <q-args>
-" Plugin 'airblade/vim-gitgutter'
-nnoremap <leader>g :GitGutterToggle<CR>
-nnoremap ]g <Plug>(GitGutterNextHunk)
-nnoremap [g <Plug>(GitGutterPrevHunk)
-set updatetime=1000 " Default = 4000. Also the time delay to write swap files
-
-" Plugin 'AndrewRadev/linediff.vim' " Compare Two Blocks. Editing also enabled.
-" `ca`: command alias. Visually select one block and `:CB`, and repeat for another block.
-command -range CB <line1>,<line2>Linediff
-command CBreset LinediffReset
-
-" Plugin 'tpope/vim-surround' " Add (ys), delete (ds) or change (cs) surroundings in pair. See also <https://towardsdatascience.com/how-i-learned-to-enjoy-vim-e310e53e8d56>
-" `cs"'`: change surrounding '"' with '''.
-" `ysiw"`: add '"' surrounding the current word (`iw`).
-" `yss)`: add '(',')' pair surrounding the current line (`s`). Use '(' for a space.
-" `ys2aw*`: add '*' pair surrounding two words under cursor. `aw`: around words.
-" `veeeeS"`: visually select and surround with '"'.
-" `dst`, `cst"`: delete/change an html tag.
-" nnoremap S ysaw
-
 " Plugin 'preservim/nerdcommenter' " for quick commenting
 let g:NERDCreateDefaultMappings = 0 " Create default mappings
 let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
@@ -387,91 +408,84 @@ nnoremap ca :call nerdcommenter#Comment("n", "Comment")<CR>
 xnoremap ca :call nerdcommenter#Comment("x", "Comment")<CR>
 nnoremap cc :call nerdcommenter#Comment("n", "Toggle")<CR>
 xnoremap cc :call nerdcommenter#Comment("x", "Toggle")<CR>
-" nnoremap cn :call nerdcommenter#Comment("n", "Nested")<CR>
-" xnoremap cn :call nerdcommenter#Comment("x", "Nested")<CR>
+nnoremap cn :call nerdcommenter#Comment("n", "Nested")<CR>
+xnoremap cn :call nerdcommenter#Comment("x", "Nested")<CR>
 nnoremap cu :call nerdcommenter#Comment("n", "Uncomment")<CR>
 xnoremap cu :call nerdcommenter#Comment("x", "Uncomment")<CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Temporary Miscellaneous
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set laststatus=2
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" => GENERAL CONFIGURATIONS
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+" In many terminal emulators the mouse works just fine, thus enable it.
+" if has("win16") || has("win32")
+if has('mouse')
+	set mouse=a
+endif
+" endif
+
+" Sets how many lines of history VIM has to remember
+set history=500
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+"" With a map leader it's possible to do extra key combinations like <leader>w saves the current file
+"let mapleader = ' '  " default is '\'
+"let g:mapleader = ' '
+
+"set lazyredraw " Don't redraw while executing macros (good performance config)
+
+" ==> APPEARANCES
 set t_Co=256
 set encoding=utf8
+set laststatus=2 " Always show the status line
+" Characters to fill the statuslines and vertical separators.
+set fillchars=vert:\ ,stl:\ ,stlnc:\
+set scrolloff=3 " Minimal number of screen lines to keep above and below the cursor. Default 0. `so` for abbr.
+"set foldcolumn=1 " Add a bit extra margin to the left
+"set cmdheight=1 " Height of the command bar. Default 1
+set report=0 " Threshold for reporting number of lines changed. Default 2
+
+" Avoid garbled characters in Chinese language Windows OS
+let $LANG='en'    " set message language
+set langmenu=en   " set menu's language of gvim. no spaces beside '='
+"source $VIMRUNTIME/delmenu.vim
+"source $VIMRUNTIME/menu.vim
+
+set cursorline
+"set cursorcolumn
+
+" Set line number
+set number relativenumber " nu rnu. Set hybrid line number
+augroup numbertoggle
+	autocmd!
+	autocmd BufEnter,FocusGained,InsertLeave * set relativenumber " rnu
+	autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber " nornu
+augroup END
+
+" syntax highlighting
+" syntax on  " Highlight colors are overruled but links are kept.
+syntax enable  " Only define colors for groups that don't have highlighting yet. Use `:syntax default`
+"if has('termguicolors')
+"	set termguicolors " Required by 'sainnhe/sonokai', but causes faded cursorline in terminal.
+"endif
+
+" Recommended: solarized, molokai, phd, desert, wombat; sonokai
+colorscheme molokai
+set background=dark
+"highlight Conceal ctermfg=109 ctermbg=NONE guifg=#ff0000 guibg=#00ff00
+"highlight Conceal ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE
+autocmd Colorscheme * highlight! link Conceal Macro " Identifier Operator Special SpecialKey
 
 " Toggle conceal
 nnoremap <C-q> :set <C-r>=(&cole>1) ? 'cole=0' : 'cole=2'<CR><CR>
 inoremap <C-q> <Esc>:set <C-r>=(&cole>1) ? 'cole=0' : 'cole=2'<CR><CR>a
 
-command! ToggleDiffMode call ToggleDiff()
-function! ToggleDiff()
-	if &diff
-		diffoff!
-	else
-		windo diffthis
-	endif
-endfunction
-nnoremap <leader>d :ToggleDiffMode<CR>
-
-nnoremap <C-p> :echo expand('%:p')<CR>
-
-
-" Press F9 to show the configuration file
-if has("win16") || has("win32")
-	"nnoremap <F9> :vsp C:/Program\ Files\ (x86)/Vim/_vimrc<CR>:set readonly<CR>
-	nnoremap <F9> :vsp $USERPROFILE/_vimrc<CR>:set readonly<CR>
-else
-	nnoremap <F9> :vsp ~/.vimrc<CR>:set readonly<CR>
-endif
-
-" For diff
-set diffopt=vertical " Vertical split is preferred, for e.g., `:diffs`
-
-" Select last paste in visual mode. Use `gv` to select last yanked block.
-nnoremap <expr> gc '`[' . strpart(getregtype(), 0, 1) . '`]'
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Sets no compatible with Vi
-"set nocompatible " Already set in Vundle
-
-" Sets how many lines of history VIM has to remember
-set history=500
-
-" Enable filetype plugins
-"filetype on
-"filetype plugin on
-"filetype indent on
-"filetype plugin indent on  " the same as the three lines above
-" The above line has already been set in Vundle.
-
-" Set to auto read when a file is changed from the outside
-set autoread
-
-" Automatically write before moving to another file using tags, make, or <C-o> <C-i>, etc.
-"set autowrite
-
-"" With a map leader it's possible to do extra key combinations like <leader>w saves the current file
-"let mapleader = ','  " default is '\'
-"let g:mapleader = ','
-
-" Fast saving
-"nmap <leader>w :w!<CR>
-"nmap <leader>w :w<CR>
-
-"" :W sudo saves the file (useful for handling the permission-denied error)
-"command W w !sudo tee % > /dev/null
-
-nmap <C-s> :up<CR>
-imap <C-s> <Esc>:up<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VIM user interface
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Minimal number of screen lines to keep above and below the cursor.
-set scrolloff=3 " default 0. `so` for abbr.
+" ==> MOVEMENTS
 " Toggle the cursor to always stay in the middle of screen when scrolling <https://vim.fandom.com/wiki/Keep_your_cursor_centered_vertically_on_the_screen>.
 if !exists('*VCenterCursor')
 	augroup VCenterCursor
@@ -494,216 +508,16 @@ if !exists('*VCenterCursor')
 		endif
 	endfunction
 endif
-
 nnoremap gz :call VCenterCursor()<CR>
 
 " Use `autocmd VimEnter *` to conduct the mapping after loading the 'context.vim' plugin
 autocmd VimEnter * nnoremap <C-e> <C-e>j
 autocmd VimEnter * nnoremap <C-y> <C-y>k
 
-" Avoid garbled characters in Chinese language Windows OS
-let $LANG='en'    " set message language
-set langmenu=en   " set menu's language of gvim. no spaces beside '='
-"source $VIMRUNTIME/delmenu.vim
-"source $VIMRUNTIME/menu.vim
+inoremap <C-f> <Esc><C-f>
+inoremap <C-b> <Esc><C-b>
 
-" Turn on the WiLd menu. Command-line completion will operate in an enhanced mode.
-set wildmenu
-
-" Ignore compiled files
-set wildignore=*.o,*~,*.pyc
-if has("win16") || has("win32")
-	set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
-else
-	set wildignore+=.git\*,.hg\*,.svn\*
-endif
-
-" Always show current position
-set ruler
-
-" Characters to fill the statuslines and vertical separators.
-set fillchars=vert:\ ,stl:\ ,stlnc:\
-
-"" A buffer becomes hidden when it is abandoned
-"set hid
-
-"" Configure backspace so it acts as it should act
-"set backspace=eol,start,indent
-"set whichwrap+=<,>,h,l
-
-" In many terminal emulators the mouse works just fine, thus enable it.
-if has("win16") || has("win32")
-	if has('mouse')
-		set mouse=a
-	endif
-endif
-
-" Map <space> to / (search) and Ctrl-<space> to ? (backwards search)
-"nnoremap <space> /
-"nnoremap <C-space> ?
-"nnoremap s :%s/
-nnoremap S :%s/
-"map s :%s///gc<Left><Left><Left>
-"map s :%s/<C-r><C-w>//gc<Left><Left><Left>
-
-" To make `n` always go forward and `N` backward even after `?` and `#` <https://vi.stackexchange.com/questions/2365/how-can-i-get-n-to-go-forward-even-if-i-started-searching-with-or>
-nnoremap <expr> n (v:searchforward ? 'n' : 'N')
-nnoremap <expr> N (v:searchforward ? 'N' : 'n')
-nnoremap <expr> ; (getcharsearch().forward ? ';' : ',')
-nnoremap <expr> , (getcharsearch().forward ? ',' : ';')
-
-" Show the number of match under cursor
-nnoremap <leader>* *<C-o>:%s///gn<CR>
-
-" Swap * and g*
-nnoremap * g*
-nnoremap g* *
-nnoremap # g#
-nnoremap g# #
-
-map gs :let @/ = expand('<cword>')<CR>:set hlsearch<CR>
-map gS :let @/ = '\<'.expand('<cword>').'\>'<CR>:set hlsearch<CR>
-
-" Ignore case when searching
-set ignorecase
-set smartcase
-
-" Makes search act like search in modern browsers
-set incsearch
-
-" Highlight search results
-set hlsearch
-
-"" Disable highlighting the last searched item
-nnoremap <silent> <leader>q :noh<CR>
-
-"" Don't redraw while executing macros (good performance config)
-"set lazyredraw
-
-" For regular expressions turn magic on
-set magic
-
-" Show matching brackets when text indicator is over them
-set showmatch
-" How many tenths of a second to blink when matching brackets
-set mat=2  " set matchtime=2
-
-" No annoying sound on errors
-set noerrorbells
-set novisualbell
-set t_vb=
-set tm=500
-
-"" Add a bit extra margin to the left
-"set foldcolumn=1
-
-" Set line number
-set number relativenumber " nu rnu. Set hybrid line number
-augroup numbertoggle
-	autocmd!
-	autocmd BufEnter,FocusGained,InsertLeave * set relativenumber " rnu
-	autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber " nornu
-augroup END
-
-" Highlight current line and column
-set cursorline
-"set cursorcolumn
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Enable syntax highlighting
-" syntax on  " Highlight colors are overruled but links are kept.
-syntax enable  " Only define colors for groups that don't have highlighting yet. Use `:syntax default`
-"if has('termguicolors')
-"	set termguicolors " Required by 'sainnhe/sonokai', but causes faded cursorline in terminal.
-"endif
-
-" Recommended: solarized, molokai, phd, desert, wombat; sonokai
-colorscheme molokai
-set background=dark
-"highlight Conceal ctermfg=109 ctermbg=NONE guifg=#ff0000 guibg=#00ff00
-"highlight Conceal ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE
-autocmd Colorscheme * highlight! link Conceal Macro " Identifier Operator Special SpecialKey
-
-"" Set extra options when running in GUI mode
-"if has("gui_running")
-"    set guioptions-=T
-"    set guioptions-=e
-"    set t_Co=256
-"    set guitablabel=%M\ %t
-"endif
-
-" Set utf8 as standard encoding and en_US as the standard language
-set encoding=utf8
-
-"" Use Unix as the standard file type
-"set ffs=unix,dos,mac
-
-" Input Greek letters using digraph
-inoremap <expr> <C-g> '<C-k>'.nr2char(getchar()).'*' " Greek letter
-inoremap <C-g>< <C-k>=<
-inoremap <C-g>> <C-k>>=
-inoremap <C-g>~ <C-k>?2
-inoremap <C-g>! <C-k>!=
-inoremap <C-g>+ <C-k>+-
-inoremap <C-g>- <C-k>-+
-"inoremap <expr> <C-u> '<C-k>'.nr2char(getchar()).'S' " superscript numbers
-"inoremap <expr> <C-d> '<C-k>'.nr2char(getchar()).'s' " subscript numbers
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Files, backups and undo
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" Turn backup off, since most stuff is in SVN, git et.c anyway...
-"set nobackup
-"set nowb
-"set noswapfile
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Text, tab and indent related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Do not use spaces in place of tabs
-set noexpandtab
-" 1 tab == 4 spaces
-set tabstop=4  " default 8
-set softtabstop=4
-set shiftwidth=4
-" Cases to use spaces instead of tabs
-autocmd FileType python set tabstop=4|set expandtab|set shiftwidth=4 " In python, space is recommended for indent rather than tab
-autocmd FileType tex,latex,bib,bibtex set tabstop=4|set expandtab|set shiftwidth=2 " Indent 2 spaces for tex files
-
-" Be smart when using tabs ;)
-set smarttab
-
-"" Linebreak on 500 characters
-"set lbr
-"set tw=500
-
-set ai "Auto indent
-set si "Smart indent
-set cindent " Works better in most cases but is more strict. Overrides si
-set wrap "Wrap lines. default on.
-nnoremap <leader>w :set wrap!<CR>
-
-
-""""""""""""""""""""""""""""""
-" => Visual mode related
-""""""""""""""""""""""""""""""
-" Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
-vnoremap <silent> * :call VisualSelection('f', '')<CR>
-vnoremap <silent> # :call VisualSelection('b', '')<CR>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabs, windows and buffers
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" Treat long lines as break lines (useful when moving around in them)
-"map j gj
-"map k gk
-
+" ==> WINDOWS AND TABS
 " Smart way to move between windows (<C-w><C-j> etc auto. mapped to <C-w>j)
 let g:BASH_Ctrl_j = 'off'
 nnoremap <C-j> <C-w>j " may not be working even with the above option
@@ -747,6 +561,10 @@ nnoremap 14gt 14gt
 nnoremap 15gt 15gt
 nnoremap 16gt 16gt
 
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+nnoremap gr :tabnew <C-r>=expand("%:p:h")<CR>/
+
 " Easier finger move
 "nnoremap ]t :tabn<CR>
 "nnoremap [t :tabp<CR>
@@ -756,6 +574,10 @@ nnoremap gh :tabp<CR>
 let g:lasttab = 1
 nmap go :exe "tabn ".g:lasttab<CR>
 autocmd TabLeave * let g:lasttab = tabpagenr()
+
+"inoremap <C-g>l <Esc>gt
+"inoremap <C-g>h <Esc>gT
+"inoremap <C-g>o <Esc>:exe "tabn ".g:lasttab<CR>
 
 " Duplicate the current file in a new tab with the same cursor location
 nnoremap gT :let lnum=line('.') \| let colnum=col('.') \| tabnew \| e # \| call cursor(lnum, colnum)<CR>
@@ -811,19 +633,40 @@ command! -nargs=1 SP SPLIT <args>
 command! -nargs=1 Diffs Diffsplit <args>
 command! -nargs=1 DIFFS DIFFSPLIT <args>
 
-"inoremap <C-g>l <Esc>gt
-"inoremap <C-g>h <Esc>gT
-"inoremap <C-g>o <Esc>:exe "tabn ".g:lasttab<CR>
+" buffer list
+nnoremap ]b :bnext<CR>
+nnoremap [b :bprev<CR>
 
-inoremap <C-f> <Esc><C-f>
-inoremap <C-b> <Esc><C-b>
+" error/quickfix list
+nnoremap <leader>e :copen<CR>
+" Use `:cc[number]` to jump to the location of [number]-th spot in the error/quickfix list
+nnoremap ]e :cnext<CR>
+nnoremap [e :cprev<CR>
 
-" Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
-nmap gr :tabnew <C-r>=expand("%:p:h")<CR>/
+" ==> VIEWS AND BEHAVIORS
+set wildmenu " Turn on the WiLd menu. Command-line completion will operate in an enhanced mode.
+
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+	set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+else
+	set wildignore+=.git\*,.hg\*,.svn\*
+endif
+
+set showmatch " Show matching brackets when text indicator is over them
+set matchtime=2 " How many tenths of a second to blink when matching brackets
+
+set wrap "Wrap lines. default on.
+nnoremap <leader>w :set wrap!<CR>
+
+" Display absolute path
+nnoremap <C-p> :echo expand('%:p')<CR>
 
 " Switch CWD to the directory of the open buffer
 nmap <leader>cd :cd %:p:h<CR>:pwd<CR>
+
+map Y y$
 
 "" Specify the behavior when switching between buffers
 "try
@@ -840,15 +683,85 @@ autocmd BufReadPost *
 " Remember info about open buffers on close
 set viminfo^=%
 
-" buffer list
-nnoremap ]b :bnext<CR>
-nnoremap [b :bprev<CR>
+set autoread " Set to auto read when a file is changed from the outside
+"set autowrite " Automatically write before moving to another file using tags, make, or <C-o> <C-i>, etc.
 
-" error/quickfix list
-nnoremap <leader>c :copen<CR>
-" Use `:cc[number]` to jump to the location of [number]-th spot in the error/quickfix list
-nnoremap cn :cnext<CR>
-nnoremap cp :cprev<CR>
+" writes
+nmap <C-s> :up<CR>
+imap <C-s> <Esc>:up<CR>
+" :W sudo saves the file (useful for handling the permission-denied error)
+"command W w !sudo tee % > /dev/null
+
+"" Turn backup off, since most stuff is in SVN, git et.c anyway...
+"set nobackup
+"set nowb
+"set noswapfile
+
+" Press F9 to show the configuration file
+if has("win16") || has("win32")
+	"nnoremap <F9> :vsp C:/Program\ Files\ (x86)/Vim/_vimrc<CR>:set readonly<CR>
+	nnoremap <F9> :vsp $USERPROFILE/_vimrc<CR>:set readonly<CR>
+else
+	nnoremap <F9> :vsp ~/.vimrc<CR>:set readonly<CR>
+endif
+
+" ==> SEARCH AND REPLACEMENT
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+
+noremap gs :let @/ = expand('<cword>')<CR>:set hlsearch<CR>
+noremap gS :let @/ = '\<'.expand('<cword>').'\>'<CR>:set hlsearch<CR>
+
+"" Turn off highlighting the last searched item
+nnoremap <silent> <leader>q :noh<CR>
+
+" To make `n` always go forward and `N` backward even after `?` and `#` <https://vi.stackexchange.com/questions/2365/how-can-i-get-n-to-go-forward-even-if-i-started-searching-with-or>
+noremap <expr> n (v:searchforward ? 'n' : 'N')
+noremap <expr> N (v:searchforward ? 'N' : 'n')
+noremap <expr> ; (getcharsearch().forward ? ';' : ',')
+noremap <expr> , (getcharsearch().forward ? ',' : ';')
+
+" Swap * and g*
+noremap * g*
+noremap g* *
+noremap # g#
+noremap g# #
+
+" Show the number of match under cursor
+noremap <leader>* *<C-o>:%s///gn<CR>
+
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :call VisualSelection('f', '')<CR>
+vnoremap <silent> # :call VisualSelection('b', '')<CR>
+
+function! VisualSelection(direction, extra_filter) range
+	let l:saved_reg = @"
+	execute "normal! vgvy"
+
+	let l:pattern = escape(@", '\\/.*$^~[]')
+	let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+	if a:direction == 'b'
+		execute "normal ?" . l:pattern . "^M"
+	elseif a:direction == 'gv'
+		call CmdLine("Ag \"" . l:pattern . "\" " )
+	elseif a:direction == 'replace'
+		call CmdLine("%s" . '/'. l:pattern . '/')
+	elseif a:direction == 'f'
+		execute "normal /" . l:pattern . "^M"
+	endif
+
+	let @/ = l:pattern
+	let @" = l:saved_reg
+endfunction
+
+set magic " For regular expressions turn magic on
+nnoremap S :%s/
+"nnoremap s :%s///gc<Left><Left><Left>
+"nnoremap s :%s/<C-r><C-w>//gc<Left><Left><Left>
 
 " grep
 "autocmd QuickFixCmdPost [^l]* nested copen
@@ -856,24 +769,57 @@ nnoremap cp :cprev<CR>
 "command! -nargs=* grepr execute 'grep ' . <q-args> . ' -r .'
 "
 
-""""""""""""""""""""""""""""""
-" => Status line and command line
-""""""""""""""""""""""""""""""
-" Always show the status line
-set laststatus=2
+" ==> EDIT ENHANCEMENTS
+" Select last paste in visual mode. Use `gv` to select last yanked block.
+nnoremap <expr> gc '`[' . strpart(getregtype(), 0, 1) . '`]'
 
-"" Height of the command bar
-"set cmdheight=1  " default 1
+" Configure tab
+set noexpandtab " Do not use spaces in place of tabs
+set tabstop=4  " 1 tab == 4 spaces. default 8
+set smarttab
+set softtabstop=4
+set shiftwidth=4
+" Cases to use spaces instead of tabs
+autocmd FileType python set tabstop=4|set expandtab|set shiftwidth=4 " In python, space is recommended for indent rather than tab
+autocmd FileType tex,latex,bib,bibtex set tabstop=4|set expandtab|set shiftwidth=2 " Indent 2 spaces for tex files
 
-" Threshold for reporting number of lines changed.
-set report=0  " default 2
+set ai "Auto indent
+"set si "Smart indent
+set cindent " Works better in most cases but is more strict. Overrides si
 
+"" Linebreak on 500 characters
+"set lbr
+"set tw=500
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Editing mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" The default Y command is the same as yy. Enable behavior like D and C.
-map Y y$
+"" Configure backspace so it acts as it should act
+"set backspace=eol,start,indent
+"set whichwrap+=<,>,h,l
+
+" For diff
+set diffopt=vertical " Vertical split is preferred, for e.g., `:diffs`
+
+command! ToggleDiffMode call ToggleDiff()
+function! ToggleDiff()
+	if &diff
+		diffoff!
+	else
+		windo diffthis
+	endif
+endfunction
+nnoremap <leader>d :ToggleDiffMode<CR>
+
+" Input Greek letters using digraph
+inoremap <expr> <C-g> '<C-k>'.nr2char(getchar()).'*' " Greek letter
+inoremap <C-g>< <C-k>=<
+inoremap <C-g>> <C-k>>=
+inoremap <C-g>~ <C-k>?2
+inoremap <C-g>! <C-k>!=
+inoremap <C-g>+ <C-k>+-
+inoremap <C-g>- <C-k>-+
+"inoremap <expr> <C-u> '<C-k>'.nr2char(getchar()).'S' " superscript numbers
+"inoremap <expr> <C-d> '<C-k>'.nr2char(getchar()).'s' " subscript numbers
+
+"""""""""""""""""
 
 "" Automatically insert the matching part of the pair. Insert mode.
 "inoremap ( ()<ESC>i
@@ -989,27 +935,6 @@ function! CmdLine(str)
 	unmenu Foo
 endfunction
 
-function! VisualSelection(direction, extra_filter) range
-	let l:saved_reg = @"
-	execute "normal! vgvy"
-
-	let l:pattern = escape(@", '\\/.*$^~[]')
-	let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-	if a:direction == 'b'
-		execute "normal ?" . l:pattern . "^M"
-	elseif a:direction == 'gv'
-		call CmdLine("Ag \"" . l:pattern . "\" " )
-	elseif a:direction == 'replace'
-		call CmdLine("%s" . '/'. l:pattern . '/')
-	elseif a:direction == 'f'
-		execute "normal /" . l:pattern . "^M"
-	endif
-
-	let @/ = l:pattern
-	let @" = l:saved_reg
-endfunction
-
 "" Don't close window, when deleting a buffer
 "command! Bclose call <SID>BufcloseCloseIt()
 "function! <SID>BufcloseCloseIt()
@@ -1113,97 +1038,6 @@ let g:tex_indent_ifelsefi = 0 " Default = 1
 "if &filetype ==? 'tex' || &filetype ==? 'bib' | [commands] | endif " This does not work! When `.vimrc` is loaded, file type is unknown! Try `echom 'a'.&filetype.'b'`, which gives 'ab'.
 autocmd FileType tex,latex,bib,bibtex let g:indentLine_enabled=0 " Disable 'indentline' to avoid conceal conflict
 autocmd FileType tex,latex,bib,bibtex set spell | set nofoldenable | set cole=2 | set cocu=inc
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Ctags
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" man ctags
-"" Create or update the tags file and update the taglist
-"nnoremap <leader>ct :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR><CR> :TlistUpdate<CR>
-"set tags=tags
-"set tags+=./tags " Add current directory's generated tags file
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Omnicppcomplete
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" :help omnicppcomplete
-"" -- Options --
-"set completeopt=menu,menuone " With no preview window
-"let OmniCpp_MayCompleteDot = 1 " autocomplete with . (default 1)
-"let OmniCpp_MayCompleteArrow = 1 " autocomplete with -> (default 1)
-"let OmniCpp_MayCompleteScope = 1 " autocomplete with :: (default 1)
-"let OmniCpp_SelectFirstItem = 2 " 2: select first item (but don't insert)
-"let OmniCpp_NamespaceSearch = 2 " search namespaces in this and included files
-"let OmniCpp_ShowPrototypeInAbbr = 1 " show function prototype in popup window
-"let OmniCpp_GlobalScopeSearch=1 " enable the global scope search
-"let OmniCpp_DisplayMode=1 " Class scope completion mode: always show all members
-"let OmniCpp_DefaultNamespaces=["std"]
-"let OmniCpp_ShowScopeInAbbr=1 " show scope in abbreviation and remove the last column
-"let OmniCpp_ShowAccess=1
-"
-"" -- Commands --
-"" Automatically complete the code using F3. Note that there should be no character following this mapping command, including <tab>.
-"imap <F3> <C-x><C-o>
-"" " Completion according to the included files.
-""imap <F2> <C-x><C-i>
-"
-"" To disable and enable the automatic OmniComplete actions
-"cmap dsom :let OmniCpp_MayCompleteDot=0<CR>:let OmniCpp_MayCompleteArrow=0<CR>:let OmniCpp_MayCompleteScope=0<CR>
-"cmap enom :let OmniCpp_MayCompleteDot=1<CR>:let OmniCpp_MayCompleteArrow=1<CR>:let OmniCpp_MayCompleteScope=1<CR>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Taglist
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" :help taglist.txt
-"" -- Options --
-"let Tlist_Auto_Highlight_Tag=1  " Automatically highlight the current tag in the taglist.
-""let Tlist_Auto_Open  " Open the taglist window when Vim starts.
-""let Tlist_Auto_Update  " Automatically update the taglist to include newly edited files.
-""let Tlist_Close_On_Select  " Close the taglist window when a file or tag is selected.
-""let Tlist_Compact_Format  " Remove extra information and blank lines from the taglist window.
-"let Tlist_Ctags_Cmd='ctags'  " 	Specifies the path to the ctags utility.
-"let Tlist_Display_Prototype=1  " Show prototypes and not tags in the taglist window.
-""let Tlist_Display_Tag_Scope  " Show tag scope next to the tag name.
-""let Tlist_Enable_Fold_Column  " Show the fold indicator column in the taglist window.
-"let Tlist_Exit_OnlyWindow=1  " Close Vim if the taglist is the only window.
-"let Tlist_File_Fold_Auto_Close=0  " Close tag folds for inactive buffers.
-""let Tlist_GainFocus_On_ToggleOpen  " Jump to taglist window on open.
-""let Tlist_Highlight_Tag_On_BufEnter  " On entering a buffer, automatically highlight the current tag.
-""let Tlist_Inc_Winwidth  " Increase the Vim window width to accommodate the taglist window.
-""let Tlist_Max_Submenu_Items  " Maximum number of items in a tags sub-menu.
-""let Tlist_Max_Tag_Length  " Maximum tag length used in a tag menu entry.
-"let Tlist_Process_File_Always=1  " Process files even when the taglist window is closed.
-""let Tlist_Show_Menu  " Display the tags menu.
-"let Tlist_Show_One_File=0  " Show tags for the current buffer only.
-""let Tlist_Sort_Type  " Sort method used for arranging the tags.
-""let Tlist_Use_Horiz_Window  " Use a horizontally split window for the taglist window.
-""let Tlist_Use_Right_Window  " Place the taglist window on the right side.
-""let Tlist_Use_SingleClick  " Single click on a tag jumps to it.
-""let Tlist_WinHeight  " Horizontally split taglist window height.
-""let Tlist_WinWidth  " Vertically split taglist window width.
-"
-"" -- Commands --
-"nnoremap <leader>tl :TlistToggle<CR>
-"nnoremap <leader>ta :TlistAddFiles .
-"nnoremap <leader>tr :TlistAddFilesRecursive .
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Syntastic
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" :help syntastic
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_ignore_files=[".*"] " stop processing files with matching name (exact reg-ex)
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
