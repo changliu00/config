@@ -383,8 +383,8 @@ command! -nargs=* Gbr execute 'G branch ' . <q-args>
 
 "" Plugin 'airblade/vim-gitgutter'
 nnoremap <leader>g :GitGutterToggle<CR>
-nmap ]g <Plug>(GitGutterNextHunk)
-nmap [g <Plug>(GitGutterPrevHunk)
+map ]g <Plug>(GitGutterNextHunk)
+map [g <Plug>(GitGutterPrevHunk)
 set updatetime=1000 " Default = 4000. Also the time delay to write swap files
 
 "" Plugin 'wellle/context.vim'
