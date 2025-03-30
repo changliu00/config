@@ -227,7 +227,7 @@ if !has("win16") && !has("win32")
   "let g:ycm_show_diagnostics_ui = 0 " Stop the built-in checker of ycm for c-related syntax
   " Stop the popup from automatically displaying. Set to 'CursorHold' (default) or 'CursorMoved' (use `K` to toggle between the two) to resume.
   let g:ycm_auto_hover = ''
-  nnoremap K <Plug>(YCMHover)
+  nmap K <Plug>(YCMHover)
 endif
 
 "" Plugin 'vim-latex/vim-latex' " See <http://vim-latex.sourceforge.net/>
@@ -383,8 +383,8 @@ command! -nargs=* Gbr execute 'G branch ' . <q-args>
 
 "" Plugin 'airblade/vim-gitgutter'
 nnoremap <leader>g :GitGutterToggle<CR>
-nnoremap ]g <Plug>(GitGutterNextHunk)
-nnoremap [g <Plug>(GitGutterPrevHunk)
+nmap ]g <Plug>(GitGutterNextHunk)
+nmap [g <Plug>(GitGutterPrevHunk)
 set updatetime=1000 " Default = 4000. Also the time delay to write swap files
 
 "" Plugin 'wellle/context.vim'
@@ -436,55 +436,6 @@ xnoremap cu :call nerdcommenter#Comment("x", "Uncomment")<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" => GENERAL CONFIGURATIONS
 """""""""""""""""""""""""""""""""""""""""""""""""
-
-"" settings for Windows
-if has("win16") || has("win32")
-	" -- Default settings from gVim --
-	source $VIMRUNTIME/vimrc_example.vim
-
-	set diffexpr=MyDiff()
-	function MyDiff()
-		let opt = '-a --binary '
-		if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-		if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-		let arg1 = v:fname_in
-		if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-		let arg1 = substitute(arg1, '!', '\!', 'g')
-		let arg2 = v:fname_new
-		if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-		let arg2 = substitute(arg2, '!', '\!', 'g')
-		let arg3 = v:fname_out
-		if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-		let arg3 = substitute(arg3, '!', '\!', 'g')
-		if $VIMRUNTIME =~ ' '
-			if &sh =~ '\<cmd'
-				if empty(&shellxquote)
-					let l:shxq_sav = ''
-					set shellxquote&
-				endif
-				let cmd = '"' . $VIMRUNTIME . '\diff"'
-			else
-				let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-			endif
-		else
-			let cmd = $VIMRUNTIME . '\diff'
-		endif
-		let cmd = substitute(cmd, '!', '\!', 'g')
-		silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
-		if exists('l:shxq_sav')
-			let &shellxquote=l:shxq_sav
-		endif
-	endfunction
-
-	" -- My settings --
-	"set guifont=Courier\ New:h12
-	set guifont=Consolas:h14
-	set t_ut="" " To properly display background in Windows PowerShell. `t_ut=""` disables Background Color Erase (BCE)
-	"set lines=45 columns=158
-	set gcr=a:block-blinkon0  " To stop the cursor from shining
-	map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
-endif
-
 " In many terminal emulators the mouse works just fine, thus enable it.
 "if has("win16") || has("win32")
 if has('mouse')
@@ -551,7 +502,7 @@ autocmd Colorscheme * highlight! link Conceal Macro " Identifier Operator Specia
 
 " Toggle conceal
 nnoremap <C-q> :set <C-r>=(&cole>1) ? 'cole=0' : 'cole=2'<CR><CR>
-inoremap <C-q> <Esc>:set <C-r>=(&cole>1) ? 'cole=0' : 'cole=2'<CR><CR>a
+imap <C-q> <Esc><C-q>a
 
 "" ==> MOVEMENTS
 " Use `autocmd VimEnter *` to conduct the mapping after loading the 'context.vim' plugin
@@ -923,6 +874,55 @@ inoremap <C-g>- <C-k>-+
 
 "%s/\s\+$//ge " Delete trailing white space
 "noremap <leader>m mmHmt:%s/<C-v><CR>//ge<CR>'tzt'm " Remove the Windows ^M - when the encodings gets messed up
+
+"" ==> SETTINGS FOR WINDOWS
+if has("win16") || has("win32")
+	" -- Default settings from gVim --
+	" Somehow the following line should be after `highlight! link Conceal Macro` to make it effective
+	source $VIMRUNTIME/vimrc_example.vim
+
+	set diffexpr=MyDiff()
+	function MyDiff()
+		let opt = '-a --binary '
+		if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+		if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+		let arg1 = v:fname_in
+		if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+		let arg1 = substitute(arg1, '!', '\!', 'g')
+		let arg2 = v:fname_new
+		if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+		let arg2 = substitute(arg2, '!', '\!', 'g')
+		let arg3 = v:fname_out
+		if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+		let arg3 = substitute(arg3, '!', '\!', 'g')
+		if $VIMRUNTIME =~ ' '
+			if &sh =~ '\<cmd'
+				if empty(&shellxquote)
+					let l:shxq_sav = ''
+					set shellxquote&
+				endif
+				let cmd = '"' . $VIMRUNTIME . '\diff"'
+			else
+				let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+			endif
+		else
+			let cmd = $VIMRUNTIME . '\diff'
+		endif
+		let cmd = substitute(cmd, '!', '\!', 'g')
+		silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
+		if exists('l:shxq_sav')
+			let &shellxquote=l:shxq_sav
+		endif
+	endfunction
+
+	" -- My settings --
+	"set guifont=Courier\ New:h12
+	set guifont=Consolas:h14
+	set t_ut="" " To properly display background in Windows PowerShell. `t_ut=""` disables Background Color Erase (BCE)
+	"set lines=45 columns=158
+	set gcr=a:block-blinkon0  " To stop the cursor from shining
+	map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" => Notes
