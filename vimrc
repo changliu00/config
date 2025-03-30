@@ -1,5 +1,5 @@
 """""""""""""""""""""""""""""""""""""""""""""""""
-" => PLUGIN REGISTRATION IN VUNDLE
+"" => PLUGIN REGISTRATION IN VUNDLE
 """""""""""""""""""""""""""""""""""""""""""""""""
 " Checkout with: 'git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim',
 " or to '%USERPROFILE%/vimfiles/bundle/Vundle.vim' on Windows,
@@ -24,7 +24,7 @@ endif
 " Let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" ==> SPECIAL INSTALLATION / FILETYPE SPECIFIC
+"" ==> SPECIAL INSTALLATION / FILETYPE SPECIFIC
 if !has("win16") && !has("win32")
   Plugin 'ycm-core/YouCompleteMe'
 endif
@@ -100,8 +100,8 @@ Plugin 'vim-latex/vim-latex' " See <http://vim-latex.sourceforge.net/>
 "   Directly edit '$VIMFILES/bundle/vim-latex/ftplugin/latex-suite/main.vim'. E.g., `call IMAP ('==', '={} & ', "tex")`.
 Plugin 'changliu00/tex-conceal.vim' " 'KeitaNakamura/tex-conceal.vim'
 
-" ==> APPEARANCES
-" Plugin 'flazz/vim-colorschemes'
+"" ==> APPEARANCES
+Plugin 'flazz/vim-colorschemes'
 Plugin 'sainnhe/sonokai'
 
 "Plugin 'Lokaltog/vim-powerline' " 'powerline/powerline' See <https://github.com/Lokaltog/vim-powerline>
@@ -116,7 +116,7 @@ Plugin 'ap/vim-css-color'
 Plugin 'Yggdroot/indentLine' " See <https://github.com/Yggdroot/indentLine>
 Plugin 'vim-python/python-syntax'
 
-" ==> VIEWS AND BEHAVIORS
+"" ==> VIEWS AND BEHAVIORS
 Plugin 'easymotion/vim-easymotion'
 
 Plugin 'preservim/nerdtree' " Another file system explorer
@@ -124,7 +124,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight' " Highlighting Nerdtree
 "Plugin 'ryanoasis/vim-devicons' " Icons for Nerdtree
 
-" ==> EDIT ENHANCEMENTS
+"" ==> EDIT ENHANCEMENTS
 Plugin 'changliu00/vim-compare-lines' " Forked from 'statox/vim-compare-lines' Compare Two Lines.
 Plugin 'AndrewRadev/linediff.vim' " Compare Two Blocks. Editing also enabled.
 
@@ -135,7 +135,7 @@ Plugin 'tpope/vim-repeat' " Repeat the last command of a plugin.
 
 Plugin 'tpope/vim-surround' " Add (ys), delete (ds) or change (cs) surroundings in pair. See also <https://towardsdatascience.com/how-i-learned-to-enjoy-vim-e310e53e8d56>
 
-" ==> PROGRAMMING
+"" ==> PROGRAMMING
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 
@@ -157,7 +157,7 @@ Plugin 'wellle/context.vim'
 
 Plugin 'preservim/nerdcommenter'
 
-" ==> RESERVED
+"" ==> RESERVED
 "Plugin 'jreybert/vimagit' " Magit-like plugin for vim
 " -- Plugin from <http://vim-scripts.org/vim/scripts.html>
 "Plugin 'L9' " COMMENTED for conflicting commands (E174)
@@ -189,7 +189,7 @@ Plugin 'preservim/nerdcommenter'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-"" To ignore plugin indent changes, instead use:
+" To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
 " Brief help
@@ -203,12 +203,12 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 """""""""""""""""""""""""""""""""""""""""""""""""
-" => PLUGIN CONFIGURATIONS
+"" => PLUGIN CONFIGURATIONS
 """""""""""""""""""""""""""""""""""""""""""""""""
 
-" ==> SPECIAL INSTALLATION / FILETYPE SPECIFIC
+"" ==> SPECIAL INSTALLATION / FILETYPE SPECIFIC
 if !has("win16") && !has("win32")
-  " Plugin 'ycm-core/YouCompleteMe'
+  "" Plugin 'ycm-core/YouCompleteMe'
   "let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py' " Specify the configuration file (This is default)
   autocmd FileType * if index(['tex','latex','bib','bibtex'], &filetype) >= 0 | let g:ycm_auto_trigger = 0 | endif " When set to 0, use <C-space> to force semantic completion. Default = 1
   nnoremap <leader>yy :let g:ycm_auto_trigger = !g:ycm_auto_trigger<CR>
@@ -230,7 +230,7 @@ if !has("win16") && !has("win32")
   nnoremap K <Plug>(YCMHover)
 endif
 
-" Plugin 'vim-latex/vim-latex' " See <http://vim-latex.sourceforge.net/>
+"" Plugin 'vim-latex/vim-latex' " See <http://vim-latex.sourceforge.net/>
 " REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
 "filetype plugin on " already enabled
 "
@@ -250,19 +250,39 @@ filetype indent on
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
+" My adjustments
+set noshellslash " For enabling forward search with SumatraPDF in Windows. Alternatively, substitute `target_file` with `'%:r.pdf'` and `sourcefileFull` with `'%:p'` in Line 385 of 'vim-latex/ftplugin/latex-suite/compiler.vim' (The line is originally `let execString .= Tex_Stringformat('start %s %s -forward-search %s %s', viewer, target_file, sourcefileFull, linenr)`.)
+let g:Tex_DefaultTargetFormat = 'pdf' " Default = dvi
+let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode -file-line-error-style -src-specials $*' " Default = 'latex -interaction=nonstopmode -file-line-error-style $*'. Add '-src-specials' to enable forward/inverse searching
+let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*' " Default = 'pdflatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*'. The option '-synctex=1' enables forward/inverse searching by providing a synctex(.gz) file to the pdf viewer
+let g:Tex_MultipleCompileFormats = 'dvi,pdf' " Default = 'dvi'
+"let g:Tex_FormatDependency_pdf = 'dvi,pdf' " Default = 'dvi,pdf'
+let g:Tex_ViewRule_pdf = '' " Default = 'xpdf' for Unix. Consider 'Zathura' for Ubuntu
+if has("win16") || has("win32")
+	let g:Tex_ViewRule_pdf = 'SumatraPDF -inverse-search "gvim -c \":RemoteOpen +\%l \%f\""' " Default = 'AcroRd32' for Windows
+elseif has("osx") || has("mac") || has("macunix")
+	let g:Tex_TreatMacViewerAsUNIX = 1 " To enable forward/inverse searching on Macintosh systems
+endif
+let g:tex_indent_brace = 1 " Default = 1
+let g:tex_indent_items = 1 " Default = 1
+let g:tex_items = '\\bibitem\|\\item' " Default = '\\bibitem\|\\item'
+let g:tex_itemize_env = 'itemize\|description\|enumerate\|thebibliography' " Default = 'itemize\|description\|enumerate\|thebibliography'
+let g:tex_noindent_env = 'document\|verbatim\|comment\|lstlisting' " Default = 'document\|verbatim\|comment\|lstlisting'
+let g:tex_indent_ifelsefi = 0 " Default = 1
+" Other options
+"if &filetype ==? 'tex' || &filetype ==? 'bib' | [commands] | endif " This does not work! When `.vimrc` is loaded, file type is unknown! Try `echom 'a'.&filetype.'b'`, which gives 'ab'.
+autocmd FileType tex,latex,bib,bibtex let g:indentLine_enabled=0 " Disable 'indentline' to avoid conceal conflict
+autocmd FileType tex,latex,bib,bibtex set spell | set nofoldenable | set cole=2 | set cocu=inc
 
-" ==> APPEARANCES
-" Plugin 'flazz/vim-colorschemes'
-" colorscheme molokai
-
-" Plugin 'sainnhe/sonokai'
+"" ==> APPEARANCES
+"" Plugin 'sainnhe/sonokai'
 let g:sonokai_style = 'andromeda' " 'default', 'atlantis', 'andromeda', 'shusia', 'maia'
 let g:sonokai_enable_italic = 1
 let g:sonokai_disable_italic_comment = 1
 
-" Plugin 'Lokaltog/vim-powerline' " 'powerline/powerline' See <https://github.com/Lokaltog/vim-powerline>
-" let g:Powerline_symbols = 'unicode' 'fancy'
-" Plugin 'itchyny/lightline.vim'
+"" Plugin 'Lokaltog/vim-powerline' " 'powerline/powerline' See <https://github.com/Lokaltog/vim-powerline>
+"let g:Powerline_symbols = 'unicode' 'fancy'
+"" Plugin 'itchyny/lightline.vim'
 let g:lightline = {
       \ 'colorscheme': 'powerline',
       \ 'active': {
@@ -275,23 +295,23 @@ let g:lightline = {
       \ },
       \ }
 
-" Plugin 'luochen1990/rainbow' " for visualizing paired brackets
+"" Plugin 'luochen1990/rainbow' " for visualizing paired brackets
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
-" Plugin 'Yggdroot/indentLine' " See <https://github.com/Yggdroot/indentLine>
-"It sets `conceallevel = 2` and `concealcursor = 'inc'`.
+"" Plugin 'Yggdroot/indentLine' " See <https://github.com/Yggdroot/indentLine>
+" It sets `conceallevel = 2` and `concealcursor = 'inc'`.
 let g:indentLine_char = '|'
 autocmd FileType tex,latex,bib,bibtex let g:indentLine_setColors = 0 " Do not overwrite 'conceal' color for tex files
 "let g:indentLine_defaultGroup = 'SpecialKey' " Use the same colors as the 'SpecialKey' highlight group
 "let g:indentLine_color_term = 239 | let g:indentLine_bgcolor_term = 202 " Customize conceal color
 nnoremap <leader>i :IndentLinesToggle<CR>
 
-" Plugin 'vim-python/python-syntax'
+"" Plugin 'vim-python/python-syntax'
 let g:python_highlight_all = 1
 
-" ==> VIEWS AND BEHAVIORS
-" Plugin 'easymotion/vim-easymotion'
-"noremap <leader> <Plug>(easymotion-prefix)
+"" ==> VIEWS AND BEHAVIORS
+"" Plugin 'easymotion/vim-easymotion'
+"map <leader> <Plug>(easymotion-prefix)
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
 " Use uppercase target labels and type as a lower case
 "let g:EasyMotion_use_upper = 1
@@ -300,24 +320,24 @@ let g:EasyMotion_smartcase = 1
 " Type `3` and match `3` & `#`
 "let g:EasyMotion_use_smartsign_us = 1
 " Jump to anywhere with only `s{char}{target}`. Use `s<CR>` to repeat last find motion.
-"noremap s <Plug>(easymotion-s)
+"map s <Plug>(easymotion-s)
 " Jump to anywhere with `s{char}{char}{label}`
-nnoremap s <Plug>(easymotion-s2)
-"noremap <space> <Plug>(easymotion-f)
-"noremap <space><space> <Plug>(easymotion-F)
-"noremap <C-space> <Plug>(easymotion-t)
-"noremap <space> <Plug>(easymotion-s)
-"noremap <space><space> <Plug>(easymotion-bd-t)
-noremap <space> <Plug>(easymotion-bd-fl)
-noremap - <Plug>(easymotion-bd-tl)
-"noremap F <Plug>(easymotion-bd-fl)
-"noremap T <Plug>(easymotion-bd-tl)
-"noremap - <Plug>(easymotion-bd-jk)
-noremap + <Plug>(easymotion-f)
-noremap _ <Plug>(easymotion-F)
+nmap s <Plug>(easymotion-s2)
+"map <space> <Plug>(easymotion-f)
+"map <space><space> <Plug>(easymotion-F)
+"map <C-space> <Plug>(easymotion-t)
+"map <space> <Plug>(easymotion-s)
+"map <space><space> <Plug>(easymotion-bd-t)
+map <space> <Plug>(easymotion-bd-fl)
+map - <Plug>(easymotion-bd-tl)
+"map F <Plug>(easymotion-bd-fl)
+"map T <Plug>(easymotion-bd-tl)
+"map - <Plug>(easymotion-bd-jk)
+map + <Plug>(easymotion-f)
+map _ <Plug>(easymotion-F)
 "imap <C-s> <Esc>s
 
-" Plugin 'preservim/nerdtree' " Another file system explorer
+"" Plugin 'preservim/nerdtree' " Another file system explorer
 nnoremap <leader>f :NERDTreeToggle<CR>
 " Open a NERDTree automatically when Vim starts up with no file specified
 autocmd StdinReadPre * let s:std_in=1
@@ -326,29 +346,29 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 "let g:NERDTreeDirArrowExpandable = '>' " 'ÎÎ'
 "let g:NERDTreeDirArrowCollapsible = 'v' " 'ÎÎ'
-" Plugin 'Xuyuanp/nerdtree-git-plugin'
+"" Plugin 'Xuyuanp/nerdtree-git-plugin'
 "let g:NERDTreeShowIgnoredStatus = 1 " To show ignored status (a heavy feature)
 
-" ==> EDIT ENHANCEMENTS
-" Plugin 'changliu00/vim-compare-lines' " Forked from 'statox/vim-compare-lines' Compare Two Lines.
+"" ==> EDIT ENHANCEMENTS
+"" Plugin 'changliu00/vim-compare-lines' " Forked from 'statox/vim-compare-lines' Compare Two Lines.
 " Use `:CL` with optional line number(s). Support relative line numbering.
 
-" Plugin 'AndrewRadev/linediff.vim' " Compare Two Blocks. Editing also enabled.
+"" Plugin 'AndrewRadev/linediff.vim' " Compare Two Blocks. Editing also enabled.
 " `ca`: command alias. Visually select one block and `:CB`, and repeat for another block.
 command -range CB <line1>,<line2>Linediff
 command CBreset LinediffReset
 
-" Plugin 'tpope/vim-surround' " Add (ys), delete (ds) or change (cs) surroundings in pair. See also <https://towardsdatascience.com/how-i-learned-to-enjoy-vim-e310e53e8d56>
+"" Plugin 'tpope/vim-surround' " Add (ys), delete (ds) or change (cs) surroundings in pair. See also <https://towardsdatascience.com/how-i-learned-to-enjoy-vim-e310e53e8d56>
 " `cs"'`: change surrounding '"' with '''.
 " `ysiw"`: add '"' surrounding the current word (`iw`).
 " `yss)`: add '(',')' pair surrounding the current line (`s`). Use '(' for a space.
 " `ys2aw*`: add '*' pair surrounding two words under cursor. `aw`: around words.
 " `veeeeS"`: visually select and surround with '"'.
 " `dst`, `cst"`: delete/change an html tag.
-" nnoremap S ysaw
+"nnoremap S ysaw
 
-" ==> PROGRAMMING
-" Plugin 'tpope/vim-fugitive'
+"" ==> PROGRAMMING
+"" Plugin 'tpope/vim-fugitive'
 " Examples: " `:G add %` (`:G`=`:Git`) or `:Gw(rite)`; `:Gcommit`; `:Gdiff`;
 " `:Gdiffsplit`: diff with the staged;
 " `:G blame`: vert-split window for annotations for each line of the file;
@@ -361,19 +381,19 @@ command! -nargs=* Gci execute 'G commit ' . <q-args>
 command! -nargs=* Gpush execute 'G push ' . <q-args>
 command! -nargs=* Gbr execute 'G branch ' . <q-args>
 
-" Plugin 'airblade/vim-gitgutter'
+"" Plugin 'airblade/vim-gitgutter'
 nnoremap <leader>g :GitGutterToggle<CR>
 nnoremap ]g <Plug>(GitGutterNextHunk)
 nnoremap [g <Plug>(GitGutterPrevHunk)
 set updatetime=1000 " Default = 4000. Also the time delay to write swap files
 
-" Plugin 'wellle/context.vim'
+"" Plugin 'wellle/context.vim'
 nnoremap <leader>h :ContextToggleWindow<CR>
-" let g:context_filetype_blacklist = []
+"let g:context_filetype_blacklist = []
 let g:context_max_height = 11 " 21
 
 "if !has("win16") && !has("win32")
-"  Plugin 'liuchengxu/vista.vim'
+"  "" Plugin 'liuchengxu/vista.vim'
 "  nnoremap <leader>v :Vista!!<CR>
 "  "let g:vista_icon_indent = ["▸ ", ""] " ["╰─▸ ", "├─▸ "]
 "  "let g:vista_fzf_preview = ['right:50%']
@@ -393,7 +413,7 @@ let g:context_max_height = 11 " 21
 "  autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 "endif
 
-" Plugin 'preservim/nerdcommenter' " for quick commenting
+"" Plugin 'preservim/nerdcommenter' " for quick commenting
 let g:NERDCreateDefaultMappings = 0 " Create default mappings
 let g:NERDSpaceDelims = 1 " Add spaces after comment delimiters by default
 let g:NERDCompactSexyComs = 1 " Use compact syntax for prettified multi-line comments
@@ -414,15 +434,63 @@ nnoremap cu :call nerdcommenter#Comment("n", "Uncomment")<CR>
 xnoremap cu :call nerdcommenter#Comment("x", "Uncomment")<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""
-" => GENERAL CONFIGURATIONS
+"" => GENERAL CONFIGURATIONS
 """""""""""""""""""""""""""""""""""""""""""""""""
 
+"" settings for Windows
+if has("win16") || has("win32")
+	" -- Default settings from gVim --
+	source $VIMRUNTIME/vimrc_example.vim
+
+	set diffexpr=MyDiff()
+	function MyDiff()
+		let opt = '-a --binary '
+		if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+		if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+		let arg1 = v:fname_in
+		if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+		let arg1 = substitute(arg1, '!', '\!', 'g')
+		let arg2 = v:fname_new
+		if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+		let arg2 = substitute(arg2, '!', '\!', 'g')
+		let arg3 = v:fname_out
+		if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+		let arg3 = substitute(arg3, '!', '\!', 'g')
+		if $VIMRUNTIME =~ ' '
+			if &sh =~ '\<cmd'
+				if empty(&shellxquote)
+					let l:shxq_sav = ''
+					set shellxquote&
+				endif
+				let cmd = '"' . $VIMRUNTIME . '\diff"'
+			else
+				let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+			endif
+		else
+			let cmd = $VIMRUNTIME . '\diff'
+		endif
+		let cmd = substitute(cmd, '!', '\!', 'g')
+		silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
+		if exists('l:shxq_sav')
+			let &shellxquote=l:shxq_sav
+		endif
+	endfunction
+
+	" -- My settings --
+	"set guifont=Courier\ New:h12
+	set guifont=Consolas:h14
+	set t_ut="" " To properly display background in Windows PowerShell. `t_ut=""` disables Background Color Erase (BCE)
+	"set lines=45 columns=158
+	set gcr=a:block-blinkon0  " To stop the cursor from shining
+	map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
+endif
+
 " In many terminal emulators the mouse works just fine, thus enable it.
-" if has("win16") || has("win32")
+"if has("win16") || has("win32")
 if has('mouse')
 	set mouse=a
 endif
-" endif
+"endif
 
 " Sets how many lines of history VIM has to remember
 set history=500
@@ -433,13 +501,13 @@ set novisualbell
 set t_vb=
 set tm=500
 
-"" With a map leader it's possible to do extra key combinations like <leader>w saves the current file
+" With a map leader it's possible to do extra key combinations like <leader>w saves the current file
 "let mapleader = ' '  " default is '\'
 "let g:mapleader = ' '
 
 "set lazyredraw " Don't redraw while executing macros (good performance config)
 
-" ==> APPEARANCES
+"" ==> APPEARANCES
 set t_Co=256
 set encoding=utf8
 set laststatus=2 " Always show the status line
@@ -468,7 +536,7 @@ augroup numbertoggle
 augroup END
 
 " syntax highlighting
-" syntax on  " Highlight colors are overruled but links are kept.
+"syntax on  " Highlight colors are overruled but links are kept.
 syntax enable  " Only define colors for groups that don't have highlighting yet. Use `:syntax default`
 "if has('termguicolors')
 "	set termguicolors " Required by 'sainnhe/sonokai', but causes faded cursorline in terminal.
@@ -485,7 +553,14 @@ autocmd Colorscheme * highlight! link Conceal Macro " Identifier Operator Specia
 nnoremap <C-q> :set <C-r>=(&cole>1) ? 'cole=0' : 'cole=2'<CR><CR>
 inoremap <C-q> <Esc>:set <C-r>=(&cole>1) ? 'cole=0' : 'cole=2'<CR><CR>a
 
-" ==> MOVEMENTS
+"" ==> MOVEMENTS
+" Use `autocmd VimEnter *` to conduct the mapping after loading the 'context.vim' plugin
+autocmd VimEnter * nnoremap <C-e> <C-e>j
+autocmd VimEnter * nnoremap <C-y> <C-y>k
+
+inoremap <C-f> <Esc><C-f>
+inoremap <C-b> <Esc><C-b>
+
 " Toggle the cursor to always stay in the middle of screen when scrolling <https://vim.fandom.com/wiki/Keep_your_cursor_centered_vertically_on_the_screen>.
 if !exists('*VCenterCursor')
 	augroup VCenterCursor
@@ -510,14 +585,7 @@ if !exists('*VCenterCursor')
 endif
 nnoremap gz :call VCenterCursor()<CR>
 
-" Use `autocmd VimEnter *` to conduct the mapping after loading the 'context.vim' plugin
-autocmd VimEnter * nnoremap <C-e> <C-e>j
-autocmd VimEnter * nnoremap <C-y> <C-y>k
-
-inoremap <C-f> <Esc><C-f>
-inoremap <C-b> <Esc><C-b>
-
-" ==> WINDOWS AND TABS
+"" ==> WINDOWS
 " Smart way to move between windows (<C-w><C-j> etc auto. mapped to <C-w>j)
 let g:BASH_Ctrl_j = 'off'
 nnoremap <C-j> <C-w>j " may not be working even with the above option
@@ -542,6 +610,7 @@ nnoremap <silent> <C-w>l :vertical resize -3<CR>
 nnoremap <C-w>v <C-w>t<C-w>H
 nnoremap <C-w>s <C-w>t<C-w>K
 
+"" ==> TABS
 " Useful mappings for managing tabs
 nnoremap gt :tabnew 
 nnoremap 1gt 1gt
@@ -633,17 +702,7 @@ command! -nargs=1 SP SPLIT <args>
 command! -nargs=1 Diffs Diffsplit <args>
 command! -nargs=1 DIFFS DIFFSPLIT <args>
 
-" buffer list
-nnoremap ]b :bnext<CR>
-nnoremap [b :bprev<CR>
-
-" error/quickfix list
-nnoremap <leader>e :copen<CR>
-" Use `:cc[number]` to jump to the location of [number]-th spot in the error/quickfix list
-nnoremap ]e :cnext<CR>
-nnoremap [e :cprev<CR>
-
-" ==> VIEWS AND BEHAVIORS
+"" ==> VIEWS AND BEHAVIORS
 set wildmenu " Turn on the WiLd menu. Command-line completion will operate in an enhanced mode.
 
 " Ignore compiled files
@@ -657,23 +716,65 @@ endif
 set showmatch " Show matching brackets when text indicator is over them
 set matchtime=2 " How many tenths of a second to blink when matching brackets
 
-set wrap "Wrap lines. default on.
+set wrap " Wrap lines. default on.
 nnoremap <leader>w :set wrap!<CR>
+
+noremap <leader>s :setlocal spell!<CR>
+"map <leader>sa zg " Add word to dictionary
+"map <leader>s? z=
+
+"" error/quickfix list
+nnoremap <leader>e :copen<CR>
+nnoremap ]e :cnext<CR>
+nnoremap [e :cprev<CR>
+" Use `:cc[number]` to jump to the location of [number]-th spot in the error/quickfix list
 
 " Display absolute path
 nnoremap <C-p> :echo expand('%:p')<CR>
 
 " Switch CWD to the directory of the open buffer
-nmap <leader>cd :cd %:p:h<CR>:pwd<CR>
+nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 
-map Y y$
+"" yank and paste
+noremap Y y$
+" Toggle paste mode on and off
+noremap <leader>p :setlocal paste!<CR>
+noremap gp "0p
+noremap gP "0P
+" Select last paste in visual mode. Use `gv` to select last yanked block.
+nnoremap <expr> gc '`[' . strpart(getregtype(), 0, 1) . '`]'
 
-"" Specify the behavior when switching between buffers
-"try
-"  set switchbuf=useopen,usetab,newtab
-"  set stal=2
-"catch
-"endtry
+"" folding
+"set foldmethod=indent
+set foldmethod=syntax
+"set nofoldenable " Turn off folding when starting Vim
+
+"" Press <F9> to show the configuration file
+if has("win16") || has("win32")
+	"nnoremap <F9> :vsp C:/Program\ Files\ (x86)/Vim/_vimrc<CR>:set readonly<CR>
+	nnoremap <F9> :vsp $USERPROFILE/_vimrc<CR>:set readonly<CR>
+else
+	nnoremap <F9> :vsp ~/.vimrc<CR>:set readonly<CR>
+endif
+
+"" ==> FILE AND BUFFER
+set autoread " Set to auto read when a file is changed from the outside
+"set autowrite " Automatically write before moving to another file using tags, make, or <C-o> <C-i>, etc.
+
+"" writes
+nmap <C-s> :up<CR>
+imap <C-s> <Esc>:up<CR>
+" :W sudo saves the file (useful for handling the permission-denied error)
+"command W w !sudo tee % > /dev/null
+
+" Turn backup off, since most stuff is in SVN, git et.c anyway...
+"set nobackup
+"set nowb
+"set noswapfile
+
+"" buffer list
+nnoremap ]b :bnext<CR>
+nnoremap [b :bprev<CR>
 
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost *
@@ -683,29 +784,14 @@ autocmd BufReadPost *
 " Remember info about open buffers on close
 set viminfo^=%
 
-set autoread " Set to auto read when a file is changed from the outside
-"set autowrite " Automatically write before moving to another file using tags, make, or <C-o> <C-i>, etc.
+" Specify the behavior when switching between buffers
+"try
+"  set switchbuf=useopen,usetab,newtab
+"  set stal=2
+"catch
+"endtry
 
-" writes
-nmap <C-s> :up<CR>
-imap <C-s> <Esc>:up<CR>
-" :W sudo saves the file (useful for handling the permission-denied error)
-"command W w !sudo tee % > /dev/null
-
-"" Turn backup off, since most stuff is in SVN, git et.c anyway...
-"set nobackup
-"set nowb
-"set noswapfile
-
-" Press F9 to show the configuration file
-if has("win16") || has("win32")
-	"nnoremap <F9> :vsp C:/Program\ Files\ (x86)/Vim/_vimrc<CR>:set readonly<CR>
-	nnoremap <F9> :vsp $USERPROFILE/_vimrc<CR>:set readonly<CR>
-else
-	nnoremap <F9> :vsp ~/.vimrc<CR>:set readonly<CR>
-endif
-
-" ==> SEARCH AND REPLACEMENT
+"" ==> SEARCH AND REPLACEMENT
 set ignorecase
 set smartcase
 set incsearch
@@ -714,7 +800,7 @@ set hlsearch
 noremap gs :let @/ = expand('<cword>')<CR>:set hlsearch<CR>
 noremap gS :let @/ = '\<'.expand('<cword>').'\>'<CR>:set hlsearch<CR>
 
-"" Turn off highlighting the last searched item
+" Turn off highlighting the last searched item
 nnoremap <silent> <leader>q :noh<CR>
 
 " To make `n` always go forward and `N` backward even after `?` and `#` <https://vi.stackexchange.com/questions/2365/how-can-i-get-n-to-go-forward-even-if-i-started-searching-with-or>
@@ -746,10 +832,10 @@ function! VisualSelection(direction, extra_filter) range
 
 	if a:direction == 'b'
 		execute "normal ?" . l:pattern . "^M"
-	elseif a:direction == 'gv'
-		call CmdLine("Ag \"" . l:pattern . "\" " )
-	elseif a:direction == 'replace'
-		call CmdLine("%s" . '/'. l:pattern . '/')
+	"elseif a:direction == 'gv'
+	"	call CmdLine("Ag \"" . l:pattern . "\" " )
+	"elseif a:direction == 'replace'
+	"	call CmdLine("%s" . '/'. l:pattern . '/')
 	elseif a:direction == 'f'
 		execute "normal /" . l:pattern . "^M"
 	endif
@@ -763,17 +849,14 @@ nnoremap S :%s/
 "nnoremap s :%s///gc<Left><Left><Left>
 "nnoremap s :%s/<C-r><C-w>//gc<Left><Left><Left>
 
-" grep
+"" grep
 "autocmd QuickFixCmdPost [^l]* nested copen
 "command! -nargs=* greph execute 'grep ' . <q-args> . ' ./*' " need to filter out directories
 "command! -nargs=* grepr execute 'grep ' . <q-args> . ' -r .'
 "
 
-" ==> EDIT ENHANCEMENTS
-" Select last paste in visual mode. Use `gv` to select last yanked block.
-nnoremap <expr> gc '`[' . strpart(getregtype(), 0, 1) . '`]'
-
-" Configure tab
+"" ==> EDIT ENHANCEMENTS
+"" configure tab
 set noexpandtab " Do not use spaces in place of tabs
 set tabstop=4  " 1 tab == 4 spaces. default 8
 set smarttab
@@ -787,15 +870,27 @@ set ai "Auto indent
 "set si "Smart indent
 set cindent " Works better in most cases but is more strict. Overrides si
 
-"" Linebreak on 500 characters
+" Linebreak on 500 characters
 "set lbr
 "set tw=500
 
-"" Configure backspace so it acts as it should act
+" Configure backspace so it acts as it should act
 "set backspace=eol,start,indent
 "set whichwrap+=<,>,h,l
 
-" For diff
+" Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
+"if has("osx") || has("mac") || has("macunix")
+"	nmap <M-j> mz:m+<CR>`z
+"	nmap <M-k> mz:m-2<CR>`z
+"	vmap <M-j> :m'>+<CR>`<my`>mzgv`yo`z
+"	vmap <M-k> :m'<-2<CR>`>my`<mzgv`yo`z
+"	nmap <D-j> <M-j>
+"	nmap <D-k> <M-k>
+"	vmap <D-j> <M-j>
+"	vmap <D-k> <M-k>
+"endif
+
+"" configure diff
 set diffopt=vertical " Vertical split is preferred, for e.g., `:diffs`
 
 command! ToggleDiffMode call ToggleDiff()
@@ -808,6 +903,13 @@ function! ToggleDiff()
 endfunction
 nnoremap <leader>d :ToggleDiffMode<CR>
 
+" Automatically insert the matching part of the pair. Insert mode.
+"inoremap ( ()<ESC>i
+"inoremap [ []<ESC>i
+"inoremap { {<CR>}<ESC>O
+"inoremap " ""<ESC>i
+"inoremap ' ''<ESC>i
+
 " Input Greek letters using digraph
 inoremap <expr> <C-g> '<C-k>'.nr2char(getchar()).'*' " Greek letter
 inoremap <C-g>< <C-k>=<
@@ -819,230 +921,12 @@ inoremap <C-g>- <C-k>-+
 "inoremap <expr> <C-u> '<C-k>'.nr2char(getchar()).'S' " superscript numbers
 "inoremap <expr> <C-d> '<C-k>'.nr2char(getchar()).'s' " subscript numbers
 
-"""""""""""""""""
+"%s/\s\+$//ge " Delete trailing white space
+"noremap <leader>m mmHmt:%s/<C-v><CR>//ge<CR>'tzt'm " Remove the Windows ^M - when the encodings gets messed up
 
-"" Automatically insert the matching part of the pair. Insert mode.
-"inoremap ( ()<ESC>i
-"inoremap [ []<ESC>i
-"inoremap { {<CR>}<ESC>O
-"inoremap " ""<ESC>i
-"inoremap ' ''<ESC>i
-
-"" Remap VIM 0 to first non-blank character
-"map 0 ^
-
-" Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-if has("osx") || has("mac") || has("macunix")
-	nmap <M-j> mz:m+<CR>`z
-	nmap <M-k> mz:m-2<CR>`z
-	vmap <M-j> :m'>+<CR>`<my`>mzgv`yo`z
-	vmap <M-k> :m'<-2<CR>`>my`<mzgv`yo`z
-
-	nmap <D-j> <M-j>
-	nmap <D-k> <M-k>
-	vmap <D-j> <M-j>
-	vmap <D-k> <M-k>
-endif
-
-"" Delete trailing white space on save, useful for Python and CoffeeScript ;)
-"func! DeleteTrailingWS()
-"  exe "normal mz"
-"  %s/\s\+$//ge
-"  exe "normal `z"
-"endfunc
-"autocmd BufWrite *.py :call DeleteTrailingWS()
-"autocmd BufWrite *.coffee :call DeleteTrailingWS()
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Ag searching and cope displaying
-"    requires ag.vim - it's much better than vimgrep/grep
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" When you press gv you Ag after the selected text
-"vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
-"
-"" Open Ag and put the cursor in the right position
-"map <leader>g :Ag
-"
-"" When you press <leader>r you can search and replace the selected text
-"vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
-"
-"" Do :help cope if you are unsure what cope is. It's super useful!
-"
-"" When you search with Ag, display your results in cope by doing:
-""   <leader>cc
-"
-"" To go to the next search result do:
-""   <leader>n
-"
-"" To go to the previous search results do:
-""   <leader>p
-"
-"map <leader>cc :botright cope<CR>
-"map <leader>co ggVGy:tabnew<CR>:set syntax=qf<CR>pgg
-"map <leader>n :cn<CR>
-"map <leader>p :cp<CR>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Spell checking
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Pressing ,ss will toggle and untoggle spell checking
-map <leader>s :setlocal spell!<CR>
-
-"" Shortcuts using <leader>
-"map <leader>sn ]s
-"map <leader>sp [s
-"map <leader>sa zg " Add word to dictionary
-"map <leader>s? z=
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Folding
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Folding based on indent or syntax
-"set foldmethod=indent
-set foldmethod=syntax
-
-"" Turn off folding when starting Vim
-"set nofoldenable
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Misc
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" Remove the Windows ^M - when the encodings gets messed up
-"noremap <leader>m mmHmt:%s/<C-v><CR>//ge<CR>'tzt'm
-
-"" Quickly open a buffer for scribble
-"map <leader>q :e ~/buffer<CR>
-
-"" Quickly open a markdown buffer for scribble
-"map <leader>x :e ~/buffer.md<CR>
-
-" Toggle paste mode on and off
-map <leader>p :setlocal paste!<CR>
-map gp "0p
-map gP "0P
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Helper functions
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! CmdLine(str)
-	exe "menu Foo.Bar :" . a:str
-	emenu Foo.Bar
-	unmenu Foo
-endfunction
-
-"" Don't close window, when deleting a buffer
-"command! Bclose call <SID>BufcloseCloseIt()
-"function! <SID>BufcloseCloseIt()
-"   let l:currentBufNum = bufnr("%")
-"   let l:alternateBufNum = bufnr("#")
-"
-"   if buflisted(l:alternateBufNum)
-"     buffer #
-"   else
-"     bnext
-"   endif
-"
-"   if bufnr("%") == l:currentBufNum
-"     new
-"   endif
-"
-"   if buflisted(l:currentBufNum)
-"     execute("bdelete! ".l:currentBufNum)
-"   endif
-"endfunction
-
-
-" End of adapted part
-""""""""""""""""""""""""""""""""""""""""""""""""
-""""""""""""""""""""""""""""""""""""""""""""""""
-" Begin of my adjustments
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Settings for Windows
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-if has("win16") || has("win32")
-	" -- Default settings from gVim --
-	source $VIMRUNTIME/vimrc_example.vim
-
-	set diffexpr=MyDiff()
-	function MyDiff()
-		let opt = '-a --binary '
-		if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-		if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-		let arg1 = v:fname_in
-		if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-		let arg1 = substitute(arg1, '!', '\!', 'g')
-		let arg2 = v:fname_new
-		if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-		let arg2 = substitute(arg2, '!', '\!', 'g')
-		let arg3 = v:fname_out
-		if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-		let arg3 = substitute(arg3, '!', '\!', 'g')
-		if $VIMRUNTIME =~ ' '
-			if &sh =~ '\<cmd'
-				if empty(&shellxquote)
-					let l:shxq_sav = ''
-					set shellxquote&
-				endif
-				let cmd = '"' . $VIMRUNTIME . '\diff"'
-			else
-				let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-			endif
-		else
-			let cmd = $VIMRUNTIME . '\diff'
-		endif
-		let cmd = substitute(cmd, '!', '\!', 'g')
-		silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
-		if exists('l:shxq_sav')
-			let &shellxquote=l:shxq_sav
-		endif
-	endfunction
-
-	" -- My settings --
-	"set guifont=Courier\ New:h12
-	set guifont=Consolas:h14
-	set t_Co=256 t_ut="" " To properly display background in Windows PowerShell. `t_ut=""` disables Background Color Erase (BCE)
-	"set lines=45 columns=158
-	set gcr=a:block-blinkon0  " To stop the cursor from shining
-	map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
-endif
-
-" My adjustments
-set noshellslash " For enabling forward search with SumatraPDF in Windows. Alternatively, substitute `target_file` with `'%:r.pdf'` and `sourcefileFull` with `'%:p'` in Line 385 of 'vim-latex/ftplugin/latex-suite/compiler.vim' (The line is originally `let execString .= Tex_Stringformat('start %s %s -forward-search %s %s', viewer, target_file, sourcefileFull, linenr)`.)
-let g:Tex_DefaultTargetFormat = 'pdf' " Default = dvi
-let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode -file-line-error-style -src-specials $*' " Default = 'latex -interaction=nonstopmode -file-line-error-style $*'. Add '-src-specials' to enable forward/inverse searching
-let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*' " Default = 'pdflatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*'. The option '-synctex=1' enables forward/inverse searching by providing a synctex(.gz) file to the pdf viewer
-let g:Tex_MultipleCompileFormats = 'dvi,pdf' " Default = 'dvi'
-"let g:Tex_FormatDependency_pdf = 'dvi,pdf' " Default = 'dvi,pdf'
-let g:Tex_ViewRule_pdf = '' " Default = 'xpdf' for Unix. Consider 'Zathura' for Ubuntu
-if has("win16") || has("win32")
-	let g:Tex_ViewRule_pdf = 'SumatraPDF -inverse-search "gvim -c \":RemoteOpen +\%l \%f\""' " Default = 'AcroRd32' for Windows
-elseif has("osx") || has("mac") || has("macunix")
-	let g:Tex_TreatMacViewerAsUNIX = 1 " To enable forward/inverse searching on Macintosh systems
-endif
-let g:tex_indent_brace = 1 " Default = 1
-let g:tex_indent_items = 1 " Default = 1
-let g:tex_items = '\\bibitem\|\\item' " Default = '\\bibitem\|\\item'
-let g:tex_itemize_env = 'itemize\|description\|enumerate\|thebibliography' " Default = 'itemize\|description\|enumerate\|thebibliography'
-let g:tex_noindent_env = 'document\|verbatim\|comment\|lstlisting' " Default = 'document\|verbatim\|comment\|lstlisting'
-let g:tex_indent_ifelsefi = 0 " Default = 1
-
-" Other options
-"if &filetype ==? 'tex' || &filetype ==? 'bib' | [commands] | endif " This does not work! When `.vimrc` is loaded, file type is unknown! Try `echom 'a'.&filetype.'b'`, which gives 'ab'.
-autocmd FileType tex,latex,bib,bibtex let g:indentLine_enabled=0 " Disable 'indentline' to avoid conceal conflict
-autocmd FileType tex,latex,bib,bibtex set spell | set nofoldenable | set cole=2 | set cocu=inc
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Notes
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""
+"" => Notes
+"""""""""""""""""""""""""""""""""""""""""""""""""
 " 1. Search and replace. <https://vim.fandom.com/wiki/Search_and_replace> <https://learnbyexample.gitbooks.io/vim-reference/content/Regular_Expressions.html>
 " * Patterns (`h pattern`):
 "   - '(', ')', '{', '}', '?' are normal characters. '[', ']', '*', '.', '^', '$', '&', '\', '/' are not.
