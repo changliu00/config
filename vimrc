@@ -379,6 +379,8 @@ command! -nargs=* Gst execute 'G status ' . <q-args>
 command! -nargs=* Gbl execute 'G blame ' . <q-args>
 command! -nargs=* Gci execute 'G commit ' . <q-args>
 command! -nargs=* Gpush execute 'G push ' . <q-args>
+command! -nargs=* Glg execute 'G lg ' . <q-args>
+command! -nargs=* Glog execute 'G log ' . <q-args>
 command! -nargs=* Gbr execute 'G branch ' . <q-args>
 
 "" Plugin 'airblade/vim-gitgutter'
@@ -437,11 +439,11 @@ xnoremap cu :call nerdcommenter#Comment("x", "Uncomment")<CR>
 "" => GENERAL CONFIGURATIONS
 """""""""""""""""""""""""""""""""""""""""""""""""
 " In many terminal emulators the mouse works just fine, thus enable it.
-"if has("win16") || has("win32")
-if has('mouse')
-	set mouse=a
+if has("win16") || has("win32")
+	if has('mouse')
+		set mouse=a
+	endif
 endif
-"endif
 
 " Sets how many lines of history VIM has to remember
 set history=500
@@ -586,10 +588,10 @@ nnoremap 16gt 16gt
 nnoremap gr :tabnew <C-r>=expand("%:p:h")<CR>/
 
 " Easier finger move
-"nnoremap ]t :tabn<CR>
-"nnoremap [t :tabp<CR>
-nnoremap gl :tabn<CR>
-nnoremap gh :tabp<CR>
+"nnoremap ]t gt
+"nnoremap [t gT
+nnoremap gl gt
+nnoremap gh gT
 " Let `go` toggle between this and the last accessed tab
 let g:lasttab = 1
 nmap go :exe "tabn ".g:lasttab<CR>
