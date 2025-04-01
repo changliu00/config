@@ -244,7 +244,7 @@ set shellslash
 set grepprg=grep\ -nH\ $*
 " 
 " OPTIONAL: This enables automatic indentation as you type.
-filetype indent on
+"filetype indent on " already enabled
 " 
 " OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
@@ -271,7 +271,6 @@ let g:tex_noindent_env = 'document\|verbatim\|comment\|lstlisting' " Default = '
 let g:tex_indent_ifelsefi = 0 " Default = 1
 " Other options
 "if &filetype ==? 'tex' || &filetype ==? 'bib' | [commands] | endif " This does not work! When `.vimrc` is loaded, file type is unknown! Try `echom 'a'.&filetype.'b'`, which gives 'ab'.
-autocmd FileType tex,latex,bib,bibtex let g:indentLine_enabled=0 " Disable 'indentline' to avoid conceal conflict
 autocmd FileType tex,latex,bib,bibtex set spell | set nofoldenable | set cole=2 | set cocu=inc
 
 "" ==> APPEARANCES
@@ -301,6 +300,7 @@ let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowTo
 "" Plugin 'Yggdroot/indentLine' " See <https://github.com/Yggdroot/indentLine>
 " It sets `conceallevel = 2` and `concealcursor = 'inc'`.
 let g:indentLine_char = '|'
+autocmd FileType tex,latex,bib,bibtex let g:indentLine_enabled=0 " Disable 'indentline' to avoid conceal conflict
 autocmd FileType tex,latex,bib,bibtex let g:indentLine_setColors = 0 " Do not overwrite 'conceal' color for tex files
 "let g:indentLine_defaultGroup = 'SpecialKey' " Use the same colors as the 'SpecialKey' highlight group
 "let g:indentLine_color_term = 239 | let g:indentLine_bgcolor_term = 202 " Customize conceal color
@@ -438,12 +438,61 @@ xnoremap cu :call nerdcommenter#Comment("x", "Uncomment")<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" => GENERAL CONFIGURATIONS
 """""""""""""""""""""""""""""""""""""""""""""""""
-" In many terminal emulators the mouse works just fine, thus enable it.
+
+"" ==> SETTINGS FOR WINDOWS
 if has("win16") || has("win32")
-	if has('mouse')
-		set mouse=a
-	endif
+	" -- Default settings from gVim --
+	source $VIMRUNTIME/vimrc_example.vim
+
+	set diffexpr=MyDiff()
+	function MyDiff()
+		let opt = '-a --binary '
+		if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+		if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+		let arg1 = v:fname_in
+		if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+		let arg1 = substitute(arg1, '!', '\!', 'g')
+		let arg2 = v:fname_new
+		if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+		let arg2 = substitute(arg2, '!', '\!', 'g')
+		let arg3 = v:fname_out
+		if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+		let arg3 = substitute(arg3, '!', '\!', 'g')
+		if $VIMRUNTIME =~ ' '
+			if &sh =~ '\<cmd'
+				if empty(&shellxquote)
+					let l:shxq_sav = ''
+					set shellxquote&
+				endif
+				let cmd = '"' . $VIMRUNTIME . '\diff"'
+			else
+				let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+			endif
+		else
+			let cmd = $VIMRUNTIME . '\diff'
+		endif
+		let cmd = substitute(cmd, '!', '\!', 'g')
+		silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
+		if exists('l:shxq_sav')
+			let &shellxquote=l:shxq_sav
+		endif
+	endfunction
+
+	" -- My settings --
+	"set guifont=Courier\ New:h12
+	set guifont=Consolas:h14
+	set t_ut="" " To properly display background in Windows PowerShell. `t_ut=""` disables Background Color Erase (BCE)
+	"set lines=45 columns=158
+	set gcr=a:block-blinkon0  " To stop the cursor from shining
+	map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
 endif
+
+" Enable mouse. Commented to allow copying contents to system clipboard
+"if has("win16") || has("win32")
+"    if has('mouse')
+"        set mouse=a
+"    endif
+"endif
 
 " Sets how many lines of history VIM has to remember
 set history=500
@@ -498,9 +547,9 @@ syntax enable  " Only define colors for groups that don't have highlighting yet.
 " Recommended: solarized, molokai, phd, desert, wombat; sonokai
 colorscheme molokai
 set background=dark
+autocmd FileType tex,latex,bib,bibtex highlight! link Conceal Macro " Identifier Operator Special SpecialKey
 "highlight Conceal ctermfg=109 ctermbg=NONE guifg=#ff0000 guibg=#00ff00
 "highlight Conceal ctermfg=NONE ctermbg=NONE guifg=NONE guibg=NONE
-autocmd Colorscheme * highlight! link Conceal Macro " Identifier Operator Special SpecialKey
 
 " Toggle conceal
 nnoremap <C-q> :set <C-r>=(&cole>1) ? 'cole=0' : 'cole=2'<CR><CR>
@@ -656,16 +705,6 @@ command! -nargs=1 Diffs Diffsplit <args>
 command! -nargs=1 DIFFS DIFFSPLIT <args>
 
 "" ==> VIEWS AND BEHAVIORS
-set wildmenu " Turn on the WiLd menu. Command-line completion will operate in an enhanced mode.
-
-" Ignore compiled files
-set wildignore=*.o,*~,*.pyc
-if has("win16") || has("win32")
-	set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
-else
-	set wildignore+=.git\*,.hg\*,.svn\*
-endif
-
 set showmatch " Show matching brackets when text indicator is over them
 set matchtime=2 " How many tenths of a second to blink when matching brackets
 
@@ -676,17 +715,19 @@ noremap <leader>s :setlocal spell!<CR>
 "map <leader>sa zg " Add word to dictionary
 "map <leader>s? z=
 
-"" error/quickfix list
-nnoremap <leader>e :copen<CR>
-nnoremap ]e :cnext<CR>
-nnoremap [e :cprev<CR>
-" Use `:cc[number]` to jump to the location of [number]-th spot in the error/quickfix list
-
 " Display absolute path
 nnoremap <C-p> :echo expand('%:p')<CR>
 
 " Switch CWD to the directory of the open buffer
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+
+set wildmenu " Turn on the WiLd menu. Command-line completion will operate in an enhanced mode.
+set wildignore=*.o,*~,*.pyc " Ignore compiled files
+if has("win16") || has("win32")
+	set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+else
+	set wildignore+=.git\*,.hg\*,.svn\*
+endif
 
 "" yank and paste
 noremap Y y$
@@ -709,6 +750,12 @@ if has("win16") || has("win32")
 else
 	nnoremap <F9> :vsp ~/.vimrc<CR>:set readonly<CR>
 endif
+
+"" error/quickfix list
+nnoremap <leader>e :copen<CR>
+nnoremap ]e :cnext<CR>
+nnoremap [e :cprev<CR>
+" Use `:cc[number]` to jump to the location of [number]-th spot in the error/quickfix list
 
 "" ==> FILE AND BUFFER
 set autoread " Set to auto read when a file is changed from the outside
@@ -876,55 +923,6 @@ inoremap <C-g>- <C-k>-+
 
 "%s/\s\+$//ge " Delete trailing white space
 "noremap <leader>m mmHmt:%s/<C-v><CR>//ge<CR>'tzt'm " Remove the Windows ^M - when the encodings gets messed up
-
-"" ==> SETTINGS FOR WINDOWS
-if has("win16") || has("win32")
-	" -- Default settings from gVim --
-	" Somehow the following line should be after `highlight! link Conceal Macro` to make it effective
-	source $VIMRUNTIME/vimrc_example.vim
-
-	set diffexpr=MyDiff()
-	function MyDiff()
-		let opt = '-a --binary '
-		if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
-		if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
-		let arg1 = v:fname_in
-		if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
-		let arg1 = substitute(arg1, '!', '\!', 'g')
-		let arg2 = v:fname_new
-		if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
-		let arg2 = substitute(arg2, '!', '\!', 'g')
-		let arg3 = v:fname_out
-		if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
-		let arg3 = substitute(arg3, '!', '\!', 'g')
-		if $VIMRUNTIME =~ ' '
-			if &sh =~ '\<cmd'
-				if empty(&shellxquote)
-					let l:shxq_sav = ''
-					set shellxquote&
-				endif
-				let cmd = '"' . $VIMRUNTIME . '\diff"'
-			else
-				let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
-			endif
-		else
-			let cmd = $VIMRUNTIME . '\diff'
-		endif
-		let cmd = substitute(cmd, '!', '\!', 'g')
-		silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
-		if exists('l:shxq_sav')
-			let &shellxquote=l:shxq_sav
-		endif
-	endfunction
-
-	" -- My settings --
-	"set guifont=Courier\ New:h12
-	set guifont=Consolas:h14
-	set t_ut="" " To properly display background in Windows PowerShell. `t_ut=""` disables Background Color Erase (BCE)
-	"set lines=45 columns=158
-	set gcr=a:block-blinkon0  " To stop the cursor from shining
-	map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
-endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" => Notes
