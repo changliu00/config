@@ -227,7 +227,7 @@ if !has("win16") && !has("win32")
   "let g:ycm_show_diagnostics_ui = 0 " Stop the built-in checker of ycm for c-related syntax
   " Stop the popup from automatically displaying. Set to 'CursorHold' (default) or 'CursorMoved' (use `K` to toggle between the two) to resume.
   let g:ycm_auto_hover = ''
-  nmap K <Plug>(YCMHover)
+  "nmap K <Plug>(YCMHover)
 endif
 
 "" Plugin 'vim-latex/vim-latex' " See <http://vim-latex.sourceforge.net/>
@@ -719,7 +719,7 @@ noremap <leader>s :setlocal spell!<CR>
 nnoremap <C-p> :echo expand('%:p')<CR>
 
 " Switch CWD to the directory of the open buffer
-nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+command! CD execute 'cd' expand('%:p:h')
 
 set wildmenu " Turn on the WiLd menu. Command-line completion will operate in an enhanced mode.
 set wildignore=*.o,*~,*.pyc " Ignore compiled files
@@ -796,9 +796,10 @@ set ignorecase
 set smartcase
 set incsearch
 set hlsearch
+noremap g/ :set ignorecase!<CR>
 
-noremap gs :let @/ = expand('<cword>')<CR>:set hlsearch<CR>
-noremap gS :let @/ = '\<'.expand('<cword>').'\>'<CR>:set hlsearch<CR>
+noremap K :let @/ = expand('<cword>')<CR>:set hlsearch<CR>
+noremap gK :let @/ = '\<'.expand('<cword>').'\>'<CR>:set hlsearch<CR>
 
 " Turn off highlighting the last searched item
 nnoremap <silent> <leader>q :noh<CR>
