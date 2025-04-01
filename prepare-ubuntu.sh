@@ -1,6 +1,6 @@
 sudo add-apt-repository ppa:jonathonf/vim # latest but unofficial package for Vim, in case that the official repository does not have the latest version and Vim source cannot be compiled.
 sudo apt update
-sudo apt install --upgrade python3 python3-pip git tmux vim
+sudo apt install --upgrade python3 python3-pip git tmux vim ripgrep
 
 sudo python3 -m pip install --upgrade pip numpy torch torchvision matplotlib jupyter
 # sudo pip3 install sklearn scipy tqdm tabulate dalib

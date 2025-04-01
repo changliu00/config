@@ -227,7 +227,8 @@ if !has("win16") && !has("win32")
   "let g:ycm_show_diagnostics_ui = 0 " Stop the built-in checker of ycm for c-related syntax
   " Stop the popup from automatically displaying. Set to 'CursorHold' (default) or 'CursorMoved' (use `K` to toggle between the two) to resume.
   let g:ycm_auto_hover = ''
-  "nmap K <Plug>(YCMHover)
+  nmap gs <Plug>(YCMHover)
+  nnoremap gS K
 endif
 
 "" Plugin 'vim-latex/vim-latex' " See <http://vim-latex.sourceforge.net/>
@@ -241,7 +242,10 @@ set shellslash
 " IMPORTANT: grep will sometimes skip displaying the file name if you
 " search in a singe file. This will confuse Latex-Suite. Set your grep
 " program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
+"set grepprg=grep\ -nH\ $*
+" My adjustment: Replace grep with r(ip)g(rep). `-r ./` is by default. Use `-t(T) py` to in(ex)clude filetype
+set grepprg=rg\ -nH\ $*
+command! -nargs=* Rg silent! grep <args> | tabnew | cfirst | copen
 " 
 " OPTIONAL: This enables automatic indentation as you type.
 "filetype indent on " already enabled
@@ -641,6 +645,8 @@ nnoremap gr :tabnew <C-r>=expand("%:p:h")<CR>/
 "nnoremap [t gT
 nnoremap gl gt
 nnoremap gh gT
+nnoremap gq :tabclose<CR>
+
 " Let `go` toggle between this and the last accessed tab
 let g:lasttab = 1
 nmap go :exe "tabn ".g:lasttab<CR>
@@ -849,12 +855,6 @@ set magic " For regular expressions turn magic on
 nnoremap S :%s/
 "nnoremap s :%s///gc<Left><Left><Left>
 "nnoremap s :%s/<C-r><C-w>//gc<Left><Left><Left>
-
-"" grep
-"autocmd QuickFixCmdPost [^l]* nested copen
-"command! -nargs=* greph execute 'grep ' . <q-args> . ' ./*' " need to filter out directories
-"command! -nargs=* grepr execute 'grep ' . <q-args> . ' -r .'
-"
 
 "" ==> EDIT ENHANCEMENTS
 "" configure tab
