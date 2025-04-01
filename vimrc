@@ -245,7 +245,8 @@ set shellslash
 "set grepprg=grep\ -nH\ $*
 " My adjustment: Replace grep with r(ip)g(rep). `-r ./` is by default. Use `-t(T) py` to in(ex)clude filetype
 set grepprg=rg\ -nH\ $*
-command! -nargs=* Rg silent! grep <args> | tabnew | cfirst | copen
+command! -nargs=+ Rg silent! grep <args> | execute 'normal! <C-o>' | tabnew | cfirst | copen
+nmap gr :Rg <cword><CR>
 " 
 " OPTIONAL: This enables automatic indentation as you type.
 "filetype indent on " already enabled
@@ -618,27 +619,11 @@ nnoremap <C-w>s <C-w>t<C-w>K
 
 "" ==> TABS
 " Useful mappings for managing tabs
-nnoremap gt :tabnew 
-nnoremap 1gt 1gt
-nnoremap 2gt 2gt
-nnoremap 3gt 3gt
-nnoremap 4gt 4gt
-nnoremap 5gt 5gt
-nnoremap 6gt 6gt
-nnoremap 7gt 7gt
-nnoremap 8gt 8gt
-nnoremap 9gt 9gt
-nnoremap 10gt 10gt
-nnoremap 11gt 11gt
-nnoremap 12gt 12gt
-nnoremap 13gt 13gt
-nnoremap 14gt 14gt
-nnoremap 15gt 15gt
-nnoremap 16gt 16gt
+nnoremap <expr> gt v:count ? 'gt' : ':tabnew '
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
-nnoremap gr :tabnew <C-r>=expand("%:p:h")<CR>/
+nnoremap gb :tabnew <C-r>=expand("%:p:h")<CR>/
 
 " Easier finger move
 "nnoremap ]t gt
@@ -658,22 +643,6 @@ autocmd TabLeave * let g:lasttab = tabpagenr()
 
 " Duplicate the current file in a new tab with the same cursor location
 nnoremap gT :let lnum=line('.') \| let colnum=col('.') \| tabnew \| e # \| call cursor(lnum, colnum)<CR>
-nnoremap 1gT 1gT
-nnoremap 2gT 2gT
-nnoremap 3gT 3gT
-nnoremap 4gT 4gT
-nnoremap 5gT 5gT
-nnoremap 6gT 6gT
-nnoremap 7gT 7gT
-nnoremap 8gT 8gT
-nnoremap 9gT 9gT
-nnoremap 10gT 10gT
-nnoremap 11gT 11gT
-nnoremap 12gT 12gT
-nnoremap 13gT 13gT
-nnoremap 14gT 14gT
-nnoremap 15gT 15gT
-nnoremap 16gT 16gT
 
 nmap gD gTgd
 
