@@ -623,14 +623,14 @@ nnoremap <expr> gt v:count ? 'gt' : ':tabnew '
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
-nnoremap gb :tabnew <C-r>=expand("%:p:h")<CR>/
+nnoremap ge :tabnew <C-r>=expand("%:p:h")<CR>/
 
 " Easier finger move
 "nnoremap ]t gt
 "nnoremap [t gT
 nnoremap gl gt
 nnoremap gh gT
-nnoremap gq :tabclose<CR>
+nnoremap gc :tabclose<CR>
 
 " Let `go` toggle between this and the last accessed tab
 let g:lasttab = 1
@@ -711,7 +711,7 @@ noremap <leader>p :setlocal paste!<CR>
 noremap gp "0p
 noremap gP "0P
 " Select last paste in visual mode. Use `gv` to select last yanked block.
-nnoremap <expr> gc '`[' . strpart(getregtype(), 0, 1) . '`]'
+nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 "" folding
 "set foldmethod=indent
