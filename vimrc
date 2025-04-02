@@ -246,7 +246,8 @@ set shellslash
 " My adjustment: Replace grep with r(ip)g(rep). `-r ./` is by default. Use `-t(T) py` to in(ex)clude filetype
 set grepprg=rg\ -nH\ $*
 command! -nargs=+ Rg silent! grep <args> | execute 'normal! <C-o>' | tabnew | cfirst | copen
-nmap gr :Rg <cword><CR>
+nmap g/ :Rg <cword><CR>
+nmap g? :Rg -w <cword><CR>
 " 
 " OPTIONAL: This enables automatic indentation as you type.
 "filetype indent on " already enabled
@@ -623,7 +624,7 @@ nnoremap <expr> gt v:count ? 'gt' : ':tabnew '
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
-nnoremap ge :tabnew <C-r>=expand("%:p:h")<CR>/
+nnoremap gr :tabnew <C-r>=expand("%:p:h")<CR>/
 
 " Easier finger move
 "nnoremap ]t gt
@@ -771,7 +772,7 @@ set ignorecase
 set smartcase
 set incsearch
 set hlsearch
-noremap g/ :set ignorecase!<CR>
+noremap <leader>c :set ignorecase!<CR>
 
 noremap K :let @/ = expand('<cword>')<CR>:set hlsearch<CR>
 noremap gK :let @/ = '\<'.expand('<cword>').'\>'<CR>:set hlsearch<CR>
