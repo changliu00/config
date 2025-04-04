@@ -778,7 +778,7 @@ noremap K :let @/ = expand('<cword>')<CR>:set hlsearch<CR>
 noremap gK :let @/ = '\<'.expand('<cword>').'\>'<CR>:set hlsearch<CR>
 
 " Turn off highlighting the last searched item
-nnoremap <silent> <leader>q :noh<CR>
+nnoremap <silent> <leader>q :set hlsearch!<CR>
 
 " To make `n` always go forward and `N` backward even after `?` and `#` <https://vi.stackexchange.com/questions/2365/how-can-i-get-n-to-go-forward-even-if-i-started-searching-with-or>
 noremap <expr> n (v:searchforward ? 'n' : 'N')
