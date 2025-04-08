@@ -685,7 +685,7 @@ set showmatch " Show matching brackets when text indicator is over them
 set matchtime=2 " How many tenths of a second to blink when matching brackets
 
 set wrap " Wrap lines. default on.
-nnoremap <leader>w :set wrap!<CR>
+nnoremap <leader>w :windo set wrap!<CR>
 
 noremap <leader>s :setlocal spell!<CR>
 "map <leader>sa zg " Add word to dictionary
