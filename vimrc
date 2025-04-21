@@ -245,7 +245,7 @@ set shellslash
 "set grepprg=grep\ -nH\ $*
 " My adjustment: Replace grep with r(ip)g(rep). `-r ./` is by default. Use `-t(T) py` to in(ex)clude filetype
 set grepprg=rg\ -nH\ $*
-command! -nargs=+ Rg silent! grep <args> | execute 'normal! <C-o>' | tabnew | cfirst | copen
+command! -nargs=+ Rg silent! grep <args> | execute 'normal! <C-o>' | tabnew | redraw! | cfirst | copen
 nmap g/ :Rg <cword><CR>
 nmap g? :Rg -w <cword><CR>
 " 
@@ -594,19 +594,22 @@ endif
 nnoremap gz :call VCenterCursor()<CR>
 
 "" ==> WINDOWS
+set splitright
+set splitbelow
 " Smart way to move between windows (<C-w><C-j> etc auto. mapped to <C-w>j)
-let g:BASH_Ctrl_j = 'off'
-nnoremap <C-j> <C-w>j " may not be working even with the above option
+"let g:BASH_Ctrl_j = 'off'
+"nnoremap <C-j> <C-w>j " may not be working even with the above option
 nnoremap <C-n> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 nnoremap <C-t> <C-w><C-w>
+" <C-;> is not recognized by terminal
 "inoremap <C-j> <Esc><C-w>j " saved for shortcut jump-out in vim-latex
 inoremap <C-k> <Esc><C-w>k
 inoremap <C-h> <Esc><C-w>h
 inoremap <C-l> <Esc><C-w>l
-"inoremap <C-t> <Esc><C-w><C-w>
+"inoremap <C-t> <Esc><C-w><C-w> " saved for increase indent in insert mode
 
 " Make adjusing split sizes a bit more friendly
 nnoremap <silent> <C-w>j :resize -3<CR>
