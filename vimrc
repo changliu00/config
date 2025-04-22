@@ -434,12 +434,20 @@ let g:NERDToggleCheckAllLines = 1 " Enable NERDCommenterToggle to check all sele
 " <leader>c<space> |NERDCommenterToggle|, <leader>cu |NERDCommenterUncomment|
 nnoremap ca :call nerdcommenter#Comment("n", "Comment")<CR>
 xnoremap ca :call nerdcommenter#Comment("x", "Comment")<CR>
-nnoremap cc :call nerdcommenter#Comment("n", "Toggle")<CR>
-xnoremap cc :call nerdcommenter#Comment("x", "Toggle")<CR>
-nnoremap cn :call nerdcommenter#Comment("n", "Nested")<CR>
-xnoremap cn :call nerdcommenter#Comment("x", "Nested")<CR>
+" nnoremap cc :call nerdcommenter#Comment("n", "Toggle")<CR>
+" xnoremap cc :call nerdcommenter#Comment("x", "Toggle")<CR>
+" nnoremap cn :call nerdcommenter#Comment("n", "Nested")<CR>
+" xnoremap cn :call nerdcommenter#Comment("x", "Nested")<CR>
 nnoremap cu :call nerdcommenter#Comment("n", "Uncomment")<CR>
 xnoremap cu :call nerdcommenter#Comment("x", "Uncomment")<CR>
+if has("win16") || has("win32")
+	nnoremap <C-/> :call nerdcommenter#Comment("n", "Toggle")<CR>
+	xnoremap <C-/> :call nerdcommenter#Comment("x", "Toggle")<CR>
+else
+	nnoremap <C-_> :call nerdcommenter#Comment("n", "Toggle")<CR>
+	xnoremap <C-_> :call nerdcommenter#Comment("x", "Toggle")<CR>
+endif
+imap <C-/> <Esc><C-/>a
 
 """""""""""""""""""""""""""""""""""""""""""""""""
 "" => GENERAL CONFIGURATIONS
@@ -731,7 +739,18 @@ else
 endif
 
 "" error/quickfix list
-nnoremap <leader>e :copen<CR>
+function! ToggleQuickfix()
+	for win in range(1, winnr('$'))
+		if getwinvar(win, '&buftype') ==# 'quickfix'
+			cclose
+			return
+		endif
+	endfor
+	copen
+endfunction
+nnoremap <leader>e :call ToggleQuickfix()<CR>
+" nnoremap <leader>e :copen<CR>
+
 nnoremap ]e :cnext<CR>
 nnoremap [e :cprev<CR>
 " Use `:cc[number]` to jump to the location of [number]-th spot in the error/quickfix list
