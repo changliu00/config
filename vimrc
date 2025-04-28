@@ -379,8 +379,8 @@ command CBreset LinediffReset
 " `:Gdiffsplit`: diff with the staged;
 " `:G blame`: vert-split window for annotations for each line of the file;
 " `:Gedit HEAD~3:%`: load the current file as it existed 3 commits ago.
-command! -nargs=* Gdf execute 'Gdiff ' . <q-args>
-command! -nargs=* Gdfc execute 'Gdiff HEAD ' . <q-args>
+command! -nargs=* -bang Gdf execute 'Gdiff' . (<bang>0 ? '!' : '') . ' ' . <q-args>
+command! -nargs=* -bang Gdfc execute 'Gdiff' . (<bang>0 ? '!' : '') . ' HEAD ' . <q-args>
 command! -nargs=* Gst execute 'G status ' . <q-args>
 command! -nargs=* Gbl execute 'G blame ' . <q-args>
 command! -nargs=* Gci execute 'G commit ' . <q-args>
@@ -436,6 +436,8 @@ nnoremap ca :call nerdcommenter#Comment("n", "Comment")<CR>
 xnoremap ca :call nerdcommenter#Comment("x", "Comment")<CR>
 " nnoremap cc :call nerdcommenter#Comment("n", "Toggle")<CR>
 " xnoremap cc :call nerdcommenter#Comment("x", "Toggle")<CR>
+nnoremap cm :call nerdcommenter#Comment("n", "Toggle")<CR>
+xnoremap cm :call nerdcommenter#Comment("x", "Toggle")<CR>
 " nnoremap cn :call nerdcommenter#Comment("n", "Nested")<CR>
 " xnoremap cn :call nerdcommenter#Comment("x", "Nested")<CR>
 nnoremap cu :call nerdcommenter#Comment("n", "Uncomment")<CR>
@@ -696,7 +698,9 @@ set showmatch " Show matching brackets when text indicator is over them
 set matchtime=2 " How many tenths of a second to blink when matching brackets
 
 set wrap " Wrap lines. default on.
-nnoremap <leader>w :windo set wrap!<CR>
+command! ToggleWrapAll let save_win = winnr() | windo set wrap! | execute save_win . 'wincmd w'
+nnoremap <silent> <leader>w :ToggleWrapAll<CR>
+nnoremap <silent> <leader>W :set wrap!<CR>
 
 noremap <leader>s :setlocal spell!<CR>
 "map <leader>sa zg " Add word to dictionary
@@ -715,6 +719,9 @@ if has("win16") || has("win32")
 else
 	set wildignore+=.git\*,.hg\*,.svn\*
 endif
+
+set nrformats-=octal " Prevents Vim from interpreting numbers with a leading 0 as octal
+"set signcolumn=number " Shows signs (e.g., diagnostics, git changes) in the line number column
 
 "" yank and paste
 noremap Y y$
@@ -758,6 +765,7 @@ nnoremap [e :cprev<CR>
 "" ==> FILE AND BUFFER
 set autoread " Set to auto read when a file is changed from the outside
 "set autowrite " Automatically write before moving to another file using tags, make, or <C-o> <C-i>, etc.
+set hidden " allow switching buffers without saving changes
 
 "" writes
 nmap <C-s> :up<CR>
@@ -862,6 +870,9 @@ autocmd FileType tex,latex,bib,bibtex set tabstop=4|set expandtab|set shiftwidth
 set ai "Auto indent
 "set si "Smart indent
 set cindent " Works better in most cases but is more strict. Overrides si
+
+set formatoptions+=j " Remove comment leader when joining lines
+set nojoinspaces " disables Vim's default behavior of adding two spaces after a period when joining lines
 
 " Linebreak on 500 characters
 "set lbr
