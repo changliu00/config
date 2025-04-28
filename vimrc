@@ -458,7 +458,7 @@ imap <C-/> <Esc><C-/>a
 "" ==> SETTINGS FOR WINDOWS
 if has("win16") || has("win32")
 	" -- Default settings from gVim --
-	source $VIMRUNTIME/vimrc_example.vim
+	" source $VIMRUNTIME/vimrc_example.vim
 
 	set diffexpr=MyDiff()
 	function MyDiff()
@@ -701,6 +701,9 @@ set wrap " Wrap lines. default on.
 command! ToggleWrapAll let save_win = winnr() | windo set wrap! | execute save_win . 'wincmd w'
 nnoremap <silent> <leader>w :ToggleWrapAll<CR>
 nnoremap <silent> <leader>W :set wrap!<CR>
+
+set display+=lastline " force Vim to display the last line even if it is too long in wrap mode
+set sessionoptions-=options " exclude Vim settings/options when `:mksession` (saves windows, buffers, layout)
 
 noremap <leader>s :setlocal spell!<CR>
 "map <leader>sa zg " Add word to dictionary
