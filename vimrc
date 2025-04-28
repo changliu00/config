@@ -765,6 +765,21 @@ nnoremap ]e :cnext<CR>
 nnoremap [e :cprev<CR>
 " Use `:cc[number]` to jump to the location of [number]-th spot in the error/quickfix list
 
+function! GitModifiedToQuickfix(cmd)
+  let l:files = filter(systemlist('git diff' . a:cmd . ' --name-only'), 'filereadable(v:val)')
+  if empty(l:files)
+    echo "No modified files."
+    return
+  endif
+  call setqflist(map(l:files, '{ "filename": v:val }'))
+  tabnew
+  redraw!
+  cfirst
+  copen
+endfunction
+command! Gdfn call GitModifiedToQuickfix('')
+command! Gdfcn call GitModifiedToQuickfix(' --cached')
+
 "" ==> FILE AND BUFFER
 set autoread " Set to auto read when a file is changed from the outside
 "set autowrite " Automatically write before moving to another file using tags, make, or <C-o> <C-i>, etc.
