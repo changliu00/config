@@ -350,6 +350,7 @@ autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " Close Vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd FileType nerdtree nnoremap <buffer> <C-p> :echo g:NERDTreeFileNode.GetSelected().path.str()<CR>
 "let g:NERDTreeDirArrowExpandable = '>' " 'ÎÎ'
 "let g:NERDTreeDirArrowCollapsible = 'v' " 'ÎÎ'
 "" Plugin 'Xuyuanp/nerdtree-git-plugin'
