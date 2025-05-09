@@ -397,7 +397,9 @@ map [g <Plug>(GitGutterPrevHunk)
 set updatetime=1000 " Default = 4000. Also the time delay to write swap files
 
 "" Plugin 'wellle/context.vim'
-nnoremap <leader>h :ContextToggleWindow<CR>
+command! ContextToggleWindowAll let save_win = winnr() | windo ContextToggleWindow | execute save_win . 'wincmd w'
+nnoremap <silent> <leader>H :ContextToggleWindowAll<CR><CR>
+nnoremap <silent> <leader>h :ContextToggleWindow<CR>
 "let g:context_filetype_blacklist = []
 let g:context_max_height = 11 " 21
 
@@ -638,7 +640,8 @@ nnoremap <expr> gt v:count ? 'gt' : ':tabnew '
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
-nnoremap gr :tabnew <C-r>=expand("%:p:h")<CR>/
+nnoremap gR :tabnew <C-r>=expand("%:p:h")<CR>/
+nnoremap gr :tabnew <C-r>=expand("%:p")<CR>
 
 " Easier finger move
 "nnoremap ]t gt
@@ -700,8 +703,8 @@ set matchtime=2 " How many tenths of a second to blink when matching brackets
 
 set wrap " Wrap lines. default on.
 command! ToggleWrapAll let save_win = winnr() | windo set wrap! | execute save_win . 'wincmd w'
-nnoremap <silent> <leader>w :ToggleWrapAll<CR>
-nnoremap <silent> <leader>W :set wrap!<CR>
+nnoremap <silent> <leader>W :ToggleWrapAll<CR>
+nnoremap <silent> <leader>w :set wrap!<CR>
 
 set display+=lastline " force Vim to display the last line even if it is too long in wrap mode
 set sessionoptions-=options " exclude Vim settings/options when `:mksession` (saves windows, buffers, layout)
