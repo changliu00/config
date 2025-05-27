@@ -346,8 +346,8 @@ map _ <Plug>(easymotion-F)
 "" Plugin 'preservim/nerdtree' " Another file system explorer
 nnoremap <leader>f :NERDTreeToggle<CR>
 " Open a NERDTree automatically when Vim starts up with no file specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " Close Vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd FileType nerdtree nnoremap <buffer> <C-p> :echo g:NERDTreeFileNode.GetSelected().path.str()<CR>
@@ -578,6 +578,8 @@ imap <C-q> <Esc><C-q>a
 " Use `autocmd VimEnter *` to conduct the mapping after loading the 'context.vim' plugin
 autocmd VimEnter * nnoremap <C-e> <C-e>j
 autocmd VimEnter * nnoremap <C-y> <C-y>k
+autocmd VimEnter * nnoremap ]c ]czz
+autocmd VimEnter * nnoremap [c [czz
 
 inoremap <C-f> <Esc><C-f>
 inoremap <C-b> <Esc><C-b>
@@ -770,7 +772,7 @@ nnoremap [e :cprev<CR>
 " Use `:cc[number]` to jump to the location of [number]-th spot in the error/quickfix list
 
 function! GitModifiedToQuickfix(cmd)
-  let l:files = filter(systemlist('git diff' . a:cmd . ' --name-only'), 'filereadable(v:val)')
+  let l:files = filter(systemlist('git diff ' . a:cmd . ' --name-only'), 'filereadable(v:val)')
   if empty(l:files)
     echo "No modified files."
     return
@@ -781,7 +783,7 @@ function! GitModifiedToQuickfix(cmd)
   cfirst
   copen
 endfunction
-command! Gdfn call GitModifiedToQuickfix('')
+command! -nargs=* Gdfn call GitModifiedToQuickfix(<q-args>)
 command! Gdfcn call GitModifiedToQuickfix(' --cached')
 
 "" ==> FILE AND BUFFER
