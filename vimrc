@@ -512,6 +512,7 @@ endif
 "        set mouse=a
 "    endif
 "endif
+set mouse=
 
 " Sets how many lines of history VIM has to remember
 set history=500
@@ -903,8 +904,8 @@ set nojoinspaces " disables Vim's default behavior of adding two spaces after a 
 "set tw=500
 
 " Configure backspace so it acts as it should act
-"set backspace=eol,start,indent
-"set whichwrap+=<,>,h,l
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
 
 " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
 "if has("osx") || has("mac") || has("macunix")
