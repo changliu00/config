@@ -265,7 +265,8 @@ let g:Tex_MultipleCompileFormats = 'dvi,pdf' " Default = 'dvi'
 "let g:Tex_FormatDependency_pdf = 'dvi,pdf' " Default = 'dvi,pdf'
 let g:Tex_ViewRule_pdf = '' " Default = 'xpdf' for Unix. Consider 'Zathura' for Ubuntu
 if has("win16") || has("win32")
-	let g:Tex_ViewRule_pdf = 'SumatraPDF -inverse-search "gvim -c \":RemoteOpen +\%l \%f\""' " Default = 'AcroRd32' for Windows
+	" let g:Tex_ViewRule_pdf = 'SumatraPDF -inverse-search "gvim -c \":RemoteOpen +%l \"%f\"\""' " Default = 'AcroRd32' for Windows
+	let g:Tex_ViewRule_pdf = 'SumatraPDF -inverse-search "vim --remote +%l \"%f\""' " Default = 'AcroRd32' for Windows
 elseif has("osx") || has("mac") || has("macunix")
 	let g:Tex_TreatMacViewerAsUNIX = 1 " To enable forward/inverse searching on Macintosh systems
 endif
