@@ -507,13 +507,19 @@ if has("win16") || has("win32")
 	map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
 endif
 
-" Enable mouse. Commented to allow copying contents to system clipboard
-"if has("win16") || has("win32")
-"    if has('mouse')
-"        set mouse=a
-"    endif
-"endif
-set mouse=
+" Enable mouse.
+if has("win16") || has("win32")
+   if has('mouse')
+		set mouse=a
+		vmap <RightMouse> "+y
+		imap <RightMouse> <Esc>"+pa
+		nmap <RightMouse> "+Pa
+		autocmd CmdlineEnter * set mouse=
+		autocmd CmdlineLeave * set mouse=a
+   endif
+else
+	set mouse=
+endif
 
 " Sets how many lines of history VIM has to remember
 set history=500
