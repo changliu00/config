@@ -27,6 +27,7 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 vim +PluginInstall +qall
 # sudo apt install --upgrade build-essential cmake python3-dev
 cd ~/.vim/bundle/YouCompleteMe/
+git submodule update --init --recursive
 # git checkout b6e8c64d # or, branch legacy-vim-8.2 # for the customized vim built with python3.10
 python3 install.py --clangd-completer
 
