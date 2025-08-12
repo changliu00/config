@@ -25,9 +25,9 @@ endif
 Plugin 'VundleVim/Vundle.vim'
 
 "" ==> SPECIAL INSTALLATION / FILETYPE SPECIFIC
-if !has("win16") && !has("win32")
-  Plugin 'ycm-core/YouCompleteMe'
-endif
+"if !has("win16") && !has("win32")
+Plugin 'ycm-core/YouCompleteMe'
+"endif
 "Plugin 'Valloric/YouCompleteMe' " Old version. See <https://bitbucket.org/Alexander-Shukaev/vim-youcompleteme-for-windows/src/master/> for Windows
 " For Windows, requires:
 " 1. (G)Vim is installed/compiled with Python support.
@@ -207,29 +207,29 @@ filetype plugin indent on    " required
 """""""""""""""""""""""""""""""""""""""""""""""""
 
 "" ==> SPECIAL INSTALLATION / FILETYPE SPECIFIC
-if !has("win16") && !has("win32")
-  "" Plugin 'ycm-core/YouCompleteMe'
-  "let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py' " Specify the configuration file (This is default)
-  autocmd FileType * if index(['tex','latex','bib','bibtex'], &filetype) >= 0 | let g:ycm_auto_trigger = 0 | endif " When set to 0, use <C-space> to force semantic completion. Default = 1
-  nnoremap <leader>yy :let g:ycm_auto_trigger = !g:ycm_auto_trigger<CR>
-  " Do the same as the subcommand 'GoToDefinitionElseDeclaration' (which is only for C#)
-  nnoremap gd :YcmCompleter GoTo<CR>
-  " Do not recompile the file with libclang (trades correctness for speed)
-  nnoremap <leader>yi :YcmCompleter GoToImprecise<CR>
-  nnoremap <leader>yr :YcmRestartServer<CR>
-  nnoremap <leader>yu :YcmForceCompileAndDiagnostics<CR>
-  let g:ycm_min_num_of_chars_for_completion = 4 " Default = 2
-  " If =99: turn off the identifier completion engine and just leave the semantic engine.
-  nnoremap <leader>ys :let g:ycm_min_num_of_chars_for_completion = 103 - g:ycm_min_num_of_chars_for_completion<CR>
-  let g:ycm_max_num_candidates = 30 " Default = 50
-  let g:ycm_confirm_extra_conf = 0 " Stop confirming loading extra configuration file when entering vim
-  "let g:ycm_collect_identifiers_from_tag_files = 1 " Use the tags file produced by ctags
-  "let g:ycm_show_diagnostics_ui = 0 " Stop the built-in checker of ycm for c-related syntax
-  " Stop the popup from automatically displaying. Set to 'CursorHold' (default) or 'CursorMoved' (use `K` to toggle between the two) to resume.
-  let g:ycm_auto_hover = ''
-  nmap gs <Plug>(YCMHover)
-  nnoremap gS K
-endif
+"if !has("win16") && !has("win32")
+"" Plugin 'ycm-core/YouCompleteMe'
+"let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py' " Specify the configuration file (This is default)
+autocmd FileType * if index(['tex','latex','bib','bibtex'], &filetype) >= 0 | let g:ycm_auto_trigger = 0 | endif " When set to 0, use <C-space> to force semantic completion. Default = 1
+nnoremap <leader>yy :let g:ycm_auto_trigger = !g:ycm_auto_trigger<CR>
+" Do the same as the subcommand 'GoToDefinitionElseDeclaration' (which is only for C#)
+nnoremap gd :YcmCompleter GoTo<CR>
+" Do not recompile the file with libclang (trades correctness for speed)
+nnoremap <leader>yi :YcmCompleter GoToImprecise<CR>
+nnoremap <leader>yr :YcmRestartServer<CR>
+nnoremap <leader>yu :YcmForceCompileAndDiagnostics<CR>
+let g:ycm_min_num_of_chars_for_completion = 4 " Default = 2
+" If =99: turn off the identifier completion engine and just leave the semantic engine.
+nnoremap <leader>ys :let g:ycm_min_num_of_chars_for_completion = 103 - g:ycm_min_num_of_chars_for_completion<CR>
+let g:ycm_max_num_candidates = 30 " Default = 50
+let g:ycm_confirm_extra_conf = 0 " Stop confirming loading extra configuration file when entering vim
+"let g:ycm_collect_identifiers_from_tag_files = 1 " Use the tags file produced by ctags
+"let g:ycm_show_diagnostics_ui = 0 " Stop the built-in checker of ycm for c-related syntax
+" Stop the popup from automatically displaying. Set to 'CursorHold' (default) or 'CursorMoved' (use `K` to toggle between the two) to resume.
+let g:ycm_auto_hover = ''
+nmap gs <Plug>(YCMHover)
+nnoremap gS K
+"endif
 
 "" Plugin 'vim-latex/vim-latex' " See <http://vim-latex.sourceforge.net/>
 " REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
